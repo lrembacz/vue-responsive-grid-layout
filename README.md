@@ -29,7 +29,7 @@ Vue Responsive Grid Layout uses scoped slot inside to get some props.
 
 `<slot :containerWidth="containerWidth" :layout="currentLayout" :cols="cols">`
 
-You can use it to send containerWidth and currentLayout for grid-items.
+You can use it to send containerWidth, currentLayout and cols for grid-items.
 
 ## Props VueResponsiveGridLayout
 
@@ -194,7 +194,7 @@ It occurs when width is changed (window is resized etc.).
 
 ### initLayout()
 
-Function that runs initLayout when `initOnStart` is `false`.
+Function that runs initLayout when `initOnStart` is `true`.
 
 We can use it for example: `this.$refs.layout.initLayout()`.
 
