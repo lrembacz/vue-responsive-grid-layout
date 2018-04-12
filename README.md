@@ -27,7 +27,7 @@ Vue.component('vue-grid-item', VueGridItem)
 
 Vue Responsive Grid Layout uses scoped slot inside to get some props.
 
-`<slot :containerWidth="containerWidth" :layout="currentLayout" :cols="cols">`
+`<slot :containerWidth="containerWidth" :layout="currentLayout" :cols="currentCols">`
 
 You can use it to send containerWidth, currentLayout and cols for grid-items.
 
@@ -93,6 +93,10 @@ className : {
     type: String,
     default: ""
 },
+providerSelector: {
+	required: false,
+	type: String
+}
 ```
 
 ## Description
@@ -152,8 +156,13 @@ Helpful when we are waiting for data from API call.
 
 ### className
 
-Define additional classes for grid layout.
+Defines additional classes for grid layout.
 Default css class is `vue-responsive-grid-layout`.
+
+### providerSelector
+
+Defines selector for width-provider.
+Default VueResponsiveGridLayout.
 
 ## Events VueResponsiveGridLayout
 
