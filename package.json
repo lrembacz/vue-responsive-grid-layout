@@ -18,6 +18,10 @@
     "responsive",
     "vue-responsive-grid-layout"
   ],
+  "files": [
+    "dist",
+    "src"
+  ],
   "author": "Łukasz Rembacz",
   "license": "MIT",
   "devDependencies": {

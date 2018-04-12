@@ -46,7 +46,7 @@
 </template>
 
 <script>
-    import {eventBus} from './event-bus/eventBus'
+    import {eventBus} from './event-bus/eventBus.js'
     import * as utils from './utils/utils.js'
     import DraggableCore from 'vue-draggable-core'
     import Resizable from 'vue-resizable-core'
@@ -461,15 +461,6 @@
                     let { w, h } = this.calcWH({ height: this.componentHeight, width: pos.width });
 
                     eventBus.$emit('onResizeItem', this.i, w, h, false);
-                }
-            },
-            calcNewWidth(pos, width) {
-
-                if (!this.placeholder) {
-
-                    let { w, h } = this.calcWH({ height: pos.height, width: width });
-
-                    this.$events.fire('gi-onResizeItem', this.i, w, h);
                 }
             },
             onHeightUpdated() {

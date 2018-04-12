@@ -1,3 +1,3 @@
-import Vue from 'vue';
+import vue from 'vue';
 
-export const eventBus = new Vue();
+export const eventBus = new vue();

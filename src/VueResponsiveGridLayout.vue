@@ -25,7 +25,7 @@
 
 <script>
     import WidthProvider from './helpers/WidthProvider.vue'
-    import {eventBus} from './event-bus/eventBus'
+    import {eventBus} from './event-bus/eventBus.js'
     import GridItem from './VueGridItem.vue'
     import {
         getLayoutItem,
