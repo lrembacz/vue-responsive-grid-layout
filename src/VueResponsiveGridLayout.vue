@@ -95,7 +95,7 @@
             initOnStart : {
                 type: Boolean,
                 required: false,
-                default: false
+                default: true
             },
             className : {
                 required: false,
