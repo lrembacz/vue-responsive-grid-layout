@@ -12,6 +12,12 @@
                 firstRender: false
             }
         },
+        props: {
+            selector: {
+                type: String,
+                required: false
+            }
+        },
         created() {
             window.addEventListener('resize', this.handleResize)
         },
@@ -24,14 +30,22 @@
         methods: {
             init () {
                 this.$nextTick(() => {
-                    this.width = document.documentElement.clientWidth || document.body.clientWidth;;
+                    if (this.selector) {
+                        this.width = document.getElementById(this.selector).clientWidth;
+                    } else {
+                        this.width = this.$parent.$el.clientWidth;
+                    }
                     this.$emit('widthInit', this.width);
                     this.firstRender = true;
                 })
             },
             handleResize (event) {
                 this.$nextTick(() => {
-                    this.width = document.documentElement.clientWidth || document.body.clientWidth;;
+                    if (this.selector) {
+                        this.width = document.getElementById(this.selector).clientWidth;
+                    } else {
+                        this.width = this.$parent.$el.clientWidth;
+                    }
                     this.$emit('widthChange', this.width);
                 })
 

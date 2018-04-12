@@ -3,7 +3,6 @@
             :class="classes"
             :style="styles"
         >
-
             <DraggableCore
                     v-if="!placeholder"
                     :onStart="onDragHandler('onDragStart')"

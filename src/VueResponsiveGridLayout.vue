@@ -1,6 +1,6 @@
 <template>
     <div :class="classes">
-        <slot :containerWidth="containerWidth" :layout="currentLayout" :cols="cols">
+        <slot :containerWidth="containerWidth" :layout="currentLayout" :cols="currentCols">
         </slot>
         <grid-item class="vue-grid-placeholder"
             :containerWidth="containerWidth"
@@ -12,11 +12,12 @@
             :h="placeholder.h"
             :i="placeholder.i"
             :placeholder="true"
-            :cols="cols"
+            :cols="currentCols"
         style="border:1px dotted #ddd;">
         </grid-item>
 
         <width-provider
+            :selector="providerSelector"
             @widthChange="onWidthChange"
             @widthInit="onWidthInit">
         </width-provider>
@@ -49,7 +50,6 @@
             'width-provider': WidthProvider
         },
         props: {
-
             breakpoint: {
                 type: String,
                 required: false,
@@ -61,8 +61,10 @@
                 default: 12
             },
             layouts: {
-                type: Object,
                 required: true,
+                validator: value => {
+                    return value instanceof Object || value === undefined;
+                }
             },
             // ("horizontal" | "vertical")
             compactType: {
@@ -93,28 +95,27 @@
             initOnStart : {
                 type: Boolean,
                 required: false,
-                default: true
+                default: false
             },
             className : {
                 required: false,
                 type: String,
                 default: ""
             },
+            providerSelector: {
+                required: false,
+                type: String
+            }
         },
         watch: {
             layouts(val) {
-                if (val) {
+                if (val && this.inited) {
                     this.currentLayout = JSON.parse(JSON.stringify(this.layouts[this.breakpoint]));
                     this.currentLayouts = JSON.parse(JSON.stringify(this.layouts));
+                    if(this.ready === false)
+                        this.$emit('layoutInit');
                 }
             },
-            inited(val) {
-                if (this.inited) {
-                    if (this.initOnStart) {
-                        this.initLayout();
-                    }
-                }
-            }
         },
         computed: {
             classes() {
@@ -158,6 +159,8 @@
             eventBus.$on('onResizeStop', this.onResizeStop);
             eventBus.$on('onResizeItem', this.onResizeItem);
             eventBus.$on('onMoveItem', this.moveItem);
+
+            this.$on('layoutInit', this.readyLayout);
         },
 
         methods: {
@@ -166,8 +169,13 @@
                 this.inited = true;
                 this.$emit('width-init', {width});
             },
+            readyLayout() {
+                if (this.initOnStart) {
+                    this.initLayout();
+                }
+            },
             initLayout () {
-                if (this.inited) {
+                if (this.inited && this.layouts instanceof Object) {
                     this.currentLayouts = JSON.parse(JSON.stringify(this.layouts));
                     this.currentBreakpoint = JSON.parse(JSON.stringify(this.breakpoint));
                     this.currentCols = JSON.parse(JSON.stringify(this.cols));
@@ -238,7 +246,7 @@
                     currentCols !== newCols
                 ) {
                     if (!(lastBreakpoint in currentLayouts))
-                        currentLayouts[lastBreakpoint] = cloneLayout(this.layout);
+                        currentLayouts[lastBreakpoint] = cloneLayout(this.currentLayout);
 
                     let currentLayout = findOrGenerateResponsiveLayout(
                         currentLayouts,
@@ -255,16 +263,17 @@
                         this.compactTypeState()
                     );
 
-                    this.$set(currentLayouts, newBreakpoint,  currentLayout);
-
-                    this.$emit('layout-change',{layout: currentLayout, breakpoint: newBreakpoint});
-                    this.$emit('breakpoint-change',{breakpoint: newBreakpoint, cols: newCols});
-
-                    // this.breakpoint= newBreakpoint;
                     this.currentLayout = currentLayout;
                     this.currentBreakpoint = newBreakpoint;
                     this.currentCols = newCols;
-                    // this.cols = newCols;
+                    this.$set(this.currentLayouts, newBreakpoint,  currentLayout);
+
+                    this.$nextTick( ()=> {
+                        this.updateItemsHeight();
+                    })
+
+                    this.$emit('layout-change',{layout: currentLayout, breakpoint: newBreakpoint});
+                    this.$emit('breakpoint-change',{breakpoint: newBreakpoint, cols: newCols});
                 }
 
                 this.$emit('width-change', {width, newCols})
@@ -607,6 +616,8 @@
             eventBus.$off('onResizeStop', this.onResizeStop);
             eventBus.$off('onMoveItem', this.moveItem);
             eventBus.$off('onResizeItem', this.onResizeItem);
+
+            this.$off('layoutInit', this.readyLayout);
         }
     }
 </script>
