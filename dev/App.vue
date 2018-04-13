@@ -3,6 +3,7 @@
         <div style="position:relative;width:100%;height:100%;">
             <div style="height: 30px;">
                 <div class="pull-right">
+		    <div @click="switchLayout()" class="btn btn-md"><span class="glyphicon glyphicon-share-alt"></span></div>
                     <div @click="gridMode()" class="btn btn-md"><span class="glyphicon glyphicon-th-large"></span></div>
                     <div @click="listMode()" class="btn btn-md"><span class="glyphicon glyphicon-list"></span></div>
                 </div>
@@ -10,6 +11,7 @@
             <vue-responsive-grid-layout
                     @layout-update="updateLayout"
                     @layout-change="changeLayout"
+		    @layout-switched="onLayoutSwitched"
                     @layout-init="initLayout"
                     @layout-resized="resizedLayout"
                     @width-init="initWidth"
@@ -91,6 +93,21 @@ export default{
             this.containerWidth = width;
             this.$refs.layout.initLayout();
         },
+	switchLayout() {
+	    const layouts = {
+                "lg": [
+                    { x: 0, y: 0, w: 2, h: 3, i: "1"},
+                    { x: 2, y: 0, w: 2, h: 3, i: "2"},
+                ]
+	    };
+	    this.$refs.layout.switchLayout(layouts);
+        },
+	onLayoutSwitched() {
+		this.components = {
+		    "1": { i: "1", component: "example-component", defaultSize: 2},
+		    "2": { i: "2", component: "example-component", defaultSize: 2},
+		};
+	},
         changeWidth({width, newCols}) {
             this.containerWidth = width;
             this.cols = newCols;

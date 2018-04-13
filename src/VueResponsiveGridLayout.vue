@@ -212,6 +212,48 @@
                 }
             },
 
+	    switchLayout(newLayouts) {
+		if (this.inited && newLayouts instanceof Object) {
+                    this.currentLayouts = JSON.parse(JSON.stringify(newLayouts));
+
+                    const breakpoint = getBreakpointFromWidth(this.breakpoints, this.containerWidth);
+                    const cols = getColsFromBreakpoint(breakpoint, this.colsAll);
+
+                    const layout = findOrGenerateResponsiveLayout(
+                        this.currentLayouts,
+                        this.breakpoints,
+                        breakpoint,
+                        "lg",
+                        cols,
+                        this.compactTypeState()
+                    );
+
+                    let newLayout = synchronizeLayoutWithChildren(
+                        this.currentLayout,
+                        this.currentCols,
+                        this.compactType
+                    );
+
+                    this.currentBreakpoint = breakpoint;
+                    this.currentCols = cols;
+
+                    let filtered;
+                    filtered = layout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
+
+                    this.currentLayout = filtered;
+
+                    this.$set(this.currentLayouts, this.currentBreakpoint,  filtered);
+
+                    this.$emit('layout-switched', {layout: filtered, cols, breakpoint, layouts: this.currentLayouts});
+
+                    // Provided to make sure that components are re-rendered
+                    // Sometimes event handlers makes the errors
+                    this.$nextTick( ()=> {
+                        this.updateItemsHeight();
+                    })
+                }
+	    },
+
             synchronizeLayout() {
                 let newLayout = synchronizeLayoutWithChildren(
                     this.currentLayout,
