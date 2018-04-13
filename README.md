@@ -199,6 +199,10 @@ Emitted after resizing the window.
 Emitted after breakpoint is changed. 
 It occurs when width is changed (window is resized etc.). 
 
+### @layout-switched({layout, cols, breakpoint, layouts})
+
+Grants information that layouts object was switched.
+
 ## Functions VueResponsiveGridLayout
 
 ### initLayout()
@@ -219,7 +223,10 @@ Function resizes all grid-items width based on arguments.
 * If mode is `true` and cols is `false`, then every grid-item gets width of the whole component.
 * If cols is a number it makes every grid-item to get width represented by cols. 
 
+### switchLayout(newLayouts)
 
+Function grants abbility to change layouts object to new one.
+It's good when we have more dashboards or something.
 
 ## Props VueGridItem
 

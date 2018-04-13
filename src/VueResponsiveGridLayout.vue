@@ -213,7 +213,7 @@
             },
 
 	    switchLayout(newLayouts) {
-		if (this.inited && newLayouts instanceof Object) {
+		if (newLayouts instanceof Object) {
                     this.currentLayouts = JSON.parse(JSON.stringify(newLayouts));
 
                     const breakpoint = getBreakpointFromWidth(this.breakpoints, this.containerWidth);
@@ -229,22 +229,22 @@
                     );
 
                     let newLayout = synchronizeLayoutWithChildren(
-                        this.currentLayout,
-                        this.currentCols,
-                        this.compactType
+                        layout,
+                        cols,
+                        this.compactTypeState()
                     );
 
                     this.currentBreakpoint = breakpoint;
                     this.currentCols = cols;
 
                     let filtered;
-                    filtered = layout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
+                    filtered = newLayout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
 
                     this.currentLayout = filtered;
 
                     this.$set(this.currentLayouts, this.currentBreakpoint,  filtered);
 
-                    this.$emit('layout-switched', {layout: filtered, cols, breakpoint, layouts: this.currentLayouts});
+                    this.$emit('layout-switched', {layout: filtered, cols: this.currentCols, breakpoint: this.currentBreakpoint, layouts: this.currentLayouts});
 
                     // Provided to make sure that components are re-rendered
                     // Sometimes event handlers makes the errors
@@ -258,7 +258,7 @@
                 let newLayout = synchronizeLayoutWithChildren(
                     this.currentLayout,
                     this.currentCols,
-                    this.compactType
+                    this.compactTypeState()
                 );
 
                  let filtered;
