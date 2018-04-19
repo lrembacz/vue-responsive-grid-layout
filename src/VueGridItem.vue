@@ -27,7 +27,7 @@
                 ></slot>
             </DraggableCore>
             <Resizable
-                    v-if="!placeholder"
+                    v-if="!placeholder && isResizable"
                     :w="calcWidth()"
                     :h="calcHeight()"
                     :onResizeStart="onResizeHandler('onResizeStart')"
