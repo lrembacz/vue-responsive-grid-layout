@@ -208,12 +208,12 @@
         },
         watch:{
             w(val) {
-                if (val && !this.placeholder) {
+                if (val && (!this.placeholder && isResizable)) {
                     this.$refs.resize.width = this.calcWidth();
                 }
             },
             h(val) {
-                if (val && !this.placeholder) {
+                if (val && (!this.placeholder && isResizable)) {
                     this.$refs.resize.height = this.calcHeight();
                 }
             }
