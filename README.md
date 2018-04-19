@@ -46,6 +46,12 @@ cols: {
     default: 12
 },
 
+rowHeight: {
+    required: false,
+    type: Number,
+    default: 10
+},
+
 layouts: {
     type: Object,
     required: true,
@@ -141,6 +147,10 @@ Preventing collisions. Makes some grid items static.
 Breakpoints object which define width for breakpoints. 
 
 Default `{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }`.
+
+### rowHeight
+
+Height of one grid unit row for placeholder.
 
 ### colsAll
 

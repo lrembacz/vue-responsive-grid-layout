@@ -13,6 +13,7 @@
             :i="placeholder.i"
             :placeholder="true"
             :cols="currentCols"
+	    :rowHeight="rowHeight"
         style="border:1px dotted #ddd;">
         </grid-item>
 
@@ -55,6 +56,11 @@
                 required: false,
                 default: 'lg'
             },
+	    rowHeight: {
+		required: false,
+		type: Number,
+		default: 10
+	    },
             cols: {
                 type: Number,
                 required: false,
