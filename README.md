@@ -25,6 +25,14 @@ Vue.component('vue-grid-item', VueGridItem)
 
 # API
 
+```
+EDIT: FIX to Desynchronitizing
+
+GridLayout has its own state now. Layouts from prop is taken only for the first time. 
+
+To change layout inside the component use switchLayout method.
+ 
+```
 Vue Responsive Grid Layout uses scoped slot inside to get some props.
 
 `<slot :containerWidth="containerWidth" :layout="currentLayout" :cols="currentCols">`
