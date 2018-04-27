@@ -115,11 +115,10 @@
         },
         watch: {
             layouts(val) {
-                if (val && this.inited) {
+                if (val && this.inited  && (this.ready === false)) {
                     this.currentLayout = JSON.parse(JSON.stringify(this.layouts[this.breakpoint]));
                     this.currentLayouts = JSON.parse(JSON.stringify(this.layouts));
-                    if(this.ready === false)
-                        this.$emit('layoutInit');
+                    this.$emit('layoutInit');
                 }
             },
         },
@@ -218,47 +217,47 @@
                 }
             },
 
-	    switchLayout(newLayouts) {
-		if (newLayouts instanceof Object) {
-                    this.currentLayouts = JSON.parse(JSON.stringify(newLayouts));
+            switchLayout(newLayouts) {
+            if (newLayouts instanceof Object) {
+                        this.currentLayouts = JSON.parse(JSON.stringify(newLayouts));
 
-                    const breakpoint = getBreakpointFromWidth(this.breakpoints, this.containerWidth);
-                    const cols = getColsFromBreakpoint(breakpoint, this.colsAll);
+                        const breakpoint = getBreakpointFromWidth(this.breakpoints, this.containerWidth);
+                        const cols = getColsFromBreakpoint(breakpoint, this.colsAll);
 
-                    const layout = findOrGenerateResponsiveLayout(
-                        this.currentLayouts,
-                        this.breakpoints,
-                        breakpoint,
-                        "lg",
-                        cols,
-                        this.compactTypeState()
-                    );
+                        const layout = findOrGenerateResponsiveLayout(
+                            this.currentLayouts,
+                            this.breakpoints,
+                            breakpoint,
+                            "lg",
+                            cols,
+                            this.compactTypeState()
+                        );
 
-                    let newLayout = synchronizeLayoutWithChildren(
-                        layout,
-                        cols,
-                        this.compactTypeState()
-                    );
+                        let newLayout = synchronizeLayoutWithChildren(
+                            layout,
+                            cols,
+                            this.compactTypeState()
+                        );
 
-                    this.currentBreakpoint = breakpoint;
-                    this.currentCols = cols;
+                        this.currentBreakpoint = breakpoint;
+                        this.currentCols = cols;
 
-                    let filtered;
-                    filtered = newLayout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
+                        let filtered;
+                        filtered = newLayout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
 
-                    this.currentLayout = filtered;
+                        this.currentLayout = filtered;
 
-                    this.$set(this.currentLayouts, this.currentBreakpoint,  filtered);
+                        this.$set(this.currentLayouts, this.currentBreakpoint,  filtered);
 
-                    this.$emit('layout-switched', {layout: filtered, cols: this.currentCols, breakpoint: this.currentBreakpoint, layouts: this.currentLayouts});
+                        this.$emit('layout-switched', {layout: filtered, cols: this.currentCols, breakpoint: this.currentBreakpoint, layouts: this.currentLayouts});
 
-                    // Provided to make sure that components are re-rendered
-                    // Sometimes event handlers makes the errors
-                    this.$nextTick( ()=> {
-                        this.updateItemsHeight();
-                    })
-                }
-	    },
+                        // Provided to make sure that components are re-rendered
+                        // Sometimes event handlers makes the errors
+                        this.$nextTick( ()=> {
+                            this.updateItemsHeight();
+                        })
+                    }
+            },
 
             synchronizeLayout() {
                 let newLayout = synchronizeLayoutWithChildren(

@@ -11,13 +11,13 @@
             <vue-responsive-grid-layout
                     @layout-update="updateLayout"
                     @layout-change="changeLayout"
-		    @layout-switched="onLayoutSwitched"
+		            @layout-switched="onLayoutSwitched"
                     @layout-init="initLayout"
                     @layout-resized="resizedLayout"
                     @width-init="initWidth"
                     @width-change="changeWidth"
                     @breakpoint-change="changeBreakpoint"
-                    :layouts="layouts"
+                    :layouts="currentLayouts"
                     :cols="cols"
                     :compactType="'vertical'"
                     :verticalCompact="true"
@@ -60,13 +60,22 @@ export default{
     data() {
         return {
             layouts: {
-                "lg": [
-                    { x: 0, y: 0, w: 2, h: 3, i: "1"},
-                    { x: 2, y: 0, w: 2, h: 3, i: "2"},
-                    { x: 4, y: 0, w: 2, h: 3, i: "3"},
-                    { x: 0, y: 3, w: 2, h: 3, i: "4"}
-                ]
+                1 : {
+                    "lg": [
+                        { x: 0, y: 0, w: 2, h: 3, i: "1"},
+                        { x: 2, y: 0, w: 2, h: 3, i: "2"},
+                        { x: 4, y: 0, w: 2, h: 3, i: "3"},
+                        { x: 0, y: 3, w: 2, h: 3, i: "4"}
+                    ]
+                },
+                2: {
+                    "lg": [
+                        { x: 0, y: 0, w: 2, h: 3, i: "1"},
+                        { x: 2, y: 0, w: 2, h: 3, i: "2"},
+                    ]
+                }
             },
+            currentLayoutsId: 1,
             breakpoint: "lg",
             components: {
                 "1": { i: "1", component: "example-component", defaultSize: 2},
@@ -81,6 +90,11 @@ export default{
             isResizable: true,
         }
     },
+    computed: {
+        currentLayouts() {
+            return this.layouts[this.currentLayoutsId];
+        }
+    },
     components: {
         'vue-responsive-grid-layout': VueResponsiveGridLayout,
         'vue-grid-item': VueGridItem
@@ -93,21 +107,22 @@ export default{
             this.containerWidth = width;
             this.$refs.layout.initLayout();
         },
-	switchLayout() {
-	    const layouts = {
-                "lg": [
-                    { x: 0, y: 0, w: 2, h: 3, i: "1"},
-                    { x: 2, y: 0, w: 2, h: 3, i: "2"},
-                ]
-	    };
-	    this.$refs.layout.switchLayout(layouts);
+        switchLayout() {
+            switch(this.currentLayoutsId) {
+                case 1:
+                    this.currentLayoutsId = 2;
+                    this.$refs.layout.switchLayout(this.currentLayouts);
+                    break;
+                case 2:
+                    this.currentLayoutsId = 1;
+                    this.$refs.layout.switchLayout(this.currentLayouts);
+                    break;
+            }
+
         },
-	onLayoutSwitched() {
-		this.components = {
-		    "1": { i: "1", component: "example-component", defaultSize: 2},
-		    "2": { i: "2", component: "example-component", defaultSize: 2},
-		};
-	},
+        onLayoutSwitched() {
+            console.log('layouts switched')
+        },
         changeWidth({width, newCols}) {
             this.containerWidth = width;
             this.cols = newCols;
