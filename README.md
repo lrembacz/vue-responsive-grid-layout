@@ -329,6 +329,11 @@ className: {
     type: String,
     default: ""
 },
+dragContainerClass: {
+    required: false,
+    type: String,
+    default: "vue-grid-draggable-container"
+},
 handle: {
     required: false,
     type: String,
@@ -447,6 +452,10 @@ Default:
 * vue-grid-draggable (if isDraggable)
 * vue-grid-draggable-dragging (if is dragging)
 * cssTransforms (if uses CSS transform)
+
+### dragContainerClass
+
+Defines classes for dragContainer. Default `vue-grid-draggable-container`.
 
 ### handle
 
