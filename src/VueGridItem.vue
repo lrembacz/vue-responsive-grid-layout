@@ -11,6 +11,7 @@
                     :disabled="!isDraggable"
                     :handle="handle"
                     :cancel="cancel"
+                    :class="dragContainerClass"
             >
                 <div
                         ref="item"
@@ -68,6 +69,7 @@
                 type: Boolean,
                 default: false
             },
+
             containerWidth: {
                 required: true,
                 default: 0
@@ -79,21 +81,25 @@
                 type: Number,
                 default: 12,
             },
+
             rowHeight: {
                 required: false,
                 type: Number,
                 default: 10
             },
+
             margin: {
                 required: false,
                 type: Array,
                 default: () => [10, 10]
             },
+
             maxRows: {
                 required: false,
                 type: Number,
                 default: Infinity
             },
+
             containerPadding: {
                 required: false,
                 type:Array,
@@ -105,6 +111,7 @@
                 type: Number,
                 required: true
             },
+
             y: {
                 type: Number,
                 required: true
@@ -113,6 +120,7 @@
                 type: Number,
                 required: true
             },
+
             h: {
                 type: Number,
                 required: true
@@ -130,11 +138,13 @@
                 type: Boolean,
                 default: true
             },
+
             isResizable: {
                 required: false,
                 type: Boolean,
                 default: true
             },
+
             static: {
                 required: false,
                 type: Boolean,
@@ -154,12 +164,20 @@
                 type: String,
                 default: ""
             },
+
+            dragContainerClass: {
+                required: false,
+                type: String,
+                default: "vue-grid-draggable-container"
+            },
+
             // Selector for draggable handle
             handle: {
                 required: false,
                 type: String,
                 default: ""
             },
+
             cancel: {
                 required: false,
                 type: String,
@@ -186,11 +204,11 @@
                 default: false
             },
 
-             usePercentages: {
-                 required: false,
-                 type: Boolean,
-                 default: false
-             },
+            usePercentages: {
+                required: false,
+                type: Boolean,
+                default: false
+            },
 
             componentProps: {
                 type: Object,
@@ -369,16 +387,35 @@
                     // Get new XY
                     switch (handlerName) {
                         case "onDragStart": {
-                            // TODO: this wont work on nested parents
-                            const { offsetParent } = node.offsetParent;
-                            if (!offsetParent) return;
-                            const parentRect = offsetParent.getBoundingClientRect();
-                            const clientRect = node.getBoundingClientRect();
+                            if (this.useCSSTransforms) {
+                                const transform = this.$el.style.transform;
 
-                            newPosition.left =
-                                clientRect.left - parentRect.left + offsetParent.scrollLeft;
-                            newPosition.top =
-                                clientRect.top - parentRect.top + offsetParent.scrollTop;
+                                let transform1 = transform.split('translate(')[1];
+                                transform1 = transform1.split(')')[0];
+                                transform1 = transform1.split(', ');
+                                let top = parseInt(transform1[1]);
+
+                                const { offsetParent } = node.offsetParent;
+                                if (!offsetParent) return;
+                                const parentRect = offsetParent.getBoundingClientRect();
+                                const clientRect = node.getBoundingClientRect();
+
+                                newPosition.left =
+                                    clientRect.left - parentRect.left + offsetParent.scrollLeft;
+                                newPosition.top =
+                                    top - parentRect.top + offsetParent.scrollTop;
+                            } else {
+                                const { offsetParent } = node.offsetParent;
+                                if (!offsetParent) return;
+                                const parentRect = offsetParent.getBoundingClientRect();
+                                const clientRect = node.getBoundingClientRect();
+
+                                newPosition.left =
+                                    clientRect.left - parentRect.left + offsetParent.scrollLeft;
+                                newPosition.top =
+                                    clientRect.top - parentRect.top + offsetParent.scrollTop;
+                            }
+
                             this.dragging = newPosition;
 
                             break;
@@ -538,5 +575,10 @@
         height: 5px;
         border-right: 2px solid #000000;
         border-bottom: 2px solid #000000;
+    }
+
+    .vue-grid-draggable-container {
+        width: 100%;
+        height: 100%;
     }
 </style>
