@@ -4,6 +4,13 @@ Its responsiveness is based on breakpoints (similar to Bootstrap).
 
 It's based on https://github.com/STRML/react-grid-layout
 
+# Demo
+
+- https://jsfiddle.net/w768wv2f/ - component wrapped inside of `grid-item` 
+with `heightFromChildren` prop used.
+- https://jsfiddle.net/w768wv2f/1/ - simple component wrapped inside slot with 
+own height taken from layout.
+
 # Example
 
 - Clone project.
