@@ -1,5 +1,6 @@
 <template>
     <div id="wrapper" style="align-items: stretch;width: 100%; height: 100%;">
+
         <div style="position:relative;width:100%;height:100%;">
             <div style="height: 30px;">
                 <div class="pull-right">
@@ -195,5 +196,10 @@ export default{
         height: 5px;
         border-right: 2px solid #FFFFFF;
         border-bottom: 2px solid #FFFFFF;
+    }
+
+    .vue-responsive-grid-layout {
+        display:block;
+        position:relative;
     }
 </style>

@@ -387,24 +387,24 @@
                     // Get new XY
                     switch (handlerName) {
                         case "onDragStart": {
-                            if (this.useCSSTransforms) {
-                                const transform = this.$el.style.transform;
-
-                                let transform1 = transform.split('translate(')[1];
-                                transform1 = transform1.split(')')[0];
-                                transform1 = transform1.split(', ');
-                                let top = parseInt(transform1[1]);
-
-                                const { offsetParent } = node.offsetParent;
-                                if (!offsetParent) return;
-                                const parentRect = offsetParent.getBoundingClientRect();
-                                const clientRect = node.getBoundingClientRect();
-
-                                newPosition.left =
-                                    clientRect.left - parentRect.left + offsetParent.scrollLeft;
-                                newPosition.top =
-                                    top - parentRect.top + offsetParent.scrollTop;
-                            } else {
+//                            if (this.useCSSTransforms) {
+//                                const transform = this.$el.style.transform;
+//
+//                                let transform1 = transform.split('translate(')[1];
+//                                transform1 = transform1.split(')')[0];
+//                                transform1 = transform1.split(', ');
+//                                let top = parseInt(transform1[1]);
+//
+//                                const { offsetParent } = node.offsetParent;
+//                                if (!offsetParent) return;
+//                                const parentRect = offsetParent.getBoundingClientRect();
+//                                const clientRect = node.getBoundingClientRect();
+//
+//                                newPosition.left =
+//                                    clientRect.left - parentRect.left + offsetParent.scrollLeft;
+//                                newPosition.top =
+//                                    top - parentRect.top + offsetParent.scrollTop;
+//                            } else {
                                 const { offsetParent } = node.offsetParent;
                                 if (!offsetParent) return;
                                 const parentRect = offsetParent.getBoundingClientRect();
@@ -414,7 +414,7 @@
                                     clientRect.left - parentRect.left + offsetParent.scrollLeft;
                                 newPosition.top =
                                     clientRect.top - parentRect.top + offsetParent.scrollTop;
-                            }
+//                            }
 
                             this.dragging = newPosition;
 
