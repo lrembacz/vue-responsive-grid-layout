@@ -2,6 +2,14 @@
 
 Changes made to VueResponsiveGridLayout.
 
+1.0.12 (Apr 8, 2018)
+ ----
+
+- Updated demo
+- Return to the previous version due to an error. 
+  Added styles for `vue-responsive-grid-layout`.
+
+
 1.0.11 (Apr 5, 2018)
  ----
 
