@@ -56,11 +56,11 @@
                 required: false,
                 default: 'lg'
             },
-	    rowHeight: {
-		required: false,
-		type: Number,
-		default: 10
-	    },
+            rowHeight: {
+                required: false,
+                type: Number,
+                default: 10
+            },
             cols: {
                 type: Number,
                 required: false,
@@ -193,11 +193,17 @@
                         this.onWidthChange(this.containerWidth);
                     }
 
-                    const layout = findOrGenerateResponsiveLayout(
+                    let layout = findOrGenerateResponsiveLayout(
                         this.currentLayouts,
                         this.breakpoints,
                         breakpoint,
-                        "lg",
+                        breakpoint,
+                        cols,
+                        this.compactTypeState()
+                    );
+
+                    layout = synchronizeLayoutWithChildren(
+                        layout,
                         cols,
                         this.compactTypeState()
                     );
@@ -228,7 +234,7 @@
                             this.currentLayouts,
                             this.breakpoints,
                             breakpoint,
-                            "lg",
+                            breakpoint,
                             cols,
                             this.compactTypeState()
                         );

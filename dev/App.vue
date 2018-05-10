@@ -63,7 +63,7 @@ export default{
         return {
             layouts: {
                 1 : {
-                    "lg": [
+                    "md": [
                         { x: 0, y: 0, w: 2, h: 3, i: "1"},
                         { x: 2, y: 0, w: 2, h: 3, i: "2"},
                         { x: 4, y: 0, w: 2, h: 3, i: "3"},
@@ -71,14 +71,14 @@ export default{
                     ]
                 },
                 2: {
-                    "lg": [
+                    "md": [
                         { x: 0, y: 0, w: 2, h: 3, i: "1"},
                         { x: 2, y: 0, w: 2, h: 3, i: "2"},
                     ]
                 }
             },
             currentLayoutsId: 1,
-            breakpoint: "lg",
+            breakpoint: "md",
             components: {
                 "1": { i: "1", component: "example-component", defaultSize: 2},
                 "2": { i: "2", component: "example-component", defaultSize: 2},
