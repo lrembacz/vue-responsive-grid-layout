@@ -46,6 +46,7 @@
                         :isDraggable="isDraggable"
                         :isResizable="isResizable"
                         :heightFromChildren="true"
+                        :canBeResizedWithAll="true"
                     >
                     </vue-grid-item>
                 </template>

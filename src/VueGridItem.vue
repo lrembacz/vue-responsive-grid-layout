@@ -222,6 +222,12 @@
             defaultSize: {
                 required: false,
                 default: 2
+            },
+
+            canBeResizedWithAll: {
+                required: false,
+                default: true,
+                type: Boolean
             }
         },
         watch:{
@@ -516,7 +522,7 @@
             },
             onResizeItems(width) {
 
-                    if (!this.placeholder) {
+                    if ((!this.placeholder) && (this.canBeResizedWithAll)) {
                         if (width === this.cols) {
                             this.$nextTick(() => {
                                 eventBus.$emit('onMoveItem', this.i, 0, 99999, "vertical");

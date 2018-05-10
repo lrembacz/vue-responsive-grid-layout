@@ -390,6 +390,12 @@ component: {
 defaultSize: {
     required: false,
     default: 2
+},
+
+canBeResizedWithAll: {
+    required: false,
+    default: true,
+    type: Boolean
 }
 ```
 ## Description
@@ -505,6 +511,11 @@ Name of component that should be rendered inside grid-item.
 It is default size of grid-item given in grid units. 
 
 Needed when we want to resize all items to its default size for example.
+
+### canBeResizedWithAll
+
+When it is set to true. GridItem can be resized when calling `resizeAllItems`. 
+Otherwise its not able to.
 
 # License
 MIT
