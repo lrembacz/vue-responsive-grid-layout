@@ -2,13 +2,20 @@
 
 Changes made to VueResponsiveGridLayout.
 
-1.0.13 (Apr 10, 2018)
+1.0.14 (May 10, 2018)
+ ----
+ 
+- Updated demo
+- Fixed bug about wrongly generating layout and/or finding current one
+
+1.0.13 (May 10, 2018)
  ----
 
 - Updated demo
 - New prop added `canBeResizedWithAll` to `grid-item`'
 
-1.0.12 (Apr 8, 2018)
+
+1.0.12 (May 8, 2018)
  ----
 
 - Updated demo
