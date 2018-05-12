@@ -2,6 +2,11 @@
 
 Changes made to VueResponsiveGridLayout.
 
+1.0.15 (May 12, 2018)
+ ----
+ 
+- New UpdateHeight function for `grid-item`
+
 1.0.14 (May 10, 2018)
  ----
  
