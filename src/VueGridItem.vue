@@ -19,6 +19,7 @@
                         :is="component"
                         v-bind="componentProps"
                         :onHeightUpdated="onHeightUpdated"
+                        :updateHeight="updateHeight"
                         :cols="cols"
                         :w="w"
                         :h="h"
@@ -393,24 +394,6 @@
                     // Get new XY
                     switch (handlerName) {
                         case "onDragStart": {
-//                            if (this.useCSSTransforms) {
-//                                const transform = this.$el.style.transform;
-//
-//                                let transform1 = transform.split('translate(')[1];
-//                                transform1 = transform1.split(')')[0];
-//                                transform1 = transform1.split(', ');
-//                                let top = parseInt(transform1[1]);
-//
-//                                const { offsetParent } = node.offsetParent;
-//                                if (!offsetParent) return;
-//                                const parentRect = offsetParent.getBoundingClientRect();
-//                                const clientRect = node.getBoundingClientRect();
-//
-//                                newPosition.left =
-//                                    clientRect.left - parentRect.left + offsetParent.scrollLeft;
-//                                newPosition.top =
-//                                    top - parentRect.top + offsetParent.scrollTop;
-//                            } else {
                                 const { offsetParent } = node.offsetParent;
                                 if (!offsetParent) return;
                                 const parentRect = offsetParent.getBoundingClientRect();
@@ -420,7 +403,6 @@
                                     clientRect.left - parentRect.left + offsetParent.scrollLeft;
                                 newPosition.top =
                                     clientRect.top - parentRect.top + offsetParent.scrollTop;
-//                            }
 
                             this.dragging = newPosition;
 
@@ -503,21 +485,35 @@
                     let { w, h } = this.calcWH({ height: this.componentHeight, width: pos.width });
 
                     eventBus.$emit('onResizeItem', this.i, w, h, false);
+                } else {
+                    if(this.$slots) {
+                        if (this.$slots.default) {
+                            if (this.$slots.default.length > 0) {
+                                this.componentHeight = Math.ceil(this.$slots.default[0].elm.offsetHeight);
+
+                                let { w, h } = this.calcWH({ height: this.componentHeight, width: pos.width });
+
+                                eventBus.$emit('onResizeItem', this.i, w, h, false);
+                            }
+                        }
+                    }
                 }
             },
             onHeightUpdated() {
                 if (!this.placeholder && this.heightFromChildren) {
+                    this.updateHeight();
+                }
+            },
+            updateHeight() {
+                let pos = this.calcPosition(this.x, this.y, this.w, this.h);
 
-                    let pos = this.calcPosition(this.x, this.y, this.w, this.h);
+                this.$nextTick(() => {
+                    this.calcNewHeight(pos);
+                });
 
-                    this.$nextTick(() => {
-                        this.calcNewHeight(pos);
-                    });
-
-                    if (this.firstUpdateHeight === false) {
-                        eventBus.$emit('GridItemHeightUpdated', this.i);
-                        this.firstUpdateHeight = true;
-                    }
+                if (this.firstUpdateHeight === false) {
+                    eventBus.$emit('GridItemHeightUpdated', this.i);
+                    this.firstUpdateHeight = true;
                 }
             },
             onResizeItems(width) {
