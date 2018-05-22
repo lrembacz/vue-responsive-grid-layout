@@ -63,7 +63,7 @@ export default{
         return {
             layouts: {
                 1 : {
-                    "md": [
+                    "lg": [
                         { x: 0, y: 0, w: 2, h: 3, i: "1"},
                         { x: 2, y: 0, w: 2, h: 3, i: "2"},
                         { x: 4, y: 0, w: 2, h: 3, i: "3"},
@@ -71,14 +71,14 @@ export default{
                     ]
                 },
                 2: {
-                    "md": [
+                    "lg": [
                         { x: 0, y: 0, w: 2, h: 3, i: "1"},
                         { x: 2, y: 0, w: 2, h: 3, i: "2"},
                     ]
                 }
             },
             currentLayoutsId: 1,
-            breakpoint: "md",
+            breakpoint: "lg",
             components: {
                 "1": { i: "1", component: "example-component", defaultSize: 2},
                 "2": { i: "2", component: "example-component", defaultSize: 2},
@@ -93,8 +93,13 @@ export default{
         }
     },
     computed: {
-        currentLayouts() {
-            return this.layouts[this.currentLayoutsId];
+        currentLayouts: {
+            get() {
+                return this.layouts[this.currentLayoutsId];
+            },
+            set(val) {
+                this.$set(this.layouts, this.currentLayoutsId, val);
+            }
         }
     },
     components: {
@@ -122,8 +127,12 @@ export default{
             }
 
         },
-        onLayoutSwitched() {
-            console.log('layouts switched')
+        onLayoutSwitched({layout, layouts, breakpoint}) {
+            console.log(layout)
+            console.log(layouts)
+            console.log(breakpoint)
+            this.currentLayouts = layouts;
+            this.currentLayouts[breakpoint] = layout;
         },
         changeWidth({width, newCols}) {
             this.containerWidth = width;
@@ -136,7 +145,7 @@ export default{
             let filtered;
             filtered = layout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
 
-            this.layouts[breakpoint] = filtered;
+            this.currentLayouts[breakpoint] = filtered;
 
         },
         changeBreakpoint({breakpoint, cols}) {
@@ -147,7 +156,7 @@ export default{
         changeLayout({layout, breakpoint}) {
             let filtered;
             filtered = layout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
-            this.layouts[breakpoint] = filtered;
+            this.currentLayouts[breakpoint] = filtered;
         },
 
         gridMode() {

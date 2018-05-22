@@ -2,6 +2,13 @@
 
 Changes made to VueResponsiveGridLayout.
 
+1.0.16 (May 22, 2018)
+ ----
+ 
+- New props `noTouchAction` and `touchAction`
+- New event `@layout-height-updated`
+- Fix to `layout-resized` while not every element is resizableWithAll
+
 1.0.15 (May 12, 2018)
  ----
  

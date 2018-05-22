@@ -3,24 +3,24 @@
         <slot :containerWidth="containerWidth" :layout="currentLayout" :cols="currentCols">
         </slot>
         <grid-item class="vue-grid-placeholder"
-            :containerWidth="containerWidth"
-            v-show="isDragging || isResizing"
-            :isDraggable="false"
-            :x="placeholder.x"
-            :y="placeholder.y"
-            :w="placeholder.w"
-            :h="placeholder.h"
-            :i="placeholder.i"
-            :placeholder="true"
-            :cols="currentCols"
-	    :rowHeight="rowHeight"
-        style="border:1px dotted #ddd;">
+                   :containerWidth="containerWidth"
+                   v-show="isDragging || isResizing"
+                   :isDraggable="false"
+                   :x="placeholder.x"
+                   :y="placeholder.y"
+                   :w="placeholder.w"
+                   :h="placeholder.h"
+                   :i="placeholder.i"
+                   :placeholder="true"
+                   :cols="currentCols"
+                   :rowHeight="rowHeight"
+                   style="border:1px dotted #ddd;">
         </grid-item>
 
         <width-provider
-            :selector="providerSelector"
-            @widthChange="onWidthChange"
-            @widthInit="onWidthInit">
+                :selector="providerSelector"
+                @widthChange="onWidthChange"
+                @widthInit="onWidthInit">
         </width-provider>
     </div>
 </template>
@@ -69,7 +69,7 @@
             layouts: {
                 required: true,
                 validator: value => {
-                    return value instanceof Object || value === undefined;
+                    return value instanceof Object;
                 }
             },
             // ("horizontal" | "vertical")
@@ -115,7 +115,7 @@
         },
         watch: {
             layouts(val) {
-                if (val && this.inited  && (this.ready === false)) {
+                if ((val instanceof Object) && this.inited  && (this.ready === false)) {
                     this.currentLayout = JSON.parse(JSON.stringify(this.layouts[this.breakpoint]));
                     this.currentLayouts = JSON.parse(JSON.stringify(this.layouts));
                     this.$emit('layoutInit');
@@ -224,45 +224,45 @@
             },
 
             switchLayout(newLayouts) {
-            if (newLayouts instanceof Object) {
-                        this.currentLayouts = JSON.parse(JSON.stringify(newLayouts));
+                if (newLayouts instanceof Object) {
+                    this.currentLayouts = JSON.parse(JSON.stringify(newLayouts));
 
-                        const breakpoint = getBreakpointFromWidth(this.breakpoints, this.containerWidth);
-                        const cols = getColsFromBreakpoint(breakpoint, this.colsAll);
+                    const breakpoint = getBreakpointFromWidth(this.breakpoints, this.containerWidth);
+                    const cols = getColsFromBreakpoint(breakpoint, this.colsAll);
 
-                        const layout = findOrGenerateResponsiveLayout(
-                            this.currentLayouts,
-                            this.breakpoints,
-                            breakpoint,
-                            breakpoint,
-                            cols,
-                            this.compactTypeState()
-                        );
+                    const layout = findOrGenerateResponsiveLayout(
+                        this.currentLayouts,
+                        this.breakpoints,
+                        breakpoint,
+                        this.currentBreakpoint,
+                        cols,
+                        this.compactTypeState()
+                    );
 
-                        let newLayout = synchronizeLayoutWithChildren(
-                            layout,
-                            cols,
-                            this.compactTypeState()
-                        );
+                    let newLayout = synchronizeLayoutWithChildren(
+                        layout,
+                        cols,
+                        this.compactTypeState()
+                    );
 
-                        this.currentBreakpoint = breakpoint;
-                        this.currentCols = cols;
+                    this.currentBreakpoint = breakpoint;
+                    this.currentCols = cols;
 
-                        let filtered;
-                        filtered = newLayout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
+                    let filtered;
+                    filtered = newLayout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
 
-                        this.currentLayout = filtered;
+                    this.currentLayout = filtered;
 
-                        this.$set(this.currentLayouts, this.currentBreakpoint,  filtered);
+                    this.$set(this.currentLayouts, this.currentBreakpoint,  filtered);
 
-                        this.$emit('layout-switched', {layout: filtered, cols: this.currentCols, breakpoint: this.currentBreakpoint, layouts: this.currentLayouts});
+                    this.$emit('layout-switched', {layout: filtered, cols: this.currentCols, breakpoint: this.currentBreakpoint, layouts: this.currentLayouts});
 
-                        // Provided to make sure that components are re-rendered
-                        // Sometimes event handlers makes the errors
-                        this.$nextTick( ()=> {
-                            this.updateItemsHeight();
-                        })
-                    }
+                    // Provided to make sure that components are re-rendered
+                    // Sometimes event handlers makes the errors
+                    this.$nextTick( ()=> {
+                        this.updateItemsHeight();
+                    })
+                }
             },
 
             synchronizeLayout() {
@@ -272,10 +272,10 @@
                     this.compactTypeState()
                 );
 
-                 let filtered;
-                 filtered = newLayout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
+                let filtered;
+                filtered = newLayout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
 
-                 this.currentLayout = filtered;
+                this.currentLayout = filtered;
 
                 this.$set(this.currentLayouts, this.currentBreakpoint,  filtered);
 
@@ -332,6 +332,7 @@
                 this.$emit('width-change', {width, newCols})
             },
             updateItemsHeight() {
+                this.itemsHeightUpdated = 0;
                 eventBus.$emit('updateItemsHeight');
             },
             resizeAllItems(mode = false, cols = false) {
@@ -358,7 +359,7 @@
                 const index = this.currentLayout.findIndex(item => item.i === id)
                 if (index !== -1) {
                     this.resizeItem(id, w, newH);
-                    if (mode) {
+                    if (mode === 'resizeAll') {
                         this.itemsResized++;
 
                         if (this.itemsResized === this.currentLayout.length) {
@@ -366,6 +367,13 @@
                             this.$nextTick( () => {
                                 this.synchronizeLayout();
                             })
+                        }
+                    }
+                    if (mode === 'updateHeight') {
+                        this.itemsHeightUpdated++;
+
+                        if (this.itemsHeightUpdated === this.currentLayout.length) {
+                            this.$emit('layout-height-updated');
                         }
                     }
                 }
@@ -381,9 +389,6 @@
                 }
             },
             resizeItem(i, w, h) {
-
-
-
                 const { currentLayout } = this;
                 const oldLayout = JSON.parse(JSON.stringify(this.currentLayout));
                 const { currentCols, preventCollision } = this;

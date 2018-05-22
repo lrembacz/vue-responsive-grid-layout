@@ -1,49 +1,51 @@
 <template>
-        <div
+    <div
             :class="classes"
             :style="styles"
+    >
+        <DraggableCore
+                v-if="!placeholder"
+                :onStart="onDragHandler('onDragStart')"
+                :onDrag="onDragHandler('onDrag')"
+                :onStop="onDragHandler('onDragStop')"
+                :disabled="!isDraggable"
+                :handle="handle"
+                :cancel="cancel"
+                :class="dragContainerClass"
+                :noTouchAction="noTouchAction"
+                :touchAction="touchAction"
         >
-            <DraggableCore
-                    v-if="!placeholder"
-                    :onStart="onDragHandler('onDragStart')"
-                    :onDrag="onDragHandler('onDrag')"
-                    :onStop="onDragHandler('onDragStop')"
-                    :disabled="!isDraggable"
-                    :handle="handle"
-                    :cancel="cancel"
-                    :class="dragContainerClass"
-            >
-                <div
-                        ref="item"
-                        v-if="component"
-                        :is="component"
-                        v-bind="componentProps"
-                        :onHeightUpdated="onHeightUpdated"
-                        :updateHeight="updateHeight"
-                        :cols="cols"
-                        :w="w"
-                        :h="h"
+            <div
+                    ref="item"
+                    v-if="component"
+                    :is="component"
+                    v-bind="componentProps"
+                    :onHeightUpdated="onHeightUpdated"
+                    :updateHeight="updateHeight"
+                    :cols="cols"
+                    :w="w"
+                    :h="h"
 
-                ></div>
-                <slot v-else
-                ></slot>
-            </DraggableCore>
-            <Resizable
-                    v-if="!placeholder && isResizable"
-                    :w="calcWidth()"
-                    :h="calcHeight()"
-                    :onResizeStart="onResizeHandler('onResizeStart')"
-                    :onResize="onResizeHandler('onResize')"
-                    :onResizeStop="onResizeHandler('onResizeStop')"
-                    :minConstraints="minConstraints"
-                    :maxConstraints="maxConstraints"
-                    :className="'resizable'"
-                    ref="resize"
-            >
-                <div class="resizable-handle">
-                </div>
-            </Resizable>
-        </div>
+            ></div>
+            <slot v-else
+            ></slot>
+        </DraggableCore>
+        <Resizable
+                v-if="!placeholder && isResizable"
+                :w="calcWidth()"
+                :h="calcHeight()"
+                :onResizeStart="onResizeHandler('onResizeStart')"
+                :onResize="onResizeHandler('onResize')"
+                :onResizeStop="onResizeHandler('onResizeStop')"
+                :minConstraints="minConstraints"
+                :maxConstraints="maxConstraints"
+                :className="'resizable'"
+                ref="resize"
+        >
+            <div class="resizable-handle">
+            </div>
+        </Resizable>
+    </div>
 </template>
 
 <script>
@@ -65,6 +67,14 @@
             }
         },
         props: {
+            noTouchAction : {
+                type: Boolean,
+                default: true,
+            },
+            touchAction: {
+                type: String,
+                default: 'none',
+            },
             heightFromChildren: {
                 required: false,
                 type: Boolean,
@@ -288,7 +298,7 @@
 
             getHeight() {
                 if (this.isDraggable === true)
-                return this.$children[0].$children[0].$el.offsetHeight;
+                    return this.$children[0].$children[0].$el.offsetHeight;
             },
 
             calcWidth() {
@@ -321,15 +331,15 @@
                             : Math.round(this.rowHeight * h + Math.max(0, h - 1) * this.margin[1])
                 };
 
-                 if (this.resizing) {
-                     out.width = Math.round(this.resizing.width);
-                     out.height = Math.round(this.resizing.height);
-                 }
+                if (this.resizing) {
+                    out.width = Math.round(this.resizing.width);
+                    out.height = Math.round(this.resizing.height);
+                }
 
-                 if (this.dragging) {
-                     out.top = Math.round(this.dragging.top);
-                     out.left = Math.round(this.dragging.left);
-                 }
+                if (this.dragging) {
+                    out.top = Math.round(this.dragging.top);
+                    out.left = Math.round(this.dragging.left);
+                }
 
                 return out;
             },
@@ -394,15 +404,15 @@
                     // Get new XY
                     switch (handlerName) {
                         case "onDragStart": {
-                                const { offsetParent } = node.offsetParent;
-                                if (!offsetParent) return;
-                                const parentRect = offsetParent.getBoundingClientRect();
-                                const clientRect = node.getBoundingClientRect();
+                            const { offsetParent } = node.offsetParent;
+                            if (!offsetParent) return;
+                            const parentRect = offsetParent.getBoundingClientRect();
+                            const clientRect = node.getBoundingClientRect();
 
-                                newPosition.left =
-                                    clientRect.left - parentRect.left + offsetParent.scrollLeft;
-                                newPosition.top =
-                                    clientRect.top - parentRect.top + offsetParent.scrollTop;
+                            newPosition.left =
+                                clientRect.left - parentRect.left + offsetParent.scrollLeft;
+                            newPosition.top =
+                                clientRect.top - parentRect.top + offsetParent.scrollTop;
 
                             this.dragging = newPosition;
 
@@ -484,7 +494,7 @@
 
                     let { w, h } = this.calcWH({ height: this.componentHeight, width: pos.width });
 
-                    eventBus.$emit('onResizeItem', this.i, w, h, false);
+                    eventBus.$emit('onResizeItem', this.i, w, h, 'updateHeight');
                 } else {
                     if(this.$slots) {
                         if (this.$slots.default) {
@@ -493,15 +503,19 @@
 
                                 let { w, h } = this.calcWH({ height: this.componentHeight, width: pos.width });
 
-                                eventBus.$emit('onResizeItem', this.i, w, h, false);
+                                eventBus.$emit('onResizeItem', this.i, w, h, 'updateHeight');
                             }
                         }
                     }
                 }
             },
             onHeightUpdated() {
-                if (!this.placeholder && this.heightFromChildren) {
-                    this.updateHeight();
+                if (!this.placeholder) {
+                    if(this.heightFromChildren) {
+                        this.updateHeight();
+                    } else {
+                        eventBus.$emit('onResizeItem', this.i, this.w, this.h, 'updateHeight');
+                    }
                 }
             },
             updateHeight() {
@@ -518,24 +532,29 @@
             },
             onResizeItems(width) {
 
-                    if ((!this.placeholder) && (this.canBeResizedWithAll)) {
+                if ((!this.placeholder)) {
+                    if (this.canBeResizedWithAll) {
                         if (width === this.cols) {
                             this.$nextTick(() => {
-                                eventBus.$emit('onMoveItem', this.i, 0, 99999, "vertical");
-                                eventBus.$emit('onResizeItem', this.i, width, this.h, true);
+                                eventBus.$emit('onMoveItem', this.i, 0, 0, "vertical");
+                                eventBus.$emit('onResizeItem', this.i, width, this.h, 'resizeAll');
                             });
                         } else if (!width) {
                             this.$nextTick(() => {
-                                eventBus.$emit('onResizeItem', this.i, this.defaultSize, this.h, true);
+                                eventBus.$emit('onResizeItem', this.i, this.defaultSize, this.h, 'resizeAll');
                                 eventBus.$emit('onMoveItem', this.i, 0, 0, "horizontal");
                             });
                         } else {
                             this.$nextTick(() => {
-                                eventBus.$emit('onResizeItem', this.i, width, this.h, true);
+                                eventBus.$emit('onResizeItem', this.i, width, this.h, 'resizeAll');
                                 eventBus.$emit('onMoveItem', this.i, 0, 0, "horizontal");
                             });
                         }
+                    } else {
+                        eventBus.$emit('onMoveItem', this.i, 0, 0, "vertical");
+                        eventBus.$emit('onResizeItem', this.i, this.w, this.h, 'resizeAll');
                     }
+                }
             },
         },
         created() {

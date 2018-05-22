@@ -207,6 +207,10 @@ Grants information that all gridItems was resized and it then runs synchronizati
 
 After that emits `@layout-synchronize` event.
 
+### @layout-height-updated()
+
+Grants information that all gridItems was height updated.
+
 ### @layout-synchronize({ layout, layouts})
 
 Event emitted after layout is synchronized.
@@ -256,6 +260,14 @@ It's good when we have more dashboards or something.
 ## Props VueGridItem
 
 ```
+noTouchAction : {
+    type: Boolean,
+    default: true,
+},
+touchAction: {
+    type: String,
+    default: 'none',
+},
 heightFromChildren: {
     required: false,
     type: Boolean,
@@ -399,6 +411,14 @@ canBeResizedWithAll: {
 }
 ```
 ## Description
+
+### noTouchAction
+If false, grantstouch-action: none; style to component. Preventing from scrolling on mobile devices.
+
+Attention! : Be careful when using this prop. You can make scrolling off on mobile devices.
+
+### touchAction
+Define which touchAction are added. Default none;
 
 ### heightFromChildren
 
