@@ -2,6 +2,10 @@
 
 Changes made to VueResponsiveGridLayout.
 
+1.0.19 (May 23, 2018)
+ ----
+- Fixed a bug when layout was empty when breakpoint was wrongly given.
+
 1.0.18 (May 22, 2018)
  ----
 - Issue with https://www.npmjs.com/. Previous publish was not reachable.
