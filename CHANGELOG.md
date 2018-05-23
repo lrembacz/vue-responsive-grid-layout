@@ -2,6 +2,15 @@
 
 Changes made to VueResponsiveGridLayout.
 
+1.0.18 (May 22, 2018)
+ ----
+- Issue with https://www.npmjs.com/. Previous publish was not reachable.
+
+1.0.17 (May 22, 2018)
+ ----
+
+- Issue with https://www.npmjs.com/. Previous publish was not reachable.
+
 1.0.16 (May 22, 2018)
  ----
  
