@@ -2,6 +2,10 @@
 
 Changes made to VueResponsiveGridLayout.
 
+1.0.20 (May 24, 2018)
+ ----
+- Synchronize current layout to length of the max one.
+
 1.0.19 (May 23, 2018)
  ----
 - Fixed a bug when layout was empty when breakpoint was wrongly given.
