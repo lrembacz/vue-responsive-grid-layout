@@ -35,10 +35,12 @@ export function findOrGenerateResponsiveLayout(
     cols,
     compactType
 ) {
-    // If it already exists, just return it.
-    if (layouts[breakpoint]) return cloneLayout(layouts[breakpoint]);
-
     let lastBreakpointLength;
+    let breakpointLength;
+
+    if (layouts[breakpoint]) {
+        breakpointLength = layouts[breakpoint].length;
+    }
 
     // If there is wrongly given lastBreakpoint
     if (layouts[lastBreakpoint]) {
@@ -55,6 +57,23 @@ export function findOrGenerateResponsiveLayout(
     })
 
     const max = Math.max(...layoutsLength);
+
+    if (max !== breakpoint) {
+        for (let i = 0, len = breakpointsSorted.length; i < len; i++) {
+            const b = breakpointsSorted[i];
+            if (layouts[b]) {
+                if (layouts[b].length === max) {
+                    if (layouts[b] === breakpoint) {
+                        break;
+                    } else {
+                        breakpoint = b;
+                    }
+                }
+            }
+        }
+    } else {
+        return cloneLayout(layouts[breakpoint])
+    }
 
     if (max !== lastBreakpointLength) {
         for (let i = 0, len = breakpointsSorted.length; i < len; i++) {
