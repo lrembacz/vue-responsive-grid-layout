@@ -14,6 +14,7 @@
                 :class="dragContainerClass"
                 :noTouchAction="noTouchAction"
                 :touchAction="touchAction"
+                :draggableCoreProps="draggableCoreProps"
         >
             <div
                     ref="item"
@@ -40,6 +41,7 @@
                 :minConstraints="minConstraints"
                 :maxConstraints="maxConstraints"
                 :className="'resizable'"
+                :resizableProps="resizableProps"
                 ref="resize"
         >
             <div class="resizable-handle">
@@ -62,11 +64,18 @@
                 dragging: null,
                 isDragging: null,
                 mounted: false,
-                componentHeight: 0,
-                firstUpdateHeight: false
+                componentHeight: 0
             }
         },
         props: {
+            resizableProps : {
+                type: Object,
+                required: false
+            },
+            draggableCoreProps : {
+                type: Object,
+                required: false
+            },
             noTouchAction : {
                 type: Boolean,
                 default: true,
@@ -487,14 +496,14 @@
                     //handler.call(this, i, w, h, { e, node, size });
                 };
             },
-            calcNewHeight(pos) {
+            calcNewHeight(pos, callback) {
                 if (this.$refs.item) {
 
                     this.componentHeight = Math.ceil(this.$refs.item.$el.offsetHeight);
 
                     let { w, h } = this.calcWH({ height: this.componentHeight, width: pos.width });
 
-                    eventBus.$emit('onResizeItem', this.i, w, h, 'updateHeight');
+                    eventBus.$emit('onResizeItem', this.i, w, h, 'updateHeight', callback);
                 } else {
                     if(this.$slots) {
                         if (this.$slots.default) {
@@ -503,56 +512,57 @@
 
                                 let { w, h } = this.calcWH({ height: this.componentHeight, width: pos.width });
 
-                                eventBus.$emit('onResizeItem', this.i, w, h, 'updateHeight');
+                                eventBus.$emit('onResizeItem', this.i, w, h, 'updateHeight', callback);
                             }
                         }
                     }
                 }
             },
-            onHeightUpdated() {
+            onHeightUpdated(callback) {
                 if (!this.placeholder) {
                     if(this.heightFromChildren) {
-                        this.updateHeight();
+                        this.updateHeight(callback);
                     } else {
-                        eventBus.$emit('onResizeItem', this.i, this.w, this.h, 'updateHeight');
+                        eventBus.$emit('onResizeItem', this.i, this.w, this.h, 'updateHeight', callback);
                     }
                 }
             },
-            updateHeight() {
+            updateHeight(callback) {
                 let pos = this.calcPosition(this.x, this.y, this.w, this.h);
 
                 this.$nextTick(() => {
-                    this.calcNewHeight(pos);
+                    this.calcNewHeight(pos, callback);
                 });
-
-                if (this.firstUpdateHeight === false) {
-                    eventBus.$emit('GridItemHeightUpdated', this.i);
-                    this.firstUpdateHeight = true;
-                }
             },
-            onResizeItems(width) {
+            onResizeItems(width, callback) {
 
                 if ((!this.placeholder)) {
+
                     if (this.canBeResizedWithAll) {
+
                         if (width === this.cols) {
                             this.$nextTick(() => {
-                                eventBus.$emit('onMoveItem', this.i, 0, 0, "vertical");
-                                eventBus.$emit('onResizeItem', this.i, width, this.h, 'resizeAll');
+                                eventBus.$emit('onMoveItem', this.i, 0, 0, "vertical", () => {
+                                    eventBus.$emit('onResizeItem', this.i, width, this.h, 'resizeAll', callback);
+                                });
                             });
                         } else if (!width) {
                             this.$nextTick(() => {
-                                eventBus.$emit('onResizeItem', this.i, this.defaultSize, this.h, 'resizeAll');
-                                eventBus.$emit('onMoveItem', this.i, 0, 0, "horizontal");
+                                eventBus.$emit('onResizeItem', this.i, this.defaultSize, this.h, 'resizeAll', () => {
+                                    eventBus.$emit('onMoveItem', this.i, 0, 0, "horizontal", callback);
+                                });
                             });
                         } else {
                             this.$nextTick(() => {
-                                eventBus.$emit('onResizeItem', this.i, width, this.h, 'resizeAll');
-                                eventBus.$emit('onMoveItem', this.i, 0, 0, "horizontal");
+                                eventBus.$emit('onResizeItem', this.i, width, this.h, 'resizeAll', () => {
+                                    eventBus.$emit('onMoveItem', this.i, 0, 0, "horizontal", callback);
+                                });
                             });
                         }
                     } else {
-                        eventBus.$emit('onMoveItem', this.i, 0, 0, "vertical");
-                        eventBus.$emit('onResizeItem', this.i, this.w, this.h, 'resizeAll');
+                        eventBus.$emit('onMoveItem', this.i, 0, 0, "vertical", () => {
+                            eventBus.$emit('onResizeItem', this.i, this.w, this.h, 'resizeAll', callback);
+                        });
                     }
                 }
             },

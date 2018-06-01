@@ -2,6 +2,11 @@
 
 Changes made to VueResponsiveGridLayout.
 
+1.0.21 (June 01, 2018)
+ ----
+- Making changes to synchronization and reactiveness. 
+- Layout is now getting information directly from props.
+ 
 1.0.20 (May 24, 2018)
  ----
 - Synchronize current layout to length of the max one.

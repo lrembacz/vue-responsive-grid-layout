@@ -128,9 +128,7 @@ export default{
 
         },
         onLayoutSwitched({layout, layouts, breakpoint}) {
-            console.log(layout)
-            console.log(layouts)
-            console.log(breakpoint)
+            console.log('layout switched')
             this.currentLayouts = layouts;
             this.currentLayouts[breakpoint] = layout;
         },
@@ -142,6 +140,7 @@ export default{
             });
         },
         updateLayout({layout, breakpoint}) {
+            console.log('layoutUpdated', layout)
             let filtered;
             filtered = layout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
 

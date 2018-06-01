@@ -69,7 +69,7 @@
             layouts: {
                 required: true,
                 validator: value => {
-                    return value instanceof Object;
+                    return value instanceof Object || null;
                 }
             },
             // ("horizontal" | "vertical")
@@ -111,14 +111,23 @@
             providerSelector: {
                 required: false,
                 type: String
+            },
+            disabled: {
+                required: false,
+                type: Boolean,
+                default: false
             }
         },
         watch: {
             layouts(val) {
-                if ((val instanceof Object) && this.inited  && (this.ready === false)) {
+                if ((val instanceof Object) && this.inited  && !this.disabled) {
                     this.currentLayout = JSON.parse(JSON.stringify(this.layouts[this.breakpoint]));
                     this.currentLayouts = JSON.parse(JSON.stringify(this.layouts));
-                    this.$emit('layoutInit');
+                    this.ready = true;
+                    this.$emit('layout-ready');
+                } else if (val === null || val === {}) {
+                    this.ready = false;
+                    this.$emit('layout-not-ready');
                 }
             },
         },
@@ -146,12 +155,12 @@
                     i : '-1'
                 },
                 activeDrag : null,
-                ready: false,
                 inited: false,
                 itemsResized: 0,
                 currentLayouts: {},
                 currentBreakpoint: null,
-                currentCols: null
+                currentCols: null,
+                ready: false
 
             }
         },
@@ -163,9 +172,9 @@
             eventBus.$on('onResize', this.onResize);
             eventBus.$on('onResizeStop', this.onResizeStop);
             eventBus.$on('onResizeItem', this.onResizeItem);
-            eventBus.$on('onMoveItem', this.moveItem);
+            eventBus.$on('onMoveItem', this.onMoveItem);
 
-            this.$on('layoutInit', this.readyLayout);
+            this.$on('layout-ready', this.readyLayout);
         },
 
         methods: {
@@ -180,7 +189,7 @@
                 }
             },
             initLayout () {
-                if (this.inited && this.layouts instanceof Object) {
+                if (this.inited && this.layouts instanceof Object && this.ready) {
                     this.currentLayouts = JSON.parse(JSON.stringify(this.layouts));
                     this.currentBreakpoint = JSON.parse(JSON.stringify(this.breakpoint));
                     this.currentCols = JSON.parse(JSON.stringify(this.cols));
@@ -212,19 +221,20 @@
                     this.currentBreakpoint = breakpoint;
                     this.currentCols = cols;
 
-                    this.$emit('layout-init', {layout, cols});
-                    this.ready = true;
-
                     // Provided to make sure that components are re-rendered
                     // Sometimes event handlers makes the errors
                     this.$nextTick( ()=> {
-                        this.updateItemsHeight();
+                        this.onUpdateItemsHeight().then( response => {
+                            this.$emit('layout-init', {layout, cols});
+                        }).catch(err => {
+                            this.$emit('layout-init-failed');
+                        })
                     })
                 }
             },
 
             switchLayout(newLayouts) {
-                if (newLayouts instanceof Object) {
+                if (newLayouts instanceof Object && this.ready) {
                     this.currentLayouts = JSON.parse(JSON.stringify(newLayouts));
 
                     const breakpoint = getBreakpointFromWidth(this.breakpoints, this.containerWidth);
@@ -255,35 +265,46 @@
 
                     this.$set(this.currentLayouts, this.currentBreakpoint,  filtered);
 
-                    this.$emit('layout-switched', {layout: filtered, cols: this.currentCols, breakpoint: this.currentBreakpoint, layouts: this.currentLayouts});
-
                     // Provided to make sure that components are re-rendered
                     // Sometimes event handlers makes the errors
                     this.$nextTick( ()=> {
-                        this.updateItemsHeight();
+                        this.onUpdateItemsHeight(true).then( response => {
+                            this.$emit('layout-switched', {layout: this.currentLayout, cols: this.currentCols, breakpoint: this.currentBreakpoint, layouts: this.currentLayouts});
+                        }).catch(err => {
+                            this.$emit('layout-switched-failed');
+                        })
                     })
                 }
             },
 
             synchronizeLayout() {
-                let newLayout = synchronizeLayoutWithChildren(
-                    this.currentLayout,
-                    this.currentCols,
-                    this.compactTypeState()
-                );
-
-                let filtered;
-                filtered = newLayout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
-
-                this.currentLayout = filtered;
-
-                this.$set(this.currentLayouts, this.currentBreakpoint,  filtered);
-
-                this.$nextTick( ()=> {
-                    this.updateItemsHeight();
+                this.makeSynchronization().then( ()=> {
+                    this.$nextTick( ()=> {
+                        this.onUpdateItemsHeight(true).then( response => {
+                            this.$emit('layout-synchronize', { layout: this.currentLayout, layouts: this.currentLayouts});
+                        }).catch(err => {
+                            this.$emit('layout-synchronize-failed');
+                        })
+                    })
                 })
+            },
+            makeSynchronization() {
+                return new Promise( (resolve) => {
+                    let newLayout = synchronizeLayoutWithChildren(
+                        this.currentLayout,
+                        this.currentCols,
+                        this.compactTypeState()
+                    );
 
-                this.$emit('layout-synchronize', { layout: this.currentLayout, layouts: this.currentLayouts});
+                    let filtered;
+                    filtered = newLayout.map( (item) => { return { x: item.x, y: item.y, w: item.w, h: item.h, i: item.i }})
+
+                    this.currentLayout = filtered;
+
+                    this.$set(this.currentLayouts, this.currentBreakpoint,  filtered);
+
+                    resolve(true);
+                })
             },
             onWidthChange(width) {
                 this.containerWidth = width;
@@ -321,145 +342,205 @@
                     this.currentCols = newCols;
                     this.$set(this.currentLayouts, newBreakpoint,  currentLayout);
 
+                    this.$emit('breakpoint-change',{breakpoint: newBreakpoint});
+
                     this.$nextTick( ()=> {
-                        this.updateItemsHeight();
+                        this.onUpdateItemsHeight(true).then( response => {
+                            this.$emit('layout-change',{layout: this.currentLayout, layouts: this.currentLayouts});
+                            this.$emit('width-change', {width: width, cols: newCols});
+                        }).catch(err => {
+                            this.$emit('width-change-failed');
+                        })
                     })
 
-                    this.$emit('layout-change',{layout: currentLayout, breakpoint: newBreakpoint});
-                    this.$emit('breakpoint-change',{breakpoint: newBreakpoint, cols: newCols});
+                } else {
+                    this.$emit('width-change', {width: width, cols: newCols})
                 }
 
-                this.$emit('width-change', {width, newCols})
+
             },
-            updateItemsHeight() {
-                this.itemsHeightUpdated = 0;
-                eventBus.$emit('updateItemsHeight');
+            updateItemsHeight(mode = true) {
+                this.onUpdateItemsHeight(mode).then( response => {
+                    this.$emit('layout-height-updated', {layouts: this.currentLayouts, layout: this.currentLayout});
+                }).catch(err => {
+                    this.$emit('layout-height-updated-failed');
+                })
+            },
+            onUpdateItemsHeight(mode) {
+                return new Promise( (resolve) => {
+                    let itemsHeightUpdated = this.currentLayout ? this.currentLayout.length : -1;
+
+                    eventBus.$emit('updateItemsHeight', ({newLayout, oldLayout}) => {
+                        itemsHeightUpdated--;
+
+                        if (itemsHeightUpdated === 0) {
+                            if (mode)
+                                this.onLayoutMaybeChanged(newLayout, oldLayout, mode);
+                            resolve({newLayout, oldLayout})
+                        }
+                    });
+                })
             },
             resizeAllItems(mode = false, cols = false) {
+                this.onResizeAllItems(mode, cols).then(response => {
+                    this.onUpdateItemsHeight(true).then( ({newLayout, oldLayout}) => {
+                        this.$emit('layout-resized', {layouts: this.currentLayouts, layout: this.currentLayout});
+                    }).catch(err => {
+                        this.$emit('layout-resized-failed');
+                    })
+                })
+            },
+            onResizeAllItems(mode = false, cols = false) {
+                return new Promise( (resolve) => {
+                    let itemsResized = this.currentLayout ? this.currentLayout.length : -1;
 
-                this.itemsResized = 0;
+                    if ((mode === false) && (cols === false)) {
+                        eventBus.$emit('resizeAllItems', null, ({newLayout, oldLayout}) => {
+                            itemsResized--;
 
-                if ((mode === false) && (cols === false)) {
-                    eventBus.$emit('resizeAllItems');
-                }
+                            if (itemsResized === 0) {
+                                resolve({newLayout, oldLayout})
+                            }
+                        });
+                    }
 
-                if ((mode === true) && (cols === false)) {
-                    eventBus.$emit('resizeAllItems', this.currentCols);
-                }
+                    if ((mode === true) && (cols === false)) {
+                        eventBus.$emit('resizeAllItems', this.currentCols, ({newLayout, oldLayout}) => {
+                            itemsResized--;
 
-                if ((cols !== false) && (typeof cols === 'number')) {
-                    eventBus.$emit('resizeAllItems', cols);
-                }
+                            if (itemsResized === 0) {
+                                resolve({newLayout, oldLayout})
+                            }
+                        });
+                    }
+
+                    if ((cols !== false) && (typeof cols === 'number')) {
+                        eventBus.$emit('resizeAllItems', cols, ({newLayout, oldLayout}) => {
+                            itemsResized--;
+
+                            if (itemsResized === 0) {
+                                resolve({newLayout, oldLayout})
+                            }
+                        });
+                    }
+                });
 
             },
             compactTypeState() {
                 return this.verticalCompact === false ? null : this.compactType;
             },
-            onResizeItem(id, w, newH, mode = false) {
+            onResizeItem(id, w, newH, mode = false, callback) {
                 const index = this.currentLayout.findIndex(item => item.i === id)
                 if (index !== -1) {
-                    this.resizeItem(id, w, newH);
-                    if (mode === 'resizeAll') {
-                        this.itemsResized++;
-
-                        if (this.itemsResized === this.currentLayout.length) {
-                            this.$emit('layout-resized');
-                            this.$nextTick( () => {
-                                this.synchronizeLayout();
-                            })
+                    this.resizeItem(id, w, newH).then( ({newLayout, oldLayout}) => {
+                        if (mode === 'resizeAll') {
+                            if (callback)
+                                callback({newLayout, oldLayout})
                         }
-                    }
-                    if (mode === 'updateHeight') {
-                        this.itemsHeightUpdated++;
-
-                        if (this.itemsHeightUpdated === this.currentLayout.length) {
-                            this.$emit('layout-height-updated');
+                        if (mode === 'updateHeight') {
+                            if (callback)
+                                callback({newLayout, oldLayout})
                         }
-                    }
+                    });
                 }
-
             },
 
-            onLayoutMaybeChanged(newLayout, oldLayout, end = false) {
+            onLayoutMaybeChanged(newLayout, oldLayout, mode = false) {
                 if (!oldLayout) oldLayout = this.currentLayout;
-                if (!_.isEqual(oldLayout, newLayout)) {
+                if (!_.isEqual(oldLayout, newLayout) || mode) {
                     const newBreakpoint = getBreakpointFromWidth(this.breakpoints, this.containerWidth);
                     this.currentBreakpoint = newBreakpoint;
-                    this.$emit('layout-update', {layout: newLayout, breakpoint: newBreakpoint, end});
+                    this.$emit('layout-update', {layout: newLayout, layouts: this.currentLayouts, breakpoint: newBreakpoint});
                 }
             },
             resizeItem(i, w, h) {
-                const { currentLayout } = this;
-                const oldLayout = JSON.parse(JSON.stringify(this.currentLayout));
-                const { currentCols, preventCollision } = this;
-                const l = getLayoutItem(currentLayout, i);
+                return new Promise( (resolve) => {
+                    const { currentLayout } = this;
+                    const oldLayout = JSON.parse(JSON.stringify(this.currentLayout));
+                    const { currentCols, preventCollision } = this;
+                    const l = getLayoutItem(currentLayout, i);
 
-                let hasCollisions;
-                if (preventCollision) {
-                    const collisions = getAllCollisions(currentLayout, { ...l, w, h }).filter((layoutItem) => layoutItem.i !== l.i);
-                    hasCollisions = collisions.length > 0;
+                    let hasCollisions;
+                    if (preventCollision) {
+                        const collisions = getAllCollisions(currentLayout, { ...l, w, h }).filter((layoutItem) => layoutItem.i !== l.i);
+                        hasCollisions = collisions.length > 0;
 
-                    // If we're colliding, we need adjust the placeholder.
-                    if (hasCollisions) {
-                        // adjust w && h to maximum allowed space
-                        let leastX = Infinity, leastY = Infinity;
-                        collisions.forEach((layoutItem) => {
-                            if (layoutItem.x > l.x) leastX = Math.min(leastX, layoutItem.x);
-                            if (layoutItem.y > l.y) leastY = Math.min(leastY, layoutItem.y);
-                        });
+                        // If we're colliding, we need adjust the placeholder.
+                        if (hasCollisions) {
+                            // adjust w && h to maximum allowed space
+                            let leastX = Infinity, leastY = Infinity;
+                            collisions.forEach((layoutItem) => {
+                                if (layoutItem.x > l.x) leastX = Math.min(leastX, layoutItem.x);
+                                if (layoutItem.y > l.y) leastY = Math.min(leastY, layoutItem.y);
+                            });
 
-                        if (Number.isFinite(leastX)) l.w = leastX - l.x;
-                        if (Number.isFinite(leastY)) l.h = leastY - l.y;
+                            if (Number.isFinite(leastX)) l.w = leastX - l.x;
+                            if (Number.isFinite(leastY)) l.h = leastY - l.y;
+                        }
                     }
-                }
 
-                if (!hasCollisions) {
-                    // Set new width and height.
-                    l.w = w;
-                    l.h = h;
-                }
+                    if (!hasCollisions) {
+                        // Set new width and height.
+                        l.w = w;
+                        l.h = h;
+                    }
 
-                this.currentLayout = compact(currentLayout, this.compactTypeState(), currentCols);
-                this.setCurrentLayout(this.currentLayout);
+                    this.currentLayout = compact(currentLayout, this.compactTypeState(), currentCols);
+                    this.setCurrentLayout(this.currentLayout);
 
-                this.onLayoutMaybeChanged(this.currentLayout, oldLayout, true);
+                    resolve({newLayout: this.currentLayout, oldLayout: oldLayout});
+                })
+                // this.onLayoutMaybeChanged(this.currentLayout, oldLayout, true);
             },
+            onMoveItem(i, x, y, compactType = this.compactTypeState(), callback) {
+                const index = this.currentLayout.findIndex(item => item.i === i)
+                if (index !== -1) {
+                    this.moveItem(i, x, y, compactType, callback).then( ({newLayout, oldLayout}) => {
+                        if (callback)
+                            callback({newLayout, oldLayout})
+                    });
+                }
+            },
+
             moveItem(i, x, y, compactType = this.compactTypeState()) {
-                let { currentLayout, currentCols } = this;
-                let l = getLayoutItem(currentLayout, i);
-                if (!l) return;
+                return new Promise( (resolve) => {
+                    let { currentLayout, currentCols } = this;
+                    let l = getLayoutItem(currentLayout, i);
+                    if (!l) return;
 
 
-                this.oldDragItem = cloneLayoutItem(l);
-                this.oldLayout = this.currentLayout;
+                    this.oldDragItem = cloneLayoutItem(l);
+                    this.oldLayout = this.currentLayout;
 
-                this.isDragging = true;
+                    this.isDragging = true;
 
-                currentLayout = moveElement(
-                    currentLayout,
-                    l,
-                    x,
-                    y,
-                    false,
-                    this.preventCollision,
-                    compactType,
-                    currentCols
-                );
+                    currentLayout = moveElement(
+                        currentLayout,
+                        l,
+                        x,
+                        y,
+                        false,
+                        this.preventCollision,
+                        compactType,
+                        currentCols
+                    );
 
-                const newLayout = compact(currentLayout, compactType, currentCols);
+                    const newLayout = compact(currentLayout, compactType, currentCols);
 
-                const { oldLayout } = this;
+                    const { oldLayout } = this;
 
-                this.currentLayout = newLayout;
+                    this.currentLayout = newLayout;
 
-                this.activeDrag = null;
-                this.currentLayout = newLayout;
-                this.setCurrentLayout(newLayout);
-                this.oldDragItem = null;
-                this.oldLayout = null;
-                this.isDragging = false;
+                    this.activeDrag = null;
+                    this.currentLayout = newLayout;
+                    this.setCurrentLayout(newLayout);
+                    this.oldDragItem = null;
+                    this.oldLayout = null;
+                    this.isDragging = false;
 
-                this.onLayoutMaybeChanged(newLayout, oldLayout, true);
+                    resolve({newLayout: this.currentLayout, oldLayout: oldLayout});
+                })
+                // this.onLayoutMaybeChanged(newLayout, oldLayout);
 
             },
 
@@ -561,7 +642,7 @@
                 this.oldLayout = null;
                 this.isDragging = false;
 
-                this.onLayoutMaybeChanged(newLayout, oldLayout, true);
+                this.onLayoutMaybeChanged(newLayout, oldLayout);
             },
 
             onResizeStart (element, i, w, h, { e, node }) {
@@ -672,7 +753,7 @@
             eventBus.$off('onResizeStart', this.onResizeStart);
             eventBus.$off('onResize', this.onResize);
             eventBus.$off('onResizeStop', this.onResizeStop);
-            eventBus.$off('onMoveItem', this.moveItem);
+            eventBus.$off('onMoveItem', this.onMoveItem);
             eventBus.$off('onResizeItem', this.onResizeItem);
 
             this.$off('layoutInit', this.readyLayout);
