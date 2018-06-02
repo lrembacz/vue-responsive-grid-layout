@@ -11,6 +11,7 @@
             </div>
             <vue-responsive-grid-layout
                     @layout-update="updateLayout"
+                    @layout-ready="readyLayout"
                     @layout-change="changeLayout"
 		            @layout-switched="onLayoutSwitched"
                     @layout-init="initLayout"
@@ -112,6 +113,8 @@ export default{
         },
         initWidth({width}) {
             this.containerWidth = width;
+        },
+        readyLayout() {
             this.$refs.layout.initLayout();
         },
         switchLayout() {

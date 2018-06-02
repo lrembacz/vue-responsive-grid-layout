@@ -69,7 +69,7 @@
             layouts: {
                 required: true,
                 validator: value => {
-                    return value instanceof Object || null;
+                    return value instanceof Object || value === null;
                 }
             },
             // ("horizontal" | "vertical")
@@ -120,15 +120,8 @@
         },
         watch: {
             layouts(val) {
-                if ((val instanceof Object) && this.inited  && !this.disabled) {
-                    this.currentLayout = JSON.parse(JSON.stringify(this.layouts[this.breakpoint]));
-                    this.currentLayouts = JSON.parse(JSON.stringify(this.layouts));
-                    this.ready = true;
-                    this.$emit('layout-ready');
-                } else if (val === null || val === {}) {
-                    this.ready = false;
-                    this.$emit('layout-not-ready');
-                }
+                if (val)
+                    this.prepareLayoutsFromProps(this.layouts);
             },
         },
         computed: {
@@ -175,9 +168,24 @@
             eventBus.$on('onMoveItem', this.onMoveItem);
 
             this.$on('layout-ready', this.readyLayout);
+            this.$on('width-init', this.widthInited);
         },
 
         methods: {
+            widthInited() {
+                this.prepareLayoutsFromProps(this.layouts);
+            },
+            prepareLayoutsFromProps(layouts) {
+                if ((layouts instanceof Object && layouts !== {}) && this.inited  && !this.disabled) {
+                    this.currentLayout = JSON.parse(JSON.stringify(layouts[this.breakpoint]));
+                    this.currentLayouts = JSON.parse(JSON.stringify(layouts));
+                    this.ready = true;
+                    this.$emit('layout-ready');
+                } else if (layouts === null || layouts === {}) {
+                    this.ready = false;
+                    this.$emit('layout-not-ready');
+                }
+            },
             onWidthInit(width) {
                 this.containerWidth = width;
                 this.inited = true;
@@ -756,7 +764,8 @@
             eventBus.$off('onMoveItem', this.onMoveItem);
             eventBus.$off('onResizeItem', this.onResizeItem);
 
-            this.$off('layoutInit', this.readyLayout);
+            this.$off('layout-ready', this.readyLayout);
+            this.$off('width-init', this.widthInited);
         }
     }
 </script>
