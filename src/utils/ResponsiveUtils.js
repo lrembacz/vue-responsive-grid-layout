@@ -58,12 +58,12 @@ export function findOrGenerateResponsiveLayout(
 
     const max = Math.max(...layoutsLength);
 
-    if (max !== breakpoint) {
+    if (max !== breakpointLength) {
         for (let i = 0, len = breakpointsSorted.length; i < len; i++) {
             const b = breakpointsSorted[i];
             if (layouts[b]) {
                 if (layouts[b].length === max) {
-                    if (layouts[b] === breakpoint) {
+                    if (b === breakpoint) {
                         break;
                     } else {
                         breakpoint = b;
@@ -80,7 +80,7 @@ export function findOrGenerateResponsiveLayout(
             const b = breakpointsSorted[i];
             if (layouts[b]) {
                 if (layouts[b].length === max) {
-                    if (layouts[b] === lastBreakpoint) {
+                    if (b === lastBreakpoint) {
                         break;
                     } else {
                         lastBreakpoint = b;
@@ -94,7 +94,7 @@ export function findOrGenerateResponsiveLayout(
     let layout = layouts[lastBreakpoint];
 
     const breakpointsAbove = breakpointsSorted.slice(
-        breakpointsSorted.indexOf(breakpoint), breakpointsSorted.length
+        breakpointsSorted.indexOf(breakpoint)
     );
 
     for (let i = 0, len = breakpointsAbove.length; i < len; i++) {
