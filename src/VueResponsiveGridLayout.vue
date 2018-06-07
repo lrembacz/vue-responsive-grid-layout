@@ -124,11 +124,11 @@
             }
         },
         watch: {
-            layouts(val) {
-                if (val) {
+            layouts: {
+                handler: function(val, oldVal) {
                     this.prepareLayoutsFromProps(this.layouts);
-                }
-
+                },
+                deep: true
             },
         },
         computed: {
@@ -184,8 +184,12 @@
             },
             prepareLayoutsFromProps(layouts) {
                 if ((layouts instanceof Object && layouts !== {}) && this.inited  && !this.disabled) {
-                    this.currentLayout = JSON.parse(JSON.stringify(layouts[this.breakpoint]));
-                    this.currentLayouts = JSON.parse(JSON.stringify(layouts));
+
+                    // this.currentLayout = JSON.parse(JSON.stringify(layouts[this.breakpoint]))
+
+                    Object.assign({}, this.currentLayout, JSON.parse(JSON.stringify(layouts[this.breakpoint])));
+                    this.$set(this.currentLayouts, this.currentBreakpoint,  JSON.parse(JSON.stringify(layouts)));
+
                     this.ready = true;
                     this.$emit('layout-ready');
                 } else if (layouts === null || layouts === {}) {
@@ -204,7 +208,7 @@
                 }
             },
             initLayout () {
-                if (this.inited && this.layouts instanceof Object && this.ready) {
+                if (this.inited && this.layouts instanceof Object && this.ready && !this.disabled) {
                     this.currentLayouts = JSON.parse(JSON.stringify(this.layouts));
                     this.currentBreakpoint = JSON.parse(JSON.stringify(this.breakpoint));
                     this.currentCols = JSON.parse(JSON.stringify(this.cols));
@@ -249,7 +253,7 @@
             },
 
             switchLayout(newLayouts, mode = true) {
-                if (newLayouts instanceof Object && this.ready) {
+                if (newLayouts instanceof Object && this.ready && !this.disabled) {
                     this.currentLayouts = JSON.parse(JSON.stringify(newLayouts));
 
                     const breakpoint = getBreakpointFromWidth(this.breakpoints, this.containerWidth);

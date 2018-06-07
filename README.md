@@ -31,15 +31,32 @@ Vue.component('vue-grid-item', VueGridItem)
 ```
 
 # API
-
 ```
-EDIT: FIX to Desynchronitizing
+FIX to responsivness
 
-GridLayout has its own state now. Layouts from prop is taken only for the first time. 
+watch: {
+    layouts: {
+        handler: function(val, oldVal) {
+            this.prepareLayoutsFromProps(this.layouts);
+        },
+        deep: true
+    },
+},
 
-To change layout inside the component use switchLayout method.
- 
+Layouts from props are deeply watched and currentLayout in component is synchronized with it.
+It grants us ability to make layouts reactive and make the layouts possible to work with Vuex.
 ```
+
+
+DEPREACTED
+
+~~EDIT: FIX to Desynchronitizing~~
+
+~~GridLayout has its own state now. Layouts from prop is taken only for the first time.~~
+
+~~To change layout inside the component use switchLayout method.~~
+
+
 Vue Responsive Grid Layout uses scoped slot inside to get some props.
 
 `<slot :containerWidth="containerWidth" :layout="currentLayout" :cols="currentCols">`
@@ -107,16 +124,29 @@ initOnStart : {
     type: Boolean,
     required: false,
     default: true
-}
+},
 
 className : {
     required: false,
     type: String,
     default: ""
 },
+
 providerSelector: {
 	required: false,
 	type: String
+},
+
+disabled: {
+    required: false,
+    type: Boolean,
+    default: false
+},
+
+makeUpdateOnWidthChange: {
+    required: false,
+    type: Boolean,
+    default: true
 }
 ```
 
@@ -188,6 +218,12 @@ Default css class is `vue-responsive-grid-layout`.
 
 Defines selector for width-provider.
 Default VueResponsiveGridLayout.
+
+### disabled
+When disabled, layout is not updating its state with props.
+
+### makeUpdateOnWidthChange
+When width is changed this props grants the updateLayout event call additionally
 
 ## Events VueResponsiveGridLayout
 
