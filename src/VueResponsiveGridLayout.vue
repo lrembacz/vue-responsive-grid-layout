@@ -116,12 +116,19 @@
                 required: false,
                 type: Boolean,
                 default: false
+            },
+            makeUpdateOnWidthChange: {
+                required: false,
+                type: Boolean,
+                default: true
             }
         },
         watch: {
             layouts(val) {
-                if (val)
+                if (val) {
                     this.prepareLayoutsFromProps(this.layouts);
+                }
+
             },
         },
         computed: {
@@ -241,7 +248,7 @@
                 }
             },
 
-            switchLayout(newLayouts) {
+            switchLayout(newLayouts, mode = true) {
                 if (newLayouts instanceof Object && this.ready) {
                     this.currentLayouts = JSON.parse(JSON.stringify(newLayouts));
 
@@ -276,7 +283,7 @@
                     // Provided to make sure that components are re-rendered
                     // Sometimes event handlers makes the errors
                     this.$nextTick( ()=> {
-                        this.onUpdateItemsHeight(true).then( response => {
+                        this.onUpdateItemsHeight(mode).then( response => {
                             this.$emit('layout-switched', {layout: this.currentLayout, cols: this.currentCols, breakpoint: this.currentBreakpoint, layouts: this.currentLayouts});
                         }).catch(err => {
                             this.$emit('layout-switched-failed');
@@ -285,10 +292,10 @@
                 }
             },
 
-            synchronizeLayout() {
+            synchronizeLayout(mode = true) {
                 this.makeSynchronization().then( ()=> {
                     this.$nextTick( ()=> {
-                        this.onUpdateItemsHeight(true).then( response => {
+                        this.onUpdateItemsHeight(mode).then( response => {
                             this.$emit('layout-synchronize', { layout: this.currentLayout, layouts: this.currentLayouts});
                         }).catch(err => {
                             this.$emit('layout-synchronize-failed');
@@ -353,7 +360,7 @@
                     this.$emit('breakpoint-change',{breakpoint: newBreakpoint});
 
                     this.$nextTick( ()=> {
-                        this.onUpdateItemsHeight(true).then( response => {
+                        this.onUpdateItemsHeight(this.makeUpdateOnWidthChange).then( response => {
                             this.$emit('layout-change',{layout: this.currentLayout, layouts: this.currentLayouts});
                             this.$emit('width-change', {width: width, cols: newCols});
                         }).catch(err => {
