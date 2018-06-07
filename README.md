@@ -6,9 +6,9 @@ It's based on https://github.com/STRML/react-grid-layout
 
 # Demo
 
-- https://jsfiddle.net/w768wv2f/9/ - component wrapped inside of `grid-item` 
+- https://jsfiddle.net/w768wv2f/11/ - component wrapped inside of `grid-item` 
 with `heightFromChildren` prop used.
-- https://jsfiddle.net/w768wv2f/10/ - simple component wrapped inside slot with 
+- https://jsfiddle.net/w768wv2f/12/ - simple component wrapped inside slot with 
 own height taken from layout.
 
 # Example
