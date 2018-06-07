@@ -78,11 +78,6 @@
                 required: false,
                 default: "vertical"
             },
-            verticalCompact: {
-                type: Boolean,
-                required: false,
-                default: true
-            },
             preventCollision: {
                 type: Boolean,
                 required: false,
@@ -227,13 +222,13 @@
                         breakpoint,
                         breakpoint,
                         cols,
-                        this.compactTypeState()
+                        this.compactType
                     );
 
                     layout = synchronizeLayoutWithChildren(
                         layout,
                         cols,
-                        this.compactTypeState()
+                        this.compactType
                     );
 
                     this.currentLayout = layout;
@@ -265,13 +260,13 @@
                         breakpoint,
                         this.currentBreakpoint,
                         cols,
-                        this.compactTypeState()
+                        this.compactType
                     );
 
                     let newLayout = synchronizeLayoutWithChildren(
                         layout,
                         cols,
-                        this.compactTypeState()
+                        this.compactType
                     );
 
                     this.currentBreakpoint = breakpoint;
@@ -312,7 +307,7 @@
                     let newLayout = synchronizeLayoutWithChildren(
                         this.currentLayout,
                         this.currentCols,
-                        this.compactTypeState()
+                        this.compactType
                     );
 
                     let filtered;
@@ -347,13 +342,13 @@
                         newBreakpoint,
                         lastBreakpoint,
                         newCols,
-                        this.compactTypeState()
+                        this.compactType
                     );
 
                     currentLayout = synchronizeLayoutWithChildren(
                         currentLayout,
                         newCols,
-                        this.compactTypeState()
+                        this.compactType
                     );
 
                     this.currentLayout = currentLayout;
@@ -445,9 +440,6 @@
                 });
 
             },
-            compactTypeState() {
-                return this.verticalCompact === false ? null : this.compactType;
-            },
             onResizeItem(id, w, newH, mode = false, callback) {
                 const index = this.currentLayout.findIndex(item => item.i === id)
                 if (index !== -1) {
@@ -504,14 +496,14 @@
                         l.h = h;
                     }
 
-                    this.currentLayout = compact(currentLayout, this.compactTypeState(), currentCols);
+                    this.currentLayout = compact(currentLayout, this.compactType, currentCols);
                     this.setCurrentLayout(this.currentLayout);
 
                     resolve({newLayout: this.currentLayout, oldLayout: oldLayout});
                 })
                 // this.onLayoutMaybeChanged(this.currentLayout, oldLayout, true);
             },
-            onMoveItem(i, x, y, compactType = this.compactTypeState(), callback) {
+            onMoveItem(i, x, y, compactType = this.compactType, callback) {
                 const index = this.currentLayout.findIndex(item => item.i === i)
                 if (index !== -1) {
                     this.moveItem(i, x, y, compactType, callback).then( ({newLayout, oldLayout}) => {
@@ -521,7 +513,7 @@
                 }
             },
 
-            moveItem(i, x, y, compactType = this.compactTypeState()) {
+            moveItem(i, x, y, compactType = this.compactType) {
                 return new Promise( (resolve) => {
                     let { currentLayout, currentCols } = this;
                     let l = getLayoutItem(currentLayout, i);
@@ -606,11 +598,11 @@
                     y,
                     isUserAction,
                     this.preventCollision,
-                    this.compactTypeState(),
+                    this.compactType,
                     currentCols
                 );
 
-                const newLayout = compact(currentLayout, this.compactTypeState(), currentCols);
+                const newLayout = compact(currentLayout, this.compactType, currentCols);
 
                 this.$emit('onDrag', currentLayout, oldDragItem, l, this.placeholder, e, node);
 
@@ -642,14 +634,14 @@
                     y,
                     isUserAction,
                     preventCollision,
-                    this.compactTypeState(),
+                    this.compactType,
                     currentCols
                 );
 
                 this.$emit('onDragStop', currentLayout, oldDragItem, l, null, e, node);
 
                 // Set state
-                const newLayout = compact(currentLayout, this.compactTypeState(), currentCols);
+                const newLayout = compact(currentLayout, this.compactType, currentCols);
                 const { oldLayout } = this;
 
                 this.activeDrag = null;
@@ -726,7 +718,7 @@
 
                 const { oldLayout } = this;
 
-                this.currentLayout = compact(currentLayout, this.compactTypeState(), currentCols);
+                this.currentLayout = compact(currentLayout, this.compactType, currentCols);
 
                 this.setCurrentLayout(this.currentLayout);
 
@@ -745,7 +737,7 @@
                 this.$emit('onResizeStop', currentLayout, oldResizeItem, l, null, e, node);
 
                 // Set state
-                const newLayout = compact(currentLayout, this.compactTypeState(), currentCols);
+                const newLayout = compact(currentLayout, this.compactType, currentCols);
                 const { oldLayout } = this;
 
                 this.isResizing = false;

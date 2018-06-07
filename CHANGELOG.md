@@ -4,8 +4,13 @@ Changes made to VueResponsiveGridLayout.
 
 1.0.21 (June 01, 2018)
  ----
-- Making changes to synchronization and reactiveness. 
-- Layout is now getting information directly from props.
+- Making changes to synchronization and reactiveness.
+- `updateItemsHeight` is now Promised with other function, so there is no need to call them after updateLayout function etc.
+- `resizeAllItems` is now Promised, event is emitted after all items are updated.
+- Layout is now getting information directly from props with deep watcher.
+- Vuex can be used for `layouts` props
+- No more `@LayoutInit` event is emited after layout is ready. Now there is `@layout-ready` event.
+- `verticalCompact` props has been deleted
  
 1.0.20 (May 24, 2018)
  ----

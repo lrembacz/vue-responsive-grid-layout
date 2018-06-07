@@ -96,12 +96,6 @@ compactType: {
     default: "vertical"
 },
 
-verticalCompact: {
-    type: Boolean,
-    required: false,
-    default: true
-},
-
 preventCollision: {
     type: Boolean,
     required: false,
@@ -179,9 +173,9 @@ Layouts object for example:
 
 Type of compacting layout. Default `"vertical"`.
 
-### verticalCompact
+~~verticalCompact~~ - deleted
 
-Grants option to choose compacting type.
+~~Grants option to choose compacting type.~~
 
 ### preventCollision
 
@@ -226,6 +220,10 @@ When disabled, layout is not updating its state with props.
 When width is changed this props grants the updateLayout event call additionally
 
 ## Events VueResponsiveGridLayout
+
+~~@layoutInit~~ - deleted
+
+There is no more this event. It's `@layout-ready` now.
 
 ### @layout-ready()
 
