@@ -264,7 +264,7 @@ This event is emitted when there was an error with synchronize.
 Emitted after breakpoint is changed. 
 It occurs when width is changed (window is resized etc.). 
 
-### @layout-change({layout, breakpoint})
+### @layout-change({layout, layouts})
 
 Emitted when layout is changed with `onWidthChange()`
 
@@ -296,7 +296,7 @@ Emitted after there were errors with layout resizing.
 
 Emitted after width is get from width-provider.
 
-### @layout-update({layout, breakpoint})
+### @layout-update({layout, layouts, breakpoint})
 
 Every time layout is updated it emits this event.
 
