@@ -2,6 +2,11 @@
 
 Changes made to VueResponsiveGridLayout.
 
+1.0.22 (June 01, 2018)
+ ----
+
+- Fix bug with infinity loop.
+
 1.0.21 (June 01, 2018)
  ----
 - Making changes to synchronization and reactiveness.
