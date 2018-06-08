@@ -1,6 +1,6 @@
 {
   "name": "vue-responsive-grid-layout",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "Responsive grid layout for VueJS.",
   "main": "./dist/vue-responsive-grid-layout.min.js",
   "scripts": {
