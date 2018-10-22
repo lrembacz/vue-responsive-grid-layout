@@ -1,0 +1,329 @@
+<template>
+    <VueGridLayout
+        v-bind="attrs"
+        v-on="listeners"
+        @onLayoutUpdated="onLayoutUpdated"
+        @addChild="onChildAdded"
+        @removeChild="onChildRemoved"
+        :layout="layouts[breakpoint]"
+        :width="width"
+        :cols="cols"
+        ref="layout"
+    >
+        <template slot-scope="props">
+            <slot v-bind="props">
+            </slot>
+        </template>
+    </VueGridLayout>
+</template>
+
+<script lang="ts">
+import {Component, Vue, Prop} from 'vue-property-decorator';
+import isEqual from 'lodash/isEqual';
+import VueGridLayout from './VueGridLayout.vue';
+
+import {
+    Layout,
+    cloneLayout,
+    synchronizeLayoutWithChildren,
+    validateLayout, CompactType,
+} from '@/lib/utils';
+import {
+    getBreakpointFromWidth,
+    getColsFromBreakpoint,
+    findOrGenerateResponsiveLayout,
+    Breakpoint,
+} from '@/lib/responsiveUtils';
+
+@Component({
+    name: 'VueResponsiveGridLayout',
+    components: {
+        VueGridLayout,
+    },
+})
+export default class VueResponsiveGridLayout extends Vue {
+    public width: number = 0;
+    public children: Vue[] = [];
+
+    @Prop({
+        type: Object,
+        required: false,
+    })
+    public styles: object;
+
+    @Prop({
+        type: Boolean,
+        required: false,
+    })
+    public autoSize: boolean;
+
+    @Prop({
+        type: Number,
+        required: false,
+        default: 12,
+    })
+    public cols: number;
+
+    @Prop({
+        type: String,
+        required: false,
+        default: '',
+    })
+    public draggableCancel: string;
+
+    @Prop({
+        type: String,
+        required: false,
+        default: '',
+    })
+    public draggableHandle: string;
+
+    @Prop({
+        type: String,
+        required: false,
+        default: 'vertical',
+    })
+    public compactType: CompactType;
+
+    @Prop({
+        required: false,
+        validator: (value) => {
+            if (!value) {
+                return true;
+            }
+            return validateLayout(value, 'layout');
+        },
+    })
+    public layout: Layout;
+
+    @Prop({
+        type: Array,
+        required: false,
+        default: () => [5, 5],
+    })
+    public margin: [number, number];
+
+    @Prop({
+        type: Array,
+        required: false,
+        default: () => [5, 5],
+    })
+    public containerPadding: [number, number] | null;
+
+    @Prop({
+        type: Number,
+        required: false,
+        default: 10,
+    })
+    public rowHeight: number;
+
+    @Prop({
+        type: Number,
+        required: false,
+        default: Infinity,
+    })
+    public maxRows: number;
+
+    @Prop({
+        type: Boolean,
+        required: false,
+        default: true,
+    })
+    public isDraggable: boolean;
+
+    @Prop({
+        type: Boolean,
+        required: false,
+        default: true,
+    })
+    public isResizable: boolean;
+
+    @Prop({
+        type: Boolean,
+        required: false,
+        default: false,
+    })
+    public preventCollision: boolean;
+
+    @Prop({
+        type: Boolean,
+        required: false,
+        default: true,
+    })
+    public useCSSTransforms: boolean;
+
+    // Responsive config
+    @Prop({
+        type: String,
+        required: false,
+        default: 'vue-responsive-grid-layout',
+    })
+    public className: string;
+
+    @Prop({
+        type: String,
+        required: false,
+        default: 'lg',
+    })
+    public breakpoint: Breakpoint;
+
+    @Prop({
+        type: Object,
+        required: false,
+        default: () => ({ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }),
+    })
+    public breakpoints: { [key: string]: number };
+
+    @Prop({
+        type: Object,
+        required: false,
+        default: () => ({ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }),
+    })
+    public colsAll: { [key: string]: number };
+
+    @Prop({
+        type: Object,
+        required: false,
+        default: () => ({}),
+    })
+    public layouts: { [key: string]: Layout };
+
+    @Prop({
+        type: Boolean,
+        required: false,
+        default: true,
+    })
+    public isMounted: boolean;
+
+    public handleResize(event) {
+        this.width = this.$el.clientWidth;
+        this.onWidthChange(this.width);
+    }
+
+    public mounted() {
+        this.isMounted = true;
+        this.width = this.$el.clientWidth;
+        this.$nextTick( () => {
+            this.initLayout();
+        });
+    }
+
+    public created() {
+        window.addEventListener('resize', this.handleResize);
+    }
+
+    public beforeDestroyed() {
+        window.removeEventListener('resize', this.handleResize);
+    }
+
+
+    get listeners() {
+        const {onLayoutChange, addChild, removeChild, ...listeners} = this.$listeners;
+        return listeners;
+    }
+
+    get attrs() {
+        const {layout, cols, ...attrs} = this.$attrs;
+        const {...props} = this.$props;
+        const gather = {...props, ...attrs};
+        return gather;
+    }
+
+    public initLayout() {
+        if (this.isMounted && this.layouts instanceof Object) {
+            const currentLayouts = JSON.parse(JSON.stringify(this.layouts));
+            const currentCols = this.cols;
+            const currentBreakpoints = JSON.parse(JSON.stringify(this.breakpoints));
+            const breakpoint = getBreakpointFromWidth(currentBreakpoints, this.width);
+            const cols = getColsFromBreakpoint(breakpoint, this.colsAll);
+            if (this.breakpoint !== breakpoint) {
+                this.onWidthChange(this.width);
+            }
+            let layout = findOrGenerateResponsiveLayout(
+                currentLayouts,
+                currentBreakpoints,
+                breakpoint,
+                breakpoint,
+                cols,
+                this.compactType,
+            );
+            layout = synchronizeLayoutWithChildren(
+                layout,
+                this.children,
+                cols,
+                this.compactType,
+            );
+
+            this.$set(currentLayouts, breakpoint, layout);
+            this.$emit('onLayoutInit', layout, currentLayouts, cols, breakpoint);
+        }
+    }
+
+    public onWidthChange(width: number) {
+        this.width = width;
+        const currentLayouts = JSON.parse(JSON.stringify(this.layouts));
+        const breakpoints = JSON.parse(JSON.stringify(this.breakpoints));
+        const { cols, colsAll } = this;
+        const newBreakpoint = getBreakpointFromWidth(this.breakpoints, this.width);
+        const lastBreakpoint = this.breakpoint;
+        const newCols = getColsFromBreakpoint(newBreakpoint, colsAll);
+        if (
+            lastBreakpoint !== newBreakpoint ||
+            this.breakpoints !== breakpoints ||
+            cols !== newCols
+        ) {
+            if (!(lastBreakpoint in currentLayouts)) {
+                this.$set(currentLayouts, lastBreakpoint, cloneLayout(currentLayouts[lastBreakpoint]));
+            }
+            let currentLayout = findOrGenerateResponsiveLayout(
+                currentLayouts,
+                breakpoints,
+                newBreakpoint,
+                lastBreakpoint,
+                newCols,
+                this.compactType,
+            );
+            currentLayout = synchronizeLayoutWithChildren(
+                currentLayout,
+                this.children,
+                newCols,
+                this.compactType,
+            );
+            this.$set(currentLayouts, newBreakpoint,  currentLayout);
+            this.$emit('breakpoint-change', newBreakpoint);
+            this.$emit('layout-change',
+                JSON.parse(JSON.stringify(currentLayout)), JSON.parse(JSON.stringify(currentLayouts)), newBreakpoint,
+            );
+            this.$emit('width-change', width, newCols);
+        } else {
+            this.$emit('width-change',  width,  newCols);
+        }
+    }
+
+    public onLayoutUpdated(layout: Layout) {
+        const layouts = JSON.parse(JSON.stringify(this.layouts));
+        this.$emit('layout-update', layout, {
+                ...layouts,
+            [this.breakpoint]: layout,
+        });
+    }
+
+    public resizeAllItems(width, compactType) {
+        (this.$refs.layout as any).resizeAllItems(width, compactType);
+    }
+
+    public onChildAdded(child: Vue) {
+        this.children.push(child);
+        this.$emit('addChild', child);
+    }
+
+    public onChildRemoved(child: Vue) {
+        const index = this.children.findIndex( (item) => {
+            return item.$props.i === child.$props.i;
+        });
+        this.children.slice(index, 1);
+        this.$emit('removeChild', child);
+    }
+}
+
+</script>
