@@ -8,7 +8,7 @@
                 :onStart="onDragHandler('onDragStart')"
                 :onDrag="onDragHandler('onDrag')"
                 :onStop="onDragHandler('onDragStop')"
-                :disabled='!isDraggable'
+                :disabled='!isDraggable || immobile'
                 :handle='handle'
                 :cancel='cancel'
                 :class='dragContainerClass'
@@ -345,11 +345,13 @@ export default class GridItem extends Vue {
                 const {w, h} = this.calcWH({ height: this.componentHeight, width: pos.width });
                 this.$emit('update:w', w);
                 this.$emit('update:h', h);
-                this.$nextTick( () => {
-                    this.eventBus.$emit('onHeightUpdated', this.i, w, h);
-                });
             }
         }
+    }
+
+    @Watch('immobile')
+    public onImmobileChange(newVal, oldVal) {
+        this.$emit('update:immobile', this.immobile);
     }
 
     get classes() {

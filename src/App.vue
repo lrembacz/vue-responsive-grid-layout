@@ -5,12 +5,12 @@
         @layout-update="onLayoutUpdate"
         @layout-change="onLayoutChange"
         @layout-init="onLayoutInit"
+        @width-change="onWidthChange"
+        @breakpoint-change="onBreakpointChange"
         :layouts="layouts"
         :compactType="'vertical'"
         :breakpoint="breakpoint"
         :cols="cols"
-        @width-change="onWidthChange"
-        @breakpoint-change="onBreakpointChange"
         ref="layout"
       >
         <template slot-scope="props">
@@ -20,6 +20,7 @@
                   :h.sync="item.h"
                   :x="item.x"
                   :y="item.y"
+                  :immobile.sync="item.immobile"
                   :containerWidth="props.containerWidth"
                   :rowHeight="props.rowHeight"
                   :isDraggable="true"
@@ -62,7 +63,7 @@ export default class App extends Vue {
   @layoutModule.Action('updateBreakpoint') public updateBreakpoint;
   @layoutModule.Action('updateCols') public updateCols;
 
-  public onLayoutUpdate(layout: Layout, layouts: ResponsiveLayout) {
+  public onLayoutUpdate(layout: Layout, layouts: ResponsiveLayout, last) {
       this.updateLayout({layout, breakpoint: this.breakpoint});
   }
 

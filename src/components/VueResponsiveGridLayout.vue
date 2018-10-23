@@ -2,9 +2,9 @@
     <VueGridLayout
         v-bind="attrs"
         v-on="listeners"
-        @onLayoutUpdated="onLayoutUpdated"
-        @addChild="onChildAdded"
-        @removeChild="onChildRemoved"
+        @layout-update="onLayoutUpdated"
+        @add-child="onChildAdded"
+        @remove-child="onChildRemoved"
         :layout="layouts[breakpoint]"
         :width="width"
         :cols="cols"
@@ -225,7 +225,10 @@ export default class VueResponsiveGridLayout extends Vue {
 
 
     get listeners() {
-        const {onLayoutChange, addChild, removeChild, ...listeners} = this.$listeners;
+        const {
+            'layout-update': onLayoutChange,
+            'add-child': addChild,
+            'remove-child': removeChild, ...listeners} = this.$listeners;
         return listeners;
     }
 
@@ -310,12 +313,14 @@ export default class VueResponsiveGridLayout extends Vue {
         }
     }
 
-    public onLayoutUpdated(layout: Layout) {
+    public onLayoutUpdated(layout: Layout, last = false) {
         const layouts = JSON.parse(JSON.stringify(this.layouts));
         this.$emit('layout-update', layout, {
                 ...layouts,
-            [this.breakpoint]: layout,
-        });
+                [this.breakpoint]: layout,
+            },
+            last,
+        );
     }
 
     public resizeAllItems(width, compactType) {
@@ -324,7 +329,7 @@ export default class VueResponsiveGridLayout extends Vue {
 
     public onChildAdded(child: Vue) {
         this.children.push(child);
-        this.$emit('addChild', child);
+        this.$emit('add-child', child);
     }
 
     public onChildRemoved(child: Vue) {
@@ -332,7 +337,7 @@ export default class VueResponsiveGridLayout extends Vue {
             return item.$props.i === child.$props.i;
         });
         this.children.slice(index, 1);
-        this.$emit('removeChild', child);
+        this.$emit('remove-child', child);
     }
 }
 

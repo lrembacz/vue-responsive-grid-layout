@@ -28,7 +28,6 @@
 import VueGridItem from './VueGridItem.vue';
 import {Vue, Component, Prop, Watch, Provide, Mixins, Emit} from 'vue-property-decorator';
 import isEqual from 'lodash/isEqual';
-import WidthProvider from './WidthProvider.vue';
 import {
     bottom,
     cloneLayoutItem,
@@ -43,7 +42,6 @@ import {
 
 // Types
 import {
-    EventCallback,
     CompactType,
     GridResizeEvent,
     GridDragEvent,
@@ -195,8 +193,6 @@ export default class VueGridLayout extends Vue {
         this.eventBus.$on('onResizeStart', this.onResizeStart);
         this.eventBus.$on('onResize', this.onResize);
         this.eventBus.$on('onResizeStop', this.onResizeStop);
-
-        this.eventBus.$on('onHeightUpdated', this.onItemHeightUpdated);
         this.eventBus.$on('addChild', this.onChildAdded);
         this.eventBus.$on('removeChild', this.onChildRemoved);
     }
@@ -208,8 +204,6 @@ export default class VueGridLayout extends Vue {
         this.eventBus.$off('onResizeStart', this.onResizeStart);
         this.eventBus.$off('onResize', this.onResize);
         this.eventBus.$off('onResizeStop', this.onResizeStop);
-
-        this.eventBus.$off('onHeightUpdated', this.onItemHeightUpdated);
         this.eventBus.$off('addChild', this.onChildAdded);
         this.eventBus.$off('removeChild', this.onChildRemoved);
     }
@@ -356,7 +350,7 @@ export default class VueGridLayout extends Vue {
             oldLayout = cloneLayout(this.layout);
         }
         if (!isEqual(oldLayout, newLayout)) {
-            this.$emit('onLayoutUpdated', newLayout, last);
+            this.$emit('layout-update', newLayout, last);
         }
     }
 
@@ -449,18 +443,10 @@ export default class VueGridLayout extends Vue {
         this.oldResizeItem = null;
         this.oldLayout = null;
 
-        this.onLayoutMaybeChanged(newLayout, oldLayout);
-    }
-
-    public onItemHeightUpdated(i: string, w: number, h: number) {
-        const oldLayout = cloneLayout(this.layout);
-        let newLayout = cloneLayout(this.layout);
-        newLayout = compact(newLayout, this.compactType, this.cols);
-
         this.onLayoutMaybeChanged(newLayout, oldLayout, true);
     }
 
-    public resizeAllItems(width, compactType) {
+    public resizeAllItems(width, compactType, mode = true) {
         if (width > this.cols) {
             width = this.cols;
         }
@@ -477,12 +463,12 @@ export default class VueGridLayout extends Vue {
         });
         currentLayout = compact(currentLayout, compactType, this.cols);
 
-        this.onLayoutMaybeChanged(currentLayout, oldLayout);
+        this.onLayoutMaybeChanged(currentLayout, oldLayout, mode);
     }
 
-    public onChildAdded(child: Vue, id) {
+    public onChildAdded(child: Vue) {
         this.children.push(child);
-        this.$emit('addChild', child);
+        this.$emit('add-child', child);
     }
 
     public onChildRemoved(child: Vue) {
@@ -490,7 +476,7 @@ export default class VueGridLayout extends Vue {
             return item.$props.i === child.$props.i;
         });
         this.children.slice(index, 1);
-        this.$emit('removeChild', child);
+        this.$emit('remove-child', child);
     }
 }
 

@@ -44,6 +44,72 @@ import VueResponsiveGridLayout from 'vue-responsive-grid-layout'
 Vue.use(VueResponsiveGridLayout)
 ```
 
+## Simple example
+```
+<template>
+    <VueResponsiveGridLayout
+        @layout-update="onLayoutUpdate"
+        @layout-change="onLayoutChange"
+        @layout-init="onLayoutInit"
+        @width-change="onWidthChange"
+        @breakpoint-change="onBreakpointChange"
+        :layouts="layouts"
+        :compactType="'vertical'"
+        :breakpoint="breakpoint"
+        :cols="cols"
+        ref="layout"
+    >
+    <template slot-scope="props">
+      <VueGridItem v-for="item in props.layout"
+              :i="item.i"
+              :w.sync="item.w"
+              :h.sync="item.h"
+              :x="item.x"
+              :y="item.y"
+              :immobile.sync="item.immobile"
+              :containerWidth="props.containerWidth"
+              :rowHeight="props.rowHeight"
+              :isDraggable="true"
+              :isResizable="true"
+              :className="'grid-item'"
+              :cols="props.cols"
+              :heightFromChildren="false"
+              :maxRows="props.maxRows"
+      >
+          <div>Test</div>
+      </VueGridItem>
+    </template>
+    </VueResponsiveGridLayout>
+</template>
+
+<script>
+
+export default {
+      public onLayoutUpdate(layout: Layout, layouts: ResponsiveLayout, last) {
+          this.updateLayout({layout, breakpoint: this.breakpoint});
+      }
+    
+      public onLayoutChange(layout: Layout, layouts: ResponsiveLayout, breakpoint: Breakpoint) {
+          this.updateLayout({layout, breakpoint});
+      }
+    
+      public onLayoutInit(layout, currentLayouts, cols, breakpoint) {
+          this.updateCols({cols});
+          this.updateBreakpoint({breakpoint});
+          this.updateLayout({layout, breakpoint});
+      }
+    
+      public onBreakpointChange(breakpoint: Breakpoint) {
+          this.updateBreakpoint({breakpoint});
+      }
+    
+      public onWidthChange(width: number, cols: number) {
+          this.updateCols({cols});
+      }
+}
+</script>
+```
+
 # API
 ```
 Works with Vuex.
@@ -54,6 +120,18 @@ Vue Responsive Grid Layout uses scoped slot inside to get some props.
 `<slot :containerWidth="width" :layout="layout" :rowHeight="rowHeight" :cols="cols" :maxRows="maxRows">`
 
 You can use it to send containerWidth, layout, rowHeight, cols and maxRows for grid-items.
+
+### .sync 
+```
+Sync modifier is used on `w` and `h` props to make them reactive for external changes, 
+when :heightFromChildren is set to `true`
+```
+
+### Remember!
+```
+The state is taken directly from layout / layouts array,
+so if you want to pass immobile or any other prop just set it on layout first.
+```
 
 ## Props VueResponsiveGridLayout
 
@@ -209,6 +287,28 @@ public layouts: { [key: string]: Layout };
 public isMounted: boolean;
 ```
 
+## Events VueResponsiveGridLayout
+```
+@layout-update(layout: Layout, layouts: ResponsiveLayout, last: boolean)
+
+@layout-change(layout: Layout, layouts: ResponsiveLayout, breakpoint: Breakpoint)
+
+@layout-init(layout: Layout, layouts: ResponsiveLayout, cols: number, breakpoint: Breakpoint);
+
+@width-change(width: number, cols: number)
+
+@breakpoint-change(breakpoint: Breakpoint)
+
+@add-child(child: Vue)
+
+@remove-child(child: Vue)
+```
+
+## Function on VueResponsiveGridLayout
+```
+resizeAllItems(width: number, compactType: CompactType)
+```
+
 ## Props VueGridLayout
 
 ```
@@ -331,6 +431,15 @@ public useCSSTransforms: boolean;
     required: true,
 })
 public width: number;
+```
+
+## Events VueGridLayout
+```
+@layout-update(layout: Layout, last: boolean)
+
+@add-child(child: Vue)
+
+@remove-child(child: Vue)
 ```
 
 ## Description
