@@ -30,18 +30,14 @@ import {Vue, Component, Prop, Watch, Provide, Mixins, Emit} from 'vue-property-d
 import isEqual from 'lodash/isEqual';
 import WidthProvider from './WidthProvider.vue';
 import {
-    autoBindHandlers,
     bottom,
-    childrenEqual,
     cloneLayoutItem,
     compact,
     getLayoutItem,
     moveElement,
-    synchronizeLayoutWithChildren,
     validateLayout,
     getAllCollisions,
     cloneLayout,
-    QueueJob,
 } from '@/lib/utils';
 
 
@@ -222,7 +218,7 @@ export default class VueGridLayout extends Vue {
         this.isMounted = true;
         // Possibly call back with layout on mount. This should be done after correcting the layout width
         // to ensure we don't rerender with the wrong width.
-        this.onLayoutMaybeChanged(this.layout, this.layout);
+        // this.onLayoutMaybeChanged(this.layout, this.layout);
     }
 
     /**

@@ -4,6 +4,7 @@
         :style="{border: '1px solid #000'}"
         @layout-update="onLayoutUpdate"
         @layout-change="onLayoutChange"
+        @layout-init="onLayoutInit"
         :layouts="layouts"
         :compactType="'vertical'"
         :breakpoint="breakpoint"
@@ -66,6 +67,12 @@ export default class App extends Vue {
   }
 
   public onLayoutChange(layout: Layout, layouts: ResponsiveLayout, breakpoint: Breakpoint) {
+      this.updateLayout({layout, breakpoint});
+  }
+
+  public onLayoutInit(layout, currentLayouts, cols, breakpoint) {
+      this.updateCols({cols});
+      this.updateBreakpoint({breakpoint});
       this.updateLayout({layout, breakpoint});
   }
 

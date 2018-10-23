@@ -7,7 +7,7 @@ import { RootState } from '@/store';
 
 export const state: LayoutState = {
     layouts: {
-        lg: [
+        md: [
             {
                 i: '1',
                 x: 2,

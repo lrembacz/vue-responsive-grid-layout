@@ -86,16 +86,68 @@ export function findOrGenerateResponsiveLayout(
     cols: number,
     compactType: CompactType,
 ): Layout {
-    // If it already exists, just return it.
+    let lastBreakpointLength;
+    let breakpointLength;
+
     if (layouts[breakpoint]) {
+        breakpointLength = layouts[breakpoint].length;
+    }
+
+    const breakpointsSorted = sortBreakpoints(breakpoints);
+
+    const keys = Object.keys(layouts);
+    const layoutsLength = [];
+
+    keys.forEach((item) => {
+        layoutsLength.push(layouts[item].length);
+    });
+
+    const max = Math.max(...layoutsLength);
+
+    if (max !== breakpointLength) {
+        for (let i = 0, len = breakpointsSorted.length; i < len; i++) {
+            const b = breakpointsSorted[i];
+            if (layouts[b]) {
+                if (layouts[b].length === max) {
+                    if (b === breakpoint) {
+                        break;
+                    } else {
+                        breakpoint = b;
+                    }
+                }
+            }
+        }
+    } else {
         return cloneLayout(layouts[breakpoint]);
     }
+
+    // If there is wrongly given lastBreakpoint
+    if (layouts[lastBreakpoint]) {
+        lastBreakpointLength = layouts[lastBreakpoint].length;
+    }
+
+    if (max !== lastBreakpointLength) {
+        for (let i = 0, len = breakpointsSorted.length; i < len; i++) {
+            const b = breakpointsSorted[i];
+            if (layouts[b]) {
+                if (layouts[b].length === max) {
+                    if (b === lastBreakpoint) {
+                        break;
+                    } else {
+                        lastBreakpoint = b;
+                    }
+                }
+            }
+        }
+    }
+
     // Find or generate the next layout
     let layout = layouts[lastBreakpoint];
-    const breakpointsSorted = sortBreakpoints(breakpoints);
+
     const breakpointsAbove = breakpointsSorted.slice(
         breakpointsSorted.indexOf(breakpoint),
     );
+
     for (let i = 0, len = breakpointsAbove.length; i < len; i++) {
         const b = breakpointsAbove[i];
         if (layouts[b]) {
@@ -119,49 +171,4 @@ export function sortBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
     return keys.sort((a, b) => {
         return breakpoints[a] - breakpoints[b];
     });
-}
-
-export function generateLayoutsFromChildren(
-    children: VueChildren,
-    breakpoints: Breakpoints,
-    breakpoint: Breakpoint,
-    lastBreakpoint: Breakpoint,
-    cols: number,
-    compactType: CompactType,
-): ResponsiveLayout {
-
-    let layouts: ResponsiveLayout = {};
-    const breakpointsSorted = sortBreakpoints(breakpoints);
-
-    for (breakpoint of breakpointsSorted) {
-        let layout: Layout = [];
-        children.map((child: Vue) => {
-            const props = child.$props;
-            const key = props.i;
-
-            if (props[breakpoint]) {
-                const {x, y, w, h, immobile} = props[breakpoint];
-                if (x !== undefined && y !== undefined && w !== undefined && h !== undefined && key !== undefined) {
-                    layout.push(cloneLayoutItem({
-                        x,
-                        y,
-                        w,
-                        h,
-                        immobile: immobile ? immobile : false,
-                        i: String(key),
-                    }));
-                }
-            }
-        });
-
-        if (layout.length > 0) {
-            layout = correctBounds(layout, {cols});
-            layout = compact(layout, compactType, cols);
-            const layoutsForBreakpoint = layouts[breakpoint] ? [...layouts[breakpoint], layout] : layout;
-            layouts = Object.assign({}, layouts, {[breakpoint]: layoutsForBreakpoint});
-        }
-
-    }
-
-    return layouts;
 }

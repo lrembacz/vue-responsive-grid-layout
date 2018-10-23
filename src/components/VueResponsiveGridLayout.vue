@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Prop} from 'vue-property-decorator';
+import {Component, Vue, Prop, Watch} from 'vue-property-decorator';
 import isEqual from 'lodash/isEqual';
 import VueGridLayout from './VueGridLayout.vue';
 
@@ -26,7 +26,7 @@ import {
     Layout,
     cloneLayout,
     synchronizeLayoutWithChildren,
-    validateLayout, CompactType,
+    validateLayout, CompactType, compact,
 } from '@/lib/utils';
 import {
     getBreakpointFromWidth,
@@ -195,6 +195,13 @@ export default class VueResponsiveGridLayout extends Vue {
     })
     public isMounted: boolean;
 
+    @Watch('children')
+    public onChildrenChange(newVal, oldVal) {
+        this.$nextTick( () => {
+            this.initLayout();
+        });
+    }
+
     public handleResize(event) {
         this.width = this.$el.clientWidth;
         this.onWidthChange(this.width);
@@ -232,30 +239,34 @@ export default class VueResponsiveGridLayout extends Vue {
     public initLayout() {
         if (this.isMounted && this.layouts instanceof Object) {
             const currentLayouts = JSON.parse(JSON.stringify(this.layouts));
-            const currentCols = this.cols;
-            const currentBreakpoints = JSON.parse(JSON.stringify(this.breakpoints));
-            const breakpoint = getBreakpointFromWidth(currentBreakpoints, this.width);
-            const cols = getColsFromBreakpoint(breakpoint, this.colsAll);
-            if (this.breakpoint !== breakpoint) {
+            const breakpoints = JSON.parse(JSON.stringify(this.breakpoints));
+            const { cols, colsAll } = this;
+            const newBreakpoint = getBreakpointFromWidth(this.breakpoints, this.width);
+            const lastBreakpoint = this.breakpoint;
+            const newCols = getColsFromBreakpoint(newBreakpoint, colsAll);
+            if (lastBreakpoint !== newBreakpoint) {
                 this.onWidthChange(this.width);
             }
             let layout = findOrGenerateResponsiveLayout(
                 currentLayouts,
-                currentBreakpoints,
-                breakpoint,
-                breakpoint,
-                cols,
+                breakpoints,
+                newBreakpoint,
+                lastBreakpoint,
+                newCols,
                 this.compactType,
             );
             layout = synchronizeLayoutWithChildren(
                 layout,
                 this.children,
-                cols,
+                newCols,
                 this.compactType,
             );
 
-            this.$set(currentLayouts, breakpoint, layout);
-            this.$emit('onLayoutInit', layout, currentLayouts, cols, breakpoint);
+            layout = compact(layout, this.compactType, newCols);
+
+            this.$set(currentLayouts, newBreakpoint, layout);
+
+            this.$emit('layout-init', layout, currentLayouts, newCols, newBreakpoint);
         }
     }
 
@@ -272,9 +283,6 @@ export default class VueResponsiveGridLayout extends Vue {
             this.breakpoints !== breakpoints ||
             cols !== newCols
         ) {
-            if (!(lastBreakpoint in currentLayouts)) {
-                this.$set(currentLayouts, lastBreakpoint, cloneLayout(currentLayouts[lastBreakpoint]));
-            }
             let currentLayout = findOrGenerateResponsiveLayout(
                 currentLayouts,
                 breakpoints,
@@ -289,6 +297,8 @@ export default class VueResponsiveGridLayout extends Vue {
                 newCols,
                 this.compactType,
             );
+            currentLayout = compact(currentLayout, this.compactType, newCols);
+
             this.$set(currentLayouts, newBreakpoint,  currentLayout);
             this.$emit('breakpoint-change', newBreakpoint);
             this.$emit('layout-change',

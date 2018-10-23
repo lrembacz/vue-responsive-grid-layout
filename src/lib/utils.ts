@@ -646,29 +646,33 @@ export function synchronizeLayoutWithChildren(
 
     // Generate one layout item per child.
     let layout: Layout = [];
-    children.map( (child: Vue) => {
-        const props = child.$props;
-        const key = props.i;
-        const exists = getLayoutItem(initialLayout, String(key));
-        if (exists) {
-            layout.push(cloneLayoutItem(exists));
-        } else {
-            const {x, y, w, h, immobile} = props;
-
-            if (x !== undefined && y !== undefined && w !== undefined && h !== undefined && key !== undefined ) {
-                layout.push(cloneLayoutItem({ x, y, w, h, immobile: immobile ? immobile : false, i: String(key)}));
+    if (children.length > 0) {
+        children.map( (child: Vue) => {
+            const props = child.$props;
+            const key = props.i;
+            const exists = getLayoutItem(initialLayout, String(key));
+            if (exists) {
+                layout.push(cloneLayoutItem(exists));
             } else {
-                layout.push(cloneLayoutItem({
-                    w: 1,
-                    h: 1,
-                    x: 0,
-                    y: bottom(layout),
-                    i: String(key),
-                }));
-            }
+                const {x, y, w, h, immobile} = props;
 
-        }
-    });
+                if (x !== undefined && y !== undefined && w !== undefined && h !== undefined && key !== undefined ) {
+                    layout.push(cloneLayoutItem({ x, y, w, h, immobile: immobile ? immobile : false, i: String(key)}));
+                } else {
+                    layout.push(cloneLayoutItem({
+                        w: 1,
+                        h: 1,
+                        x: 0,
+                        y: bottom(layout),
+                        i: String(key),
+                    }));
+                }
+
+            }
+        });
+    } else {
+        layout = initialLayout;
+    }
 
     // Correct the layout.
     layout = correctBounds(layout, { cols });
