@@ -5844,12 +5844,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=892beba2&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('VueGridLayout',_vm._g(_vm._b({ref:"layout",attrs:{"layout":_vm.layouts[_vm.breakpoint],"width":_vm.width,"cols":_vm.cols},on:{"onLayoutUpdated":_vm.onLayoutUpdated,"addChild":_vm.onChildAdded,"removeChild":_vm.onChildRemoved},scopedSlots:_vm._u([{key:"default",fn:function(props){return [_vm._t("default",null,null,props)]}}])},'VueGridLayout',_vm.attrs,false),_vm.listeners))}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=26535195&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('VueGridLayout',_vm._g(_vm._b({ref:"layout",attrs:{"layout":_vm.layouts[_vm.breakpoint],"width":_vm.width,"cols":_vm.cols},on:{"layout-update":_vm.onLayoutUpdated,"add-child":_vm.onChildAdded,"remove-child":_vm.onChildRemoved},scopedSlots:_vm._u([{key:"default",fn:function(props){return [_vm._t("default",null,null,props)]}}])},'VueGridLayout',_vm.attrs,false),_vm.listeners))}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=892beba2&
+// CONCATENATED MODULE: ./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=26535195&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("c5f6");
@@ -6321,12 +6321,12 @@ function isPromise(obj) {
     return obj instanceof Promise || (obj && typeof obj.then === 'function');
 }
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridLayout.vue?vue&type=template&id=18c5f279&
-var VueGridLayoutvue_type_template_id_18c5f279_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:this.className},[_vm._t("default",null,{containerWidth:_vm.width,layout:_vm.layout,rowHeight:_vm.rowHeight,cols:_vm.cols,maxRows:_vm.maxRows}),(_vm.activeDrag)?_c('VueGridItem',{attrs:{"w":this.activeDrag.w,"h":this.activeDrag.h,"x":this.activeDrag.x,"y":this.activeDrag.y,"i":this.activeDrag.i,"className":'vue-grid-placeholder',"containerWidth":this.width,"cols":this.cols,"containerPadding":this.containerPadding,"maxRows":this.maxRows,"rowHeight":this.rowHeight,"isDraggable":false,"isResizable":false,"useCSSTransforms":this.useCSSTransforms,"placeholder":true}}):_vm._e()],2)}
-var VueGridLayoutvue_type_template_id_18c5f279_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridLayout.vue?vue&type=template&id=63086742&
+var VueGridLayoutvue_type_template_id_63086742_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:this.className},[_vm._t("default",null,{containerWidth:_vm.width,layout:_vm.layout,rowHeight:_vm.rowHeight,cols:_vm.cols,maxRows:_vm.maxRows}),(_vm.activeDrag)?_c('VueGridItem',{attrs:{"w":this.activeDrag.w,"h":this.activeDrag.h,"x":this.activeDrag.x,"y":this.activeDrag.y,"i":this.activeDrag.i,"className":'vue-grid-placeholder',"containerWidth":this.width,"cols":this.cols,"containerPadding":this.containerPadding,"maxRows":this.maxRows,"rowHeight":this.rowHeight,"isDraggable":false,"isResizable":false,"useCSSTransforms":this.useCSSTransforms,"placeholder":true}}):_vm._e()],2)}
+var VueGridLayoutvue_type_template_id_63086742_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueGridLayout.vue?vue&type=template&id=18c5f279&
+// CONCATENATED MODULE: ./src/components/VueGridLayout.vue?vue&type=template&id=63086742&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
@@ -6370,12 +6370,12 @@ function _asyncToGenerator(fn) {
     });
   };
 }
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridItem.vue?vue&type=template&id=74b26bbd&
-var VueGridItemvue_type_template_id_74b26bbd_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:_vm.classes,style:(_vm.styles)},[(_vm.isDraggable)?_c('DraggableCore',{class:_vm.dragContainerClass,attrs:{"onStart":_vm.onDragHandler('onDragStart'),"onDrag":_vm.onDragHandler('onDrag'),"onStop":_vm.onDragHandler('onDragStop'),"disabled":!_vm.isDraggable,"handle":_vm.handle,"cancel":_vm.cancel,"noTouchAction":_vm.noTouchAction,"touchAction":_vm.touchAction,"draggableCoreProps":_vm.draggableCoreProps}},[(_vm.component)?_c(_vm.component,_vm._b({ref:"component",tag:"div",attrs:{"cols":_vm.cols,"w":_vm.w,"h":_vm.h}},'div',_vm.componentProps,false)):_vm._t("default",null,{cols:_vm.cols,w:_vm.w,h:_vm.h})],2):_vm._e(),(_vm.isResizable)?_c('Resizable',{attrs:{"w":_vm.calcWidth(),"h":_vm.calcHeight(),"onResizeStart":_vm.onResizeHandler('onResizeStart'),"onResize":_vm.onResizeHandler('onResize'),"onResizeStop":_vm.onResizeHandler('onResizeStop'),"minConstraints":_vm.minConstraints,"maxConstraints":_vm.maxConstraints,"className":'resizable',"resizableProps":_vm.resizableProps}},[_c('div',{staticClass:"resizable-handle"})]):_vm._e()],1)}
-var VueGridItemvue_type_template_id_74b26bbd_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridItem.vue?vue&type=template&id=0d68e918&
+var VueGridItemvue_type_template_id_0d68e918_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:_vm.classes,style:(_vm.styles)},[(_vm.isDraggable)?_c('DraggableCore',{class:_vm.dragContainerClass,attrs:{"onStart":_vm.onDragHandler('onDragStart'),"onDrag":_vm.onDragHandler('onDrag'),"onStop":_vm.onDragHandler('onDragStop'),"disabled":!_vm.isDraggable || _vm.immobile,"handle":_vm.handle,"cancel":_vm.cancel,"noTouchAction":_vm.noTouchAction,"touchAction":_vm.touchAction,"draggableCoreProps":_vm.draggableCoreProps}},[(_vm.component)?_c(_vm.component,_vm._b({ref:"component",tag:"div",attrs:{"cols":_vm.cols,"w":_vm.w,"h":_vm.h}},'div',_vm.componentProps,false)):_vm._t("default",null,{cols:_vm.cols,w:_vm.w,h:_vm.h})],2):_vm._e(),(_vm.isResizable)?_c('Resizable',{attrs:{"w":_vm.calcWidth(),"h":_vm.calcHeight(),"onResizeStart":_vm.onResizeHandler('onResizeStart'),"onResize":_vm.onResizeHandler('onResize'),"onResizeStop":_vm.onResizeHandler('onResizeStop'),"minConstraints":_vm.minConstraints,"maxConstraints":_vm.maxConstraints,"className":'resizable',"resizableProps":_vm.resizableProps}},[_c('div',{staticClass:"resizable-handle"})]):_vm._e()],1)}
+var VueGridItemvue_type_template_id_0d68e918_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueGridItem.vue?vue&type=template&id=74b26bbd&
+// CONCATENATED MODULE: ./src/components/VueGridItem.vue?vue&type=template&id=0d68e918&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es7.symbol.async-iterator.js
 var es7_symbol_async_iterator = __webpack_require__("ac4d");
@@ -6898,40 +6898,46 @@ function synchronizeLayoutWithChildren(initialLayout, children, cols, compactTyp
   initialLayout = initialLayout || []; // Generate one layout item per child.
 
   var layout = [];
-  children.map(function (child) {
-    var props = child.$props;
-    var key = props.i;
-    var exists = getLayoutItem(initialLayout, String(key));
 
-    if (exists) {
-      layout.push(cloneLayoutItem(exists));
-    } else {
-      var x = props.x,
-          y = props.y,
-          w = props.w,
-          h = props.h,
-          immobile = props.immobile;
+  if (children.length > 0) {
+    children.map(function (child) {
+      var props = child.$props;
+      var key = props.i;
+      var exists = getLayoutItem(initialLayout, String(key));
 
-      if (x !== undefined && y !== undefined && w !== undefined && h !== undefined && key !== undefined) {
-        layout.push(cloneLayoutItem({
-          x: x,
-          y: y,
-          w: w,
-          h: h,
-          immobile: immobile ? immobile : false,
-          i: String(key)
-        }));
+      if (exists) {
+        layout.push(cloneLayoutItem(exists));
       } else {
-        layout.push(cloneLayoutItem({
-          w: 1,
-          h: 1,
-          x: 0,
-          y: bottom(layout),
-          i: String(key)
-        }));
+        var x = props.x,
+            y = props.y,
+            w = props.w,
+            h = props.h,
+            immobile = props.immobile;
+
+        if (x !== undefined && y !== undefined && w !== undefined && h !== undefined && key !== undefined) {
+          layout.push(cloneLayoutItem({
+            x: x,
+            y: y,
+            w: w,
+            h: h,
+            immobile: immobile ? immobile : false,
+            i: String(key)
+          }));
+        } else {
+          layout.push(cloneLayoutItem({
+            w: 1,
+            h: 1,
+            x: 0,
+            y: bottom(layout),
+            i: String(key)
+          }));
+        }
       }
-    }
-  }); // Correct the layout.
+    });
+  } else {
+    layout = initialLayout;
+  } // Correct the layout.
+
 
   layout = correctBounds(layout, {
     cols: cols
@@ -7054,8 +7060,6 @@ function (_Vue) {
   _createClass(GridItem, [{
     key: "onComponentHeightChanged",
     value: function onComponentHeightChanged(newVal, oldVal) {
-      var _this2 = this;
-
       if (newVal) {
         if (!this.resizing) {
           var pos = this.calcPosition(this.x, this.y, this.w, this.h);
@@ -7069,9 +7073,6 @@ function (_Vue) {
 
           this.$emit('update:w', w);
           this.$emit('update:h', h);
-          this.$nextTick(function () {
-            _this2.eventBus.$emit('onHeightUpdated', _this2.i, w, h);
-          });
         }
       }
     }
@@ -7288,7 +7289,7 @@ function (_Vue) {
   }, {
     key: "onDragHandler",
     value: function onDragHandler(handlerName) {
-      var _this3 = this;
+      var _this2 = this;
 
       return function (e, _ref2) {
         var node = _ref2.node,
@@ -7312,7 +7313,7 @@ function (_Vue) {
               var clientRect = node.getBoundingClientRect();
               newPosition.left = clientRect.left - parentRect.left + offsetParent.scrollLeft;
               newPosition.top = clientRect.top - parentRect.top + offsetParent.scrollTop;
-              _this3.dragging = {
+              _this2.dragging = {
                 left: newPosition.left,
                 top: newPosition.top
               };
@@ -7320,38 +7321,38 @@ function (_Vue) {
             }
 
           case 'onDrag':
-            if (!_this3.dragging) {
+            if (!_this2.dragging) {
               throw new Error('onDrag called before onDragStart.');
             }
 
-            newPosition.left = _this3.dragging.left + deltaX;
-            newPosition.top = _this3.dragging.top + deltaY;
-            _this3.dragging = {
+            newPosition.left = _this2.dragging.left + deltaX;
+            newPosition.top = _this2.dragging.top + deltaY;
+            _this2.dragging = {
               left: newPosition.left,
               top: newPosition.top
             };
             break;
 
           case 'onDragStop':
-            if (!_this3.dragging) {
+            if (!_this2.dragging) {
               throw new Error('onDragEnd called before onDragStart.');
             }
 
-            newPosition.left = _this3.dragging.left;
-            newPosition.top = _this3.dragging.top;
-            _this3.dragging = null;
+            newPosition.left = _this2.dragging.left;
+            newPosition.top = _this2.dragging.top;
+            _this2.dragging = null;
             break;
 
           default:
             throw new Error('onDragHandler called with unrecognized handlerName: ' + handlerName);
         }
 
-        var newPos = _this3.calcXY(newPosition.top, newPosition.left);
+        var newPos = _this2.calcXY(newPosition.top, newPosition.left);
 
         var x = Math.round(newPos.x);
         var y = Math.round(newPos.y);
 
-        _this3.eventBus.$emit(handlerName, _this3, _this3.i, x, y, {
+        _this2.eventBus.$emit(handlerName, _this2, _this2.i, x, y, {
           e: e,
           node: node,
           newPosition: newPosition
@@ -7361,20 +7362,20 @@ function (_Vue) {
   }, {
     key: "onResizeHandler",
     value: function onResizeHandler(handlerName) {
-      var _this4 = this;
+      var _this3 = this;
 
       return function (e, _ref3) {
         var node = _ref3.node,
             size = _ref3.size;
-        var cols = _this4.cols,
-            x = _this4.x,
-            i = _this4.i,
-            maxW = _this4.maxW,
-            minW = _this4.minW,
-            maxH = _this4.maxH,
-            minH = _this4.minH;
+        var cols = _this3.cols,
+            x = _this3.x,
+            i = _this3.i,
+            maxW = _this3.maxW,
+            minW = _this3.minW,
+            maxH = _this3.maxH,
+            minH = _this3.minH;
         var newPos;
-        newPos = _this4.calcWH({
+        newPos = _this3.calcWH({
           width: size.width,
           height: size.height
         });
@@ -7384,9 +7385,9 @@ function (_Vue) {
         w = Math.max(w, 1);
         w = Math.max(Math.min(w, maxW), minW);
         h = Math.max(Math.min(h, maxH), minH);
-        _this4.resizing = handlerName === 'onResizeStop' ? null : size;
+        _this3.resizing = handlerName === 'onResizeStop' ? null : size;
 
-        _this4.eventBus.$emit(handlerName, _this4, i, w, h, {
+        _this3.eventBus.$emit(handlerName, _this3, i, w, h, {
           e: e,
           node: node,
           size: size
@@ -7754,8 +7755,8 @@ function normalizeComponent (
 
 var component = normalizeComponent(
   components_VueGridItemvue_type_script_lang_ts_,
-  VueGridItemvue_type_template_id_74b26bbd_render,
-  VueGridItemvue_type_template_id_74b26bbd_staticRenderFns,
+  VueGridItemvue_type_template_id_0d68e918_render,
+  VueGridItemvue_type_template_id_0d68e918_staticRenderFns,
   false,
   null,
   null,
@@ -7820,11 +7821,10 @@ function (_Vue) {
                 this.eventBus.$on('onResizeStart', this.onResizeStart);
                 this.eventBus.$on('onResize', this.onResize);
                 this.eventBus.$on('onResizeStop', this.onResizeStop);
-                this.eventBus.$on('onHeightUpdated', this.onItemHeightUpdated);
                 this.eventBus.$on('addChild', this.onChildAdded);
                 this.eventBus.$on('removeChild', this.onChildRemoved);
 
-              case 9:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -7852,11 +7852,10 @@ function (_Vue) {
                 this.eventBus.$off('onResizeStart', this.onResizeStart);
                 this.eventBus.$off('onResize', this.onResize);
                 this.eventBus.$off('onResizeStop', this.onResizeStop);
-                this.eventBus.$off('onHeightUpdated', this.onItemHeightUpdated);
                 this.eventBus.$off('addChild', this.onChildAdded);
                 this.eventBus.$off('removeChild', this.onChildRemoved);
 
-              case 9:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -7880,10 +7879,9 @@ function (_Vue) {
               case 0:
                 this.isMounted = true; // Possibly call back with layout on mount. This should be done after correcting the layout width
                 // to ensure we don't rerender with the wrong width.
+                // this.onLayoutMaybeChanged(this.layout, this.layout);
 
-                this.onLayoutMaybeChanged(this.layout, this.layout);
-
-              case 2:
+              case 1:
               case "end":
                 return _context3.stop();
             }
@@ -8021,7 +8019,7 @@ function (_Vue) {
       }
 
       if (!isEqual_default()(oldLayout, newLayout)) {
-        this.$emit('onLayoutUpdated', newLayout, last);
+        this.$emit('layout-update', newLayout, last);
       }
     }
   }, {
@@ -8128,20 +8126,14 @@ function (_Vue) {
       this.activeDrag = null;
       this.oldResizeItem = null;
       this.oldLayout = null;
-      this.onLayoutMaybeChanged(newLayout, oldLayout);
-    }
-  }, {
-    key: "onItemHeightUpdated",
-    value: function onItemHeightUpdated(i, w, h) {
-      var oldLayout = cloneLayout(this.layout);
-      var newLayout = cloneLayout(this.layout);
-      newLayout = compact(newLayout, this.compactType, this.cols);
       this.onLayoutMaybeChanged(newLayout, oldLayout, true);
     }
   }, {
     key: "resizeAllItems",
     value: function resizeAllItems(width, compactType) {
       var _this2 = this;
+
+      var mode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
       if (width > this.cols) {
         width = this.cols;
@@ -8161,13 +8153,13 @@ function (_Vue) {
         }
       });
       currentLayout = compact(currentLayout, compactType, this.cols);
-      this.onLayoutMaybeChanged(currentLayout, oldLayout);
+      this.onLayoutMaybeChanged(currentLayout, oldLayout, mode);
     }
   }, {
     key: "onChildAdded",
-    value: function onChildAdded(child, id) {
+    value: function onChildAdded(child) {
       this.children.push(child);
-      this.$emit('addChild', child);
+      this.$emit('add-child', child);
     }
   }, {
     key: "onChildRemoved",
@@ -8176,7 +8168,7 @@ function (_Vue) {
         return item.$props.i === child.$props.i;
       });
       this.children.slice(index, 1);
-      this.$emit('removeChild', child);
+      this.$emit('remove-child', child);
     }
   }]);
 
@@ -8313,8 +8305,8 @@ VueGridLayoutvue_type_script_lang_ts_VueGridLayout = __decorate([vue_class_compo
 
 var VueGridLayout_component = normalizeComponent(
   components_VueGridLayoutvue_type_script_lang_ts_,
-  VueGridLayoutvue_type_template_id_18c5f279_render,
-  VueGridLayoutvue_type_template_id_18c5f279_staticRenderFns,
+  VueGridLayoutvue_type_template_id_63086742_render,
+  VueGridLayoutvue_type_template_id_63086742_staticRenderFns,
   false,
   null,
   null,
@@ -8324,31 +8316,6 @@ var VueGridLayout_component = normalizeComponent(
 
 VueGridLayout_component.options.__file = "VueGridLayout.vue"
 /* harmony default export */ var components_VueGridLayout = (VueGridLayout_component.exports);
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/builtin/es6/arrayWithoutHoles.js
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  }
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/builtin/es6/iterableToArray.js
-function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/builtin/es6/nonIterableSpread.js
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/builtin/es6/toConsumableArray.js
-
-
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
-}
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.iterator.js
 var es6_array_iterator = __webpack_require__("cadf");
 
@@ -8356,12 +8323,6 @@ var es6_array_iterator = __webpack_require__("cadf");
 var es6_object_keys = __webpack_require__("456d");
 
 // CONCATENATED MODULE: ./src/lib/responsiveUtils.ts
-
-
-
-
-
-
 
 
 
@@ -8419,21 +8380,69 @@ function getColsFromBreakpoint(breakpoint, cols) {
  */
 
 function findOrGenerateResponsiveLayout(layouts, breakpoints, breakpoint, lastBreakpoint, cols, compactType) {
-  // If it already exists, just return it.
+  var lastBreakpointLength;
+  var breakpointLength;
+
   if (layouts[breakpoint]) {
+    breakpointLength = layouts[breakpoint].length;
+  }
+
+  var breakpointsSorted = sortBreakpoints(breakpoints);
+  var keys = Object.keys(layouts);
+  var layoutsLength = [];
+  keys.forEach(function (item) {
+    layoutsLength.push(layouts[item].length);
+  });
+  var max = Math.max.apply(Math, layoutsLength);
+
+  if (max !== breakpointLength) {
+    for (var i = 0, len = breakpointsSorted.length; i < len; i++) {
+      var b = breakpointsSorted[i];
+
+      if (layouts[b]) {
+        if (layouts[b].length === max) {
+          if (b === breakpoint) {
+            break;
+          } else {
+            breakpoint = b;
+          }
+        }
+      }
+    }
+  } else {
     return cloneLayout(layouts[breakpoint]);
+  } // If there is wrongly given lastBreakpoint
+
+
+  if (layouts[lastBreakpoint]) {
+    lastBreakpointLength = layouts[lastBreakpoint].length;
+  }
+
+  if (max !== lastBreakpointLength) {
+    for (var _i = 0, _len = breakpointsSorted.length; _i < _len; _i++) {
+      var _b = breakpointsSorted[_i];
+
+      if (layouts[_b]) {
+        if (layouts[_b].length === max) {
+          if (_b === lastBreakpoint) {
+            break;
+          } else {
+            lastBreakpoint = _b;
+          }
+        }
+      }
+    }
   } // Find or generate the next layout
 
 
   var layout = layouts[lastBreakpoint];
-  var breakpointsSorted = sortBreakpoints(breakpoints);
   var breakpointsAbove = breakpointsSorted.slice(breakpointsSorted.indexOf(breakpoint));
 
-  for (var i = 0, len = breakpointsAbove.length; i < len; i++) {
-    var b = breakpointsAbove[i];
+  for (var _i2 = 0, _len2 = breakpointsAbove.length; _i2 < _len2; _i2++) {
+    var _b2 = breakpointsAbove[_i2];
 
-    if (layouts[b]) {
-      layout = layouts[b];
+    if (layouts[_b2]) {
+      layout = layouts[_b2];
       break;
     }
   }
@@ -8457,72 +8466,6 @@ function sortBreakpoints(breakpoints) {
   return keys.sort(function (a, b) {
     return breakpoints[a] - breakpoints[b];
   });
-}
-function generateLayoutsFromChildren(children, breakpoints, breakpoint, lastBreakpoint, cols, compactType) {
-  var layouts = {};
-  var breakpointsSorted = sortBreakpoints(breakpoints);
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    var _loop = function _loop() {
-      breakpoint = _step.value;
-      var layout = [];
-      children.map(function (child) {
-        var props = child.$props;
-        var key = props.i;
-
-        if (props[breakpoint]) {
-          var _props$breakpoint = props[breakpoint],
-              x = _props$breakpoint.x,
-              y = _props$breakpoint.y,
-              w = _props$breakpoint.w,
-              h = _props$breakpoint.h,
-              immobile = _props$breakpoint.immobile;
-
-          if (x !== undefined && y !== undefined && w !== undefined && h !== undefined && key !== undefined) {
-            layout.push(cloneLayoutItem({
-              x: x,
-              y: y,
-              w: w,
-              h: h,
-              immobile: immobile ? immobile : false,
-              i: String(key)
-            }));
-          }
-        }
-      });
-
-      if (layout.length > 0) {
-        layout = correctBounds(layout, {
-          cols: cols
-        });
-        layout = compact(layout, compactType, cols);
-        var layoutsForBreakpoint = layouts[breakpoint] ? _toConsumableArray(layouts[breakpoint]).concat([layout]) : layout;
-        layouts = Object.assign({}, layouts, _defineProperty({}, breakpoint, layoutsForBreakpoint));
-      }
-    };
-
-    for (var _iterator = breakpointsSorted[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      _loop();
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator.return != null) {
-        _iterator.return();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
-  }
-
-  return layouts;
 }
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueResponsiveGridLayout.vue?vue&type=script&lang=ts&
 
@@ -8557,6 +8500,15 @@ function (_Vue) {
   }
 
   _createClass(VueResponsiveGridLayout, [{
+    key: "onChildrenChange",
+    value: function onChildrenChange(newVal, oldVal) {
+      var _this2 = this;
+
+      this.$nextTick(function () {
+        _this2.initLayout();
+      });
+    }
+  }, {
     key: "handleResize",
     value: function handleResize(event) {
       this.width = this.$el.clientWidth;
@@ -8565,12 +8517,12 @@ function (_Vue) {
   }, {
     key: "mounted",
     value: function mounted() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.isMounted = true;
       this.width = this.$el.clientWidth;
       this.$nextTick(function () {
-        _this2.initLayout();
+        _this3.initLayout();
       });
     }
   }, {
@@ -8588,19 +8540,22 @@ function (_Vue) {
     value: function initLayout() {
       if (this.isMounted && this.layouts instanceof Object) {
         var currentLayouts = JSON.parse(JSON.stringify(this.layouts));
-        var currentCols = this.cols;
-        var currentBreakpoints = JSON.parse(JSON.stringify(this.breakpoints));
-        var breakpoint = getBreakpointFromWidth(currentBreakpoints, this.width);
-        var cols = getColsFromBreakpoint(breakpoint, this.colsAll);
+        var breakpoints = JSON.parse(JSON.stringify(this.breakpoints));
+        var cols = this.cols,
+            colsAll = this.colsAll;
+        var newBreakpoint = getBreakpointFromWidth(this.breakpoints, this.width);
+        var lastBreakpoint = this.breakpoint;
+        var newCols = getColsFromBreakpoint(newBreakpoint, colsAll);
 
-        if (this.breakpoint !== breakpoint) {
+        if (lastBreakpoint !== newBreakpoint) {
           this.onWidthChange(this.width);
         }
 
-        var layout = findOrGenerateResponsiveLayout(currentLayouts, currentBreakpoints, breakpoint, breakpoint, cols, this.compactType);
-        layout = synchronizeLayoutWithChildren(layout, this.children, cols, this.compactType);
-        this.$set(currentLayouts, breakpoint, layout);
-        this.$emit('onLayoutInit', layout, currentLayouts, cols, breakpoint);
+        var layout = findOrGenerateResponsiveLayout(currentLayouts, breakpoints, newBreakpoint, lastBreakpoint, newCols, this.compactType);
+        layout = synchronizeLayoutWithChildren(layout, this.children, newCols, this.compactType);
+        layout = compact(layout, this.compactType, newCols);
+        this.$set(currentLayouts, newBreakpoint, layout);
+        this.$emit('layout-init', layout, currentLayouts, newCols, newBreakpoint);
       }
     }
   }, {
@@ -8616,12 +8571,9 @@ function (_Vue) {
       var newCols = getColsFromBreakpoint(newBreakpoint, colsAll);
 
       if (lastBreakpoint !== newBreakpoint || this.breakpoints !== breakpoints || cols !== newCols) {
-        if (!(lastBreakpoint in currentLayouts)) {
-          this.$set(currentLayouts, lastBreakpoint, cloneLayout(currentLayouts[lastBreakpoint]));
-        }
-
         var currentLayout = findOrGenerateResponsiveLayout(currentLayouts, breakpoints, newBreakpoint, lastBreakpoint, newCols, this.compactType);
         currentLayout = synchronizeLayoutWithChildren(currentLayout, this.children, newCols, this.compactType);
+        currentLayout = compact(currentLayout, this.compactType, newCols);
         this.$set(currentLayouts, newBreakpoint, currentLayout);
         this.$emit('breakpoint-change', newBreakpoint);
         this.$emit('layout-change', JSON.parse(JSON.stringify(currentLayout)), JSON.parse(JSON.stringify(currentLayouts)), newBreakpoint);
@@ -8633,8 +8585,9 @@ function (_Vue) {
   }, {
     key: "onLayoutUpdated",
     value: function onLayoutUpdated(layout) {
+      var last = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var layouts = JSON.parse(JSON.stringify(this.layouts));
-      this.$emit('layout-update', layout, _objectSpread({}, layouts, _defineProperty({}, this.breakpoint, layout)));
+      this.$emit('layout-update', layout, _objectSpread({}, layouts, _defineProperty({}, this.breakpoint, layout)), last);
     }
   }, {
     key: "resizeAllItems",
@@ -8645,7 +8598,7 @@ function (_Vue) {
     key: "onChildAdded",
     value: function onChildAdded(child) {
       this.children.push(child);
-      this.$emit('addChild', child);
+      this.$emit('add-child', child);
     }
   }, {
     key: "onChildRemoved",
@@ -8654,16 +8607,16 @@ function (_Vue) {
         return item.$props.i === child.$props.i;
       });
       this.children.slice(index, 1);
-      this.$emit('removeChild', child);
+      this.$emit('remove-child', child);
     }
   }, {
     key: "listeners",
     get: function get() {
       var _this$$listeners = this.$listeners,
-          onLayoutChange = _this$$listeners.onLayoutChange,
-          addChild = _this$$listeners.addChild,
-          removeChild = _this$$listeners.removeChild,
-          listeners = _objectWithoutProperties(_this$$listeners, ["onLayoutChange", "addChild", "removeChild"]);
+          onLayoutChange = _this$$listeners['layout-update'],
+          addChild = _this$$listeners['add-child'],
+          removeChild = _this$$listeners['remove-child'],
+          listeners = _objectWithoutProperties(_this$$listeners, ['layout-update', 'add-child', 'remove-child']);
 
       return listeners;
     }
@@ -8838,6 +8791,8 @@ __decorate([Prop({
   required: false,
   default: true
 })], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "isMounted", void 0);
+
+__decorate([Watch('children')], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "onChildrenChange", null);
 
 VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout = __decorate([vue_class_component_common_default()({
   name: 'VueResponsiveGridLayout',

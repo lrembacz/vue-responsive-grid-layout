@@ -349,11 +349,6 @@ export default class GridItem extends Vue {
         }
     }
 
-    @Watch('immobile')
-    public onImmobileChange(newVal, oldVal) {
-        this.$emit('update:immobile', this.immobile);
-    }
-
     get classes() {
         return {
             [this.className]: this.className,
