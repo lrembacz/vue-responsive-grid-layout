@@ -14,7 +14,6 @@ export const state: LayoutState = {
                 y: 6,
                 h: 6,
                 w: 2,
-                immobile: false,
             },
             {
                 i: '2',
@@ -22,7 +21,6 @@ export const state: LayoutState = {
                 y: 0,
                 h: 6,
                 w: 2,
-                immobile: false,
             },
             {
                 i: '3',
@@ -30,7 +28,6 @@ export const state: LayoutState = {
                 y: 0,
                 h: 6,
                 w: 2,
-                immobile: true,
             },
             {
                 i: '4',
@@ -38,7 +35,6 @@ export const state: LayoutState = {
                 y: 0,
                 h: 6,
                 w: 2,
-                immobile: true,
             },
         ],
     },

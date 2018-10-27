@@ -20,7 +20,6 @@
                   :h.sync="item.h"
                   :x="item.x"
                   :y="item.y"
-                  :immobile="item.immobile"
                   :containerWidth="props.containerWidth"
                   :rowHeight="props.rowHeight"
                   :isDraggable="true"

@@ -127,12 +127,6 @@ Sync modifier is used on `w` and `h` props to make them reactive for external ch
 when :heightFromChildren is set to `true`
 ```
 
-### Remember!
-```
-The state is taken directly from layout / layouts array,
-so if you want to pass immobile or any other prop just set it on layout first.
-```
-
 ## Props VueResponsiveGridLayout
 
 ```

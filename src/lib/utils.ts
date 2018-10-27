@@ -377,7 +377,8 @@ export function getStatics(layout: Layout): LayoutItem[] {
 /**
  * Move an element. Responsible for doing cascading movements of other elements.
  *
- * @param  {Layout}      layout            Full layout to modify.
+ * @param  {Layout}     layout            Full layout to modify.
+ * @param {VueChildren} children          Children of layout
  * @param  {LayoutItem} l                 element to move.
  * @param  {Number}     [x]               X position in grid units.
  * @param  {Number}     [y]               Y position in grid units.
@@ -388,6 +389,7 @@ export function getStatics(layout: Layout): LayoutItem[] {
  */
 export function moveElement(
     layout: Layout,
+    children: VueChildren,
     l: LayoutItem,
     x: number,
     y: number,
@@ -396,6 +398,15 @@ export function moveElement(
     compactType: CompactType,
     cols: number,
 ): Layout {
+    if (children) {
+        const index = children.findIndex( (item) => item.$props.i === l.i);
+        if (index >= 0) {
+            if (children[index].$props.immobile === true) {
+                return layout;
+            }
+        }
+    }
+
     if (l.immobile) {
         return layout;
     }
@@ -459,6 +470,7 @@ export function moveElement(
         if (collision.immobile) {
             layout = moveElementAwayFromCollision(
                 layout,
+                children,
                 collision,
                 l,
                 isUserAction,
@@ -468,6 +480,7 @@ export function moveElement(
         } else {
             layout = moveElementAwayFromCollision(
                 layout,
+                children,
                 l,
                 collision,
                 isUserAction,
@@ -485,6 +498,7 @@ export function moveElement(
  * We attempt to move it up if there's room, otherwise it goes below.
  *
  * @param  {Array} layout            Full layout to modify.
+ * @param {VueChildren} children     Children of layout
  * @param  {LayoutItem} collidesWith Layout item we're colliding with.
  * @param  {LayoutItem} itemToMove   Layout item we're moving.
  * @param isUserAction
@@ -494,6 +508,7 @@ export function moveElement(
  */
 export function moveElementAwayFromCollision(
     layout: Layout,
+    children: VueChildren,
     collidesWith: LayoutItem,
     itemToMove: LayoutItem,
     isUserAction: boolean,
@@ -530,6 +545,7 @@ export function moveElementAwayFromCollision(
             );
             return moveElement(
                 layout,
+                children,
                 itemToMove,
                 compactH ? fakeItem.x : undefined,
                 compactV ? fakeItem.y : undefined,
@@ -543,6 +559,7 @@ export function moveElementAwayFromCollision(
 
     return moveElement(
         layout,
+        children,
         itemToMove,
         compactH ? itemToMove.x + 1 : undefined,
         compactV ? itemToMove.y + 1 : undefined,

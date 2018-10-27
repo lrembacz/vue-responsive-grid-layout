@@ -265,7 +265,7 @@ export default class VueGridLayout extends Vue {
      * @param {Element} node The current dragging DOM element
      */
     public onDrag(element: Vue, i: string, x: number, y: number, { e, node }: GridDragEvent) {
-        const { oldDragItem } = this;
+        const { oldDragItem, children } = this;
         let layout = cloneLayout(this.layout);
         const { oldLayout } = this;
         const { cols } = this;
@@ -287,6 +287,7 @@ export default class VueGridLayout extends Vue {
         const isUserAction = true;
         layout = moveElement(
             layout,
+            children,
             l,
             x,
             y,
@@ -314,7 +315,7 @@ export default class VueGridLayout extends Vue {
      * @param {Element} node The current dragging DOM element
      */
     public onDragStop(element: Vue, i: string, x: number, y: number, { e, node }: GridDragEvent) {
-        const { oldDragItem } = this;
+        const { oldDragItem, children } = this;
         let layout = cloneLayout(this.layout);
         const { cols, preventCollision } = this;
         const l = getLayoutItem(layout, i);
@@ -325,6 +326,7 @@ export default class VueGridLayout extends Vue {
         const isUserAction = true;
         layout = moveElement(
             layout,
+            children,
             l,
             x,
             y,
