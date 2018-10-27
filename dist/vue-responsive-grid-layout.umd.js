@@ -6321,12 +6321,12 @@ function isPromise(obj) {
     return obj instanceof Promise || (obj && typeof obj.then === 'function');
 }
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridLayout.vue?vue&type=template&id=63086742&
-var VueGridLayoutvue_type_template_id_63086742_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:this.className},[_vm._t("default",null,{containerWidth:_vm.width,layout:_vm.layout,rowHeight:_vm.rowHeight,cols:_vm.cols,maxRows:_vm.maxRows}),(_vm.activeDrag)?_c('VueGridItem',{attrs:{"w":this.activeDrag.w,"h":this.activeDrag.h,"x":this.activeDrag.x,"y":this.activeDrag.y,"i":this.activeDrag.i,"className":'vue-grid-placeholder',"containerWidth":this.width,"cols":this.cols,"containerPadding":this.containerPadding,"maxRows":this.maxRows,"rowHeight":this.rowHeight,"isDraggable":false,"isResizable":false,"useCSSTransforms":this.useCSSTransforms,"placeholder":true}}):_vm._e()],2)}
-var VueGridLayoutvue_type_template_id_63086742_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridLayout.vue?vue&type=template&id=28bd08cc&
+var VueGridLayoutvue_type_template_id_28bd08cc_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:this.className},[_vm._t("default",null,{containerWidth:_vm.width,layout:_vm.layout,rowHeight:_vm.rowHeight,cols:_vm.cols,maxRows:_vm.maxRows}),(_vm.activeDrag)?_c('VueGridItem',{attrs:{"w":this.activeDrag.w,"h":this.activeDrag.h,"x":this.activeDrag.x,"y":this.activeDrag.y,"i":this.activeDrag.i,"className":'vue-grid-placeholder',"containerWidth":this.width,"cols":this.cols,"containerPadding":this.containerPadding,"maxRows":this.maxRows,"rowHeight":this.rowHeight,"isDraggable":false,"isResizable":false,"useCSSTransforms":this.useCSSTransforms,"placeholder":true}}):_vm._e()],2)}
+var VueGridLayoutvue_type_template_id_28bd08cc_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueGridLayout.vue?vue&type=template&id=63086742&
+// CONCATENATED MODULE: ./src/components/VueGridLayout.vue?vue&type=template&id=28bd08cc&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
@@ -6399,6 +6399,7 @@ var isEqual = __webpack_require__("63ea");
 var isEqual_default = /*#__PURE__*/__webpack_require__.n(isEqual);
 
 // CONCATENATED MODULE: ./src/lib/utils.ts
+
 
 
 
@@ -6692,7 +6693,8 @@ function getStatics(layout) {
 /**
  * Move an element. Responsible for doing cascading movements of other elements.
  *
- * @param  {Layout}      layout            Full layout to modify.
+ * @param  {Layout}     layout            Full layout to modify.
+ * @param {VueChildren} children          Children of layout
  * @param  {LayoutItem} l                 element to move.
  * @param  {Number}     [x]               X position in grid units.
  * @param  {Number}     [y]               Y position in grid units.
@@ -6702,7 +6704,19 @@ function getStatics(layout) {
  * @param cols
  */
 
-function moveElement(layout, l, x, y, isUserAction, preventCollision, compactType, cols) {
+function moveElement(layout, children, l, x, y, isUserAction, preventCollision, compactType, cols) {
+  if (children) {
+    var index = children.findIndex(function (item) {
+      return item.$props.i === l.i;
+    });
+
+    if (index >= 0) {
+      if (children[index].$props.immobile === true) {
+        return layout;
+      }
+    }
+  }
+
   if (l.immobile) {
     return layout;
   } // Short-circuit if nothing to do.
@@ -6757,9 +6771,9 @@ function moveElement(layout, l, x, y, isUserAction, preventCollision, compactTyp
 
 
     if (collision.immobile) {
-      layout = moveElementAwayFromCollision(layout, collision, l, isUserAction, compactType, cols);
+      layout = moveElementAwayFromCollision(layout, children, collision, l, isUserAction, compactType, cols);
     } else {
-      layout = moveElementAwayFromCollision(layout, l, collision, isUserAction, compactType, cols);
+      layout = moveElementAwayFromCollision(layout, children, l, collision, isUserAction, compactType, cols);
     }
   }
 
@@ -6770,6 +6784,7 @@ function moveElement(layout, l, x, y, isUserAction, preventCollision, compactTyp
  * We attempt to move it up if there's room, otherwise it goes below.
  *
  * @param  {Array} layout            Full layout to modify.
+ * @param {VueChildren} children     Children of layout
  * @param  {LayoutItem} collidesWith Layout item we're colliding with.
  * @param  {LayoutItem} itemToMove   Layout item we're moving.
  * @param isUserAction
@@ -6778,7 +6793,7 @@ function moveElement(layout, l, x, y, isUserAction, preventCollision, compactTyp
  * @return {Layout} Layout
  */
 
-function moveElementAwayFromCollision(layout, collidesWith, itemToMove, isUserAction, compactType, cols) {
+function moveElementAwayFromCollision(layout, children, collidesWith, itemToMove, isUserAction, compactType, cols) {
   var compactH = compactType === 'horizontal'; // Compact vertically if not set to horizontal
 
   var compactV = compactType !== 'horizontal';
@@ -6801,11 +6816,11 @@ function moveElementAwayFromCollision(layout, collidesWith, itemToMove, isUserAc
 
     if (!getFirstCollision(layout, fakeItem)) {
       log("Doing reverse collision on ".concat(itemToMove.i, " up to [").concat(fakeItem.x, ",").concat(fakeItem.y, "]."));
-      return moveElement(layout, itemToMove, compactH ? fakeItem.x : undefined, compactV ? fakeItem.y : undefined, isUserAction, preventCollision, compactType, cols);
+      return moveElement(layout, children, itemToMove, compactH ? fakeItem.x : undefined, compactV ? fakeItem.y : undefined, isUserAction, preventCollision, compactType, cols);
     }
   }
 
-  return moveElement(layout, itemToMove, compactH ? itemToMove.x + 1 : undefined, compactV ? itemToMove.y + 1 : undefined, isUserAction, preventCollision, compactType, cols);
+  return moveElement(layout, children, itemToMove, compactH ? itemToMove.x + 1 : undefined, compactV ? itemToMove.y + 1 : undefined, isUserAction, preventCollision, compactType, cols);
 }
 /**
  * Helper to convert a number to a percentage string.
@@ -7947,7 +7962,8 @@ function (_Vue) {
     value: function onDrag(element, i, x, y, _ref2) {
       var e = _ref2.e,
           node = _ref2.node;
-      var oldDragItem = this.oldDragItem;
+      var oldDragItem = this.oldDragItem,
+          children = this.children;
       var layout = cloneLayout(this.layout);
       var oldLayout = this.oldLayout;
       var cols = this.cols;
@@ -7967,7 +7983,7 @@ function (_Vue) {
       }; // Move the element to the dragged location.
 
       var isUserAction = true;
-      layout = moveElement(layout, l, x, y, isUserAction, this.preventCollision, this.compactType, cols);
+      layout = moveElement(layout, children, l, x, y, isUserAction, this.preventCollision, this.compactType, cols);
       layout = compact(layout, this.compactType, cols); // (this.$emit as any)('onDrag', layout, oldDragItem, l, placeholder, e, node);
 
       this.activeDrag = Object.assign({}, placeholder);
@@ -7987,7 +8003,8 @@ function (_Vue) {
     value: function onDragStop(element, i, x, y, _ref3) {
       var e = _ref3.e,
           node = _ref3.node;
-      var oldDragItem = this.oldDragItem;
+      var oldDragItem = this.oldDragItem,
+          children = this.children;
       var layout = cloneLayout(this.layout);
       var cols = this.cols,
           preventCollision = this.preventCollision;
@@ -7999,7 +8016,7 @@ function (_Vue) {
 
 
       var isUserAction = true;
-      layout = moveElement(layout, l, x, y, isUserAction, preventCollision, this.compactType, cols); // this.$emit('onDragStop',layout, oldDragItem, l, null, e, node);
+      layout = moveElement(layout, children, l, x, y, isUserAction, preventCollision, this.compactType, cols); // this.$emit('onDragStop',layout, oldDragItem, l, null, e, node);
       // Set state
 
       var newLayout = compact(layout, this.compactType, cols);
@@ -8305,8 +8322,8 @@ VueGridLayoutvue_type_script_lang_ts_VueGridLayout = __decorate([vue_class_compo
 
 var VueGridLayout_component = normalizeComponent(
   components_VueGridLayoutvue_type_script_lang_ts_,
-  VueGridLayoutvue_type_template_id_63086742_render,
-  VueGridLayoutvue_type_template_id_63086742_staticRenderFns,
+  VueGridLayoutvue_type_template_id_28bd08cc_render,
+  VueGridLayoutvue_type_template_id_28bd08cc_staticRenderFns,
   false,
   null,
   null,
