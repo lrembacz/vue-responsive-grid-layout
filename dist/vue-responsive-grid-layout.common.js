@@ -5835,12 +5835,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=26535195&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=fec89714&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('VueGridLayout',_vm._g(_vm._b({ref:"layout",attrs:{"layout":_vm.layouts[_vm.breakpoint],"width":_vm.width,"cols":_vm.cols},on:{"layout-update":_vm.onLayoutUpdated,"add-child":_vm.onChildAdded,"remove-child":_vm.onChildRemoved},scopedSlots:_vm._u([{key:"default",fn:function(props){return [_vm._t("default",null,null,props)]}}])},'VueGridLayout',_vm.attrs,false),_vm.listeners))}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=26535195&
+// CONCATENATED MODULE: ./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=fec89714&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("c5f6");
@@ -6312,12 +6312,12 @@ function isPromise(obj) {
     return obj instanceof Promise || (obj && typeof obj.then === 'function');
 }
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridLayout.vue?vue&type=template&id=28bd08cc&
-var VueGridLayoutvue_type_template_id_28bd08cc_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:this.className},[_vm._t("default",null,{containerWidth:_vm.width,layout:_vm.layout,rowHeight:_vm.rowHeight,cols:_vm.cols,maxRows:_vm.maxRows}),(_vm.activeDrag)?_c('VueGridItem',{attrs:{"w":this.activeDrag.w,"h":this.activeDrag.h,"x":this.activeDrag.x,"y":this.activeDrag.y,"i":this.activeDrag.i,"className":'vue-grid-placeholder',"containerWidth":this.width,"cols":this.cols,"containerPadding":this.containerPadding,"maxRows":this.maxRows,"rowHeight":this.rowHeight,"isDraggable":false,"isResizable":false,"useCSSTransforms":this.useCSSTransforms,"placeholder":true}}):_vm._e()],2)}
-var VueGridLayoutvue_type_template_id_28bd08cc_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"545da000-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridLayout.vue?vue&type=template&id=72ecb2f2&
+var VueGridLayoutvue_type_template_id_72ecb2f2_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:this.className},[_vm._t("default",null,{containerWidth:_vm.width,layout:_vm.layout,rowHeight:_vm.rowHeight,cols:_vm.cols,maxRows:_vm.maxRows}),(_vm.activeDrag)?_c('VueGridItem',{attrs:{"w":this.activeDrag.w,"h":this.activeDrag.h,"x":this.activeDrag.x,"y":this.activeDrag.y,"i":this.activeDrag.i,"className":'vue-grid-placeholder',"containerWidth":this.width,"cols":this.cols,"containerPadding":this.containerPadding,"maxRows":this.maxRows,"rowHeight":this.rowHeight,"isDraggable":false,"isResizable":false,"useCSSTransforms":this.useCSSTransforms,"placeholder":true}}):_vm._e()],2)}
+var VueGridLayoutvue_type_template_id_72ecb2f2_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueGridLayout.vue?vue&type=template&id=28bd08cc&
+// CONCATENATED MODULE: ./src/components/VueGridLayout.vue?vue&type=template&id=72ecb2f2&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
@@ -8141,7 +8141,8 @@ function (_Vue) {
     value: function resizeAllItems(width, compactType) {
       var _this2 = this;
 
-      var mode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+      var defSize = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var mode = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
       if (width > this.cols) {
         width = this.cols;
@@ -8154,9 +8155,17 @@ function (_Vue) {
           return layoutItem.i === child.$props.i;
         });
 
-        var canBeResizedWithAll = _this2.children[index].$props.canBeResizedWithAll;
+        var _this2$children$index = _this2.children[index].$props,
+            canBeResizedWithAll = _this2$children$index.canBeResizedWithAll,
+            defaultSize = _this2$children$index.defaultSize;
 
         if (canBeResizedWithAll) {
+          if (defSize === true) {
+            if (defaultSize > 0) {
+              layoutItem.w = defaultSize;
+            }
+          }
+
           layoutItem.w = width;
         }
       });
@@ -8208,18 +8217,6 @@ __decorate([Prop({
   required: false,
   default: 12
 })], VueGridLayoutvue_type_script_lang_ts_VueGridLayout.prototype, "cols", void 0);
-
-__decorate([Prop({
-  type: String,
-  required: false,
-  default: ''
-})], VueGridLayoutvue_type_script_lang_ts_VueGridLayout.prototype, "draggableCancel", void 0);
-
-__decorate([Prop({
-  type: String,
-  required: false,
-  default: ''
-})], VueGridLayoutvue_type_script_lang_ts_VueGridLayout.prototype, "draggableHandle", void 0);
 
 __decorate([Prop({
   type: String,
@@ -8313,8 +8310,8 @@ VueGridLayoutvue_type_script_lang_ts_VueGridLayout = __decorate([vue_class_compo
 
 var VueGridLayout_component = normalizeComponent(
   components_VueGridLayoutvue_type_script_lang_ts_,
-  VueGridLayoutvue_type_template_id_28bd08cc_render,
-  VueGridLayoutvue_type_template_id_28bd08cc_staticRenderFns,
+  VueGridLayoutvue_type_template_id_72ecb2f2_render,
+  VueGridLayoutvue_type_template_id_72ecb2f2_staticRenderFns,
   false,
   null,
   null,
@@ -8504,6 +8501,7 @@ function (_Vue) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(VueResponsiveGridLayout).apply(this, arguments));
     _this.width = 0;
     _this.children = [];
+    _this.isMounted = false;
     return _this;
   }
 
@@ -8600,7 +8598,9 @@ function (_Vue) {
   }, {
     key: "resizeAllItems",
     value: function resizeAllItems(width, compactType) {
-      this.$refs.layout.resizeAllItems(width, compactType);
+      var defaultSize = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var mode = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+      this.$refs.layout.resizeAllItems(width, compactType, defaultSize, mode);
     }
   }, {
     key: "onChildAdded",
@@ -8650,11 +8650,6 @@ function (_Vue) {
 }(external_commonjs_vue_commonjs2_vue_root_Vue_default.a);
 
 __decorate([Prop({
-  type: Object,
-  required: false
-})], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "styles", void 0);
-
-__decorate([Prop({
   type: Boolean,
   required: false
 })], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "autoSize", void 0);
@@ -8668,31 +8663,8 @@ __decorate([Prop({
 __decorate([Prop({
   type: String,
   required: false,
-  default: ''
-})], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "draggableCancel", void 0);
-
-__decorate([Prop({
-  type: String,
-  required: false,
-  default: ''
-})], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "draggableHandle", void 0);
-
-__decorate([Prop({
-  type: String,
-  required: false,
   default: 'vertical'
 })], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "compactType", void 0);
-
-__decorate([Prop({
-  required: false,
-  validator: function validator(value) {
-    if (!value) {
-      return true;
-    }
-
-    return validateLayout(value, 'layout');
-  }
-})], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "layout", void 0);
 
 __decorate([Prop({
   type: Array,
@@ -8793,12 +8765,6 @@ __decorate([Prop({
     return {};
   }
 })], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "layouts", void 0);
-
-__decorate([Prop({
-  type: Boolean,
-  required: false,
-  default: true
-})], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "isMounted", void 0);
 
 __decorate([Watch('children')], VueResponsiveGridLayoutvue_type_script_lang_ts_VueResponsiveGridLayout.prototype, "onChildrenChange", null);
 

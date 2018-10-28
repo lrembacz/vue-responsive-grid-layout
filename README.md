@@ -131,12 +131,6 @@ when :heightFromChildren is set to `true`
 
 ```
 @Prop({
-    type: Object,
-    required: false,
-})
-public styles: object;
-
-@Prop({
     type: Boolean,
     required: false,
 })
@@ -152,34 +146,9 @@ public cols: number;
 @Prop({
     type: String,
     required: false,
-    default: '',
-})
-public draggableCancel: string;
-
-@Prop({
-    type: String,
-    required: false,
-    default: '',
-})
-public draggableHandle: string;
-
-@Prop({
-    type: String,
-    required: false,
     default: 'vertical',
 })
 public compactType: CompactType;
-
-@Prop({
-    required: false,
-    validator: (value) => {
-        if (!value) {
-            return true;
-        }
-        return validateLayout(value, 'layout');
-    },
-})
-public layout: Layout;
 
 @Prop({
     type: Array,
@@ -272,14 +241,74 @@ public colsAll: { [key: string]: number };
     default: () => ({}),
 })
 public layouts: { [key: string]: Layout };
-
-@Prop({
-    type: Boolean,
-    required: false,
-    default: true,
-})
-public isMounted: boolean;
 ```
+
+## Description
+
+### autoSize
+
+### cols
+Number of cols. Default is 12.
+
+### compactType
+Type of compacting layout. Default `"vertical"`.
+
+### margin
+Margin of grid-items.
+
+### containerPadding
+Width of container, it is needed to calculate the width of items.
+
+### rowHeight
+Height of one grid unit row for placeholder.
+
+### maxRows
+Max rows in layout.
+
+### isDraggable
+Items can be dragged.
+
+### isResizable
+Items can be resized.
+
+### preventCollision
+Preventing collisions. Makes some grid items static.
+
+### useCSSTransforms
+Uses transform css property for changing positions and size.
+
+### className
+Defines additional classes for grid layout.
+Default css class is `vue-responsive-grid-layout`.
+
+### breakpoint
+Actual breakpoint. Default is "lg".
+
+### breakpoints
+Breakpoints object which define width for breakpoints. 
+
+Default `{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }`.
+
+### colsAll
+Defines cols for given breakpoints.
+
+Default `{ lg: 12, md: 6, sm: 4, xs: 2, xxs: 1 }`.
+
+### layouts
+Layouts object for example: 
+```
+{
+    "lg" : [
+        { x: 0, y: 0, w: 1, h: 1, i: "1" },
+        { x: 1, y: 0, w: 1, h: 1, i: "2" },
+    ],
+    "md" : [
+        { x: 0, y: 1, w: 1, h: 1, i: "1" },
+        { x: 1, y: 1, w: 1, h: 1, i: "2" },
+    ]
+}
+```
+
 
 ## Events VueResponsiveGridLayout
 ```
@@ -300,7 +329,7 @@ public isMounted: boolean;
 
 ## Function on VueResponsiveGridLayout
 ```
-resizeAllItems(width: number, compactType: CompactType)
+resizeAllItems(width: number, compactType: CompactType, defaultSize = false, mode = false)
 ```
 
 ## Props VueGridLayout
@@ -427,6 +456,50 @@ public useCSSTransforms: boolean;
 public width: number;
 ```
 
+## Description
+
+### className
+Defines additional classes for grid layout.
+Default css class is `vue-grid-layout`.
+
+### autoSize
+
+### cols
+Number of cols. Default is 12.
+
+### compactType
+Type of compacting layout. Default `"vertical"`.
+
+###layout
+Layout array.
+
+### margin
+Margin of grid-items.
+
+### containerPadding
+Padding of layout.
+
+### rowHeight
+Height of one grid unit row for placeholder.
+
+### maxRows
+Max rows in layout.
+
+### isDraggable
+Items can be dragged.
+
+### isResizable
+Items can be resized.
+
+### preventCollision
+Preventing collisions. Makes some grid items static.
+
+### useCSSTransforms
+Uses transform css property for changing positions and size.
+
+### width
+Width of grid layout. Is set from inside of VueGridLayout.
+
 ## Events VueGridLayout
 ```
 @layout-update(layout: Layout, last: boolean)
@@ -435,10 +508,6 @@ public width: number;
 
 @remove-child(child: Vue)
 ```
-
-## Description
-
-Working on it.
 
 ## Props VueGridItem
 
@@ -695,8 +764,105 @@ public heightFromChildren: boolean;
 public placeholder: boolean;
 ```
 ## Description
+### cols
+Cols number default 12.
 
-Working on it.
+### containerWidth
+Width of container. Provided for counting of size and cords.
+
+### rowHeight
+Row height. Default infinite.
+
+### margin
+Margin of elements. Default [10, 10].
+
+### maxRows
+Max rows in layout.
+
+### containerPadding
+Padding of container. Default [5, 5].
+
+### x
+X cord for item.
+
+### y
+Y cord for item.
+
+### w
+Width of item.
+
+### h
+Height of item.
+
+### minW
+Min width for item when resized.
+
+### maxW
+Max width for item when resized.
+
+### minH
+Min height for item when resized.
+
+### maxH
+Max height for item when resized.
+
+### i
+Id of item as string. Must be unique for items.
+### isDraggable
+Enable draggable mode.
+
+### isResizable
+Enable resizable mode.
+
+### immobile
+Makes item static.
+
+### canBeResizedWithAll
+Determinate if item can be resized with all by resizeAllItems() function.
+
+### useCSSTransforms
+
+### usePercentages
+Uses percentages to count coords.
+
+### className
+Class name for item. Default `vue-grid-item`.
+
+### dragContainerClass
+Class for dragContainer in item.
+
+### handle
+Selector for draggable handel.
+
+### cancel
+Selector for draggable cancel.
+
+### component
+Component to render inside grid item. You can use slot instead.
+
+### componentProps
+Props for component inside grid item.
+
+### defaultSize
+Default size of item. This size can be used to determinate size of items after resizeAllItems().
+
+### resizableProps
+Props for resizable item.
+
+### draggableCoreProps
+Props for draggable core item.
+
+### noTouchAction
+Enable/disable touch action style after dragged.
+
+### touchAction
+Touch action value after dragged.
+
+### heightFromChildren
+Determinate if item should have height get from child element.
+
+### placeholder
+Determinate if item is a placeholder.
 
 # License
 MIT

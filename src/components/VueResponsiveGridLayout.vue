@@ -44,12 +44,7 @@ import {
 export default class VueResponsiveGridLayout extends Vue {
     public width: number = 0;
     public children: Vue[] = [];
-
-    @Prop({
-        type: Object,
-        required: false,
-    })
-    public styles: object;
+    public isMounted: boolean = false;
 
     @Prop({
         type: Boolean,
@@ -67,34 +62,9 @@ export default class VueResponsiveGridLayout extends Vue {
     @Prop({
         type: String,
         required: false,
-        default: '',
-    })
-    public draggableCancel: string;
-
-    @Prop({
-        type: String,
-        required: false,
-        default: '',
-    })
-    public draggableHandle: string;
-
-    @Prop({
-        type: String,
-        required: false,
         default: 'vertical',
     })
     public compactType: CompactType;
-
-    @Prop({
-        required: false,
-        validator: (value) => {
-            if (!value) {
-                return true;
-            }
-            return validateLayout(value, 'layout');
-        },
-    })
-    public layout: Layout;
 
     @Prop({
         type: Array,
@@ -187,13 +157,6 @@ export default class VueResponsiveGridLayout extends Vue {
         default: () => ({}),
     })
     public layouts: { [key: string]: Layout };
-
-    @Prop({
-        type: Boolean,
-        required: false,
-        default: true,
-    })
-    public isMounted: boolean;
 
     @Watch('children')
     public onChildrenChange(newVal, oldVal) {
@@ -323,8 +286,8 @@ export default class VueResponsiveGridLayout extends Vue {
         );
     }
 
-    public resizeAllItems(width, compactType) {
-        (this.$refs.layout as any).resizeAllItems(width, compactType);
+    public resizeAllItems(width: number, compactType: CompactType, defaultSize: boolean = false, mode: boolean = false) {
+        (this.$refs.layout as any).resizeAllItems(width, compactType, defaultSize, mode);
     }
 
     public onChildAdded(child: Vue) {

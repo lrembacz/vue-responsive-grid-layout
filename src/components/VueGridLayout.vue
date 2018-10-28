@@ -95,20 +95,6 @@ export default class VueGridLayout extends Vue {
     @Prop({
         type: String,
         required: false,
-        default: '',
-    })
-    public draggableCancel: string;
-
-    @Prop({
-        type: String,
-        required: false,
-        default: '',
-    })
-    public draggableHandle: string;
-
-    @Prop({
-        type: String,
-        required: false,
         default: 'vertical',
     })
     public compactType: CompactType;
@@ -448,18 +434,24 @@ export default class VueGridLayout extends Vue {
         this.onLayoutMaybeChanged(newLayout, oldLayout, true);
     }
 
-    public resizeAllItems(width, compactType, mode = true) {
+    public resizeAllItems(width: number, compactType: CompactType, defSize: boolean = false, mode: boolean = false) {
         if (width > this.cols) {
             width = this.cols;
         }
+
         const oldLayout = cloneLayout(this.layout);
         let currentLayout = cloneLayout(this.layout);
         currentLayout.forEach((layoutItem) => {
             const index = this.children.findIndex( (child) => {
                 return layoutItem.i === child.$props.i;
             });
-            const {canBeResizedWithAll} = this.children[index].$props;
+            const {canBeResizedWithAll, defaultSize} = this.children[index].$props;
             if (canBeResizedWithAll) {
+                if (defSize === true) {
+                    if (defaultSize > 0) {
+                        layoutItem.w = defaultSize
+                    }
+                }
                 layoutItem.w = width;
             }
         });
