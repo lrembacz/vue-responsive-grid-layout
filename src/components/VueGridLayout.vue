@@ -449,7 +449,7 @@ export default class VueGridLayout extends Vue {
             if (canBeResizedWithAll) {
                 if (defSize === true) {
                     if (defaultSize > 0) {
-                        layoutItem.w = defaultSize
+                        layoutItem.w = defaultSize;
                     }
                 }
                 layoutItem.w = width;

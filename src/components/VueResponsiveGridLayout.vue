@@ -286,7 +286,12 @@ export default class VueResponsiveGridLayout extends Vue {
         );
     }
 
-    public resizeAllItems(width: number, compactType: CompactType, defaultSize: boolean = false, mode: boolean = false) {
+    public resizeAllItems(
+        width: number,
+        compactType: CompactType,
+        defaultSize: boolean = false,
+        mode: boolean = false,
+    ) {
         (this.$refs.layout as any).resizeAllItems(width, compactType, defaultSize, mode);
     }
 

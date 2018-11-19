@@ -4,7 +4,6 @@
             :style='styles'
     >
         <DraggableCore
-                v-if="isDraggable"
                 :onStart="onDragHandler('onDragStart')"
                 :onDrag="onDragHandler('onDrag')"
                 :onStop="onDragHandler('onDragStop')"

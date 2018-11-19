@@ -14,6 +14,6 @@ function install(Vue) {
     Vue.component('vue-grid-item', VueGridItem);
 }
 
-export {VueResponsiveGridLayout, VueGridLayout, VueGridItem};
+export {VueResponsiveGridLayout, VueGridLayout, VueGridItem, install};
 
 export default Components;
