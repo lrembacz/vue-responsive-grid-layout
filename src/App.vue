@@ -40,6 +40,7 @@
 import {Component, Vue} from 'vue-property-decorator';
 import VueResponsiveGridLayout from './components/VueResponsiveGridLayout.vue';
 import VueGridItem from './components/VueGridItem.vue';
+import ComponentItem from './components/ComponentItem.vue';
 import {namespace} from 'vuex-class';
 import {Breakpoint, ResponsiveLayout} from './lib/responsiveUtils';
 import {Layout} from './lib/utils';
@@ -51,6 +52,7 @@ const layoutModule = namespace('layout');
     components: {
         VueResponsiveGridLayout,
         VueGridItem,
+        ComponentItem,
     },
 })
 export default class App extends Vue {
