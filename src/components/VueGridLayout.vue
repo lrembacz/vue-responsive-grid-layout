@@ -469,7 +469,7 @@ export default class VueGridLayout extends Vue {
         const index = this.children.findIndex( (item) => {
             return item.$props.i === child.$props.i;
         });
-        this.children.slice(index, 1);
+        this.children.splice(index, 1);
         this.$emit('remove-child', child);
     }
 }
