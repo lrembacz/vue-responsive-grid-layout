@@ -14,7 +14,7 @@ And it's partly coded in Typescript.
 
 # Demo
 
-- https://jsfiddle.net/8dayv9cj/ - simple editable demo with VueResponsiveGridLayout
+- https://jsfiddle.net/gpz64n12/ - simple editable demo with VueResponsiveGridLayout
 
 # Example
 
