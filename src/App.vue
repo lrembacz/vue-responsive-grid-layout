@@ -16,6 +16,7 @@
         <template slot-scope="props">
           <VueGridItem v-for="item in props.layout"
                   :i="item.i"
+                  :key="item.i"
                   :w.sync="item.w"
                   :h.sync="item.h"
                   :x="item.x"

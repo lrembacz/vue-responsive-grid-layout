@@ -5681,12 +5681,12 @@ function isPromise(obj) {
     return obj instanceof Promise || (obj && typeof obj.then === 'function');
 }
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b5c12f96-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridLayout.vue?vue&type=template&id=85f2e4e4&
-var VueGridLayoutvue_type_template_id_85f2e4e4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:this.className},[_vm._t("default",null,{"containerWidth":_vm.width,"layout":_vm.layout,"rowHeight":_vm.rowHeight,"cols":_vm.cols,"maxRows":_vm.maxRows}),(_vm.activeDrag)?_c('VueGridItem',{attrs:{"w":this.activeDrag.w,"h":this.activeDrag.h,"x":this.activeDrag.x,"y":this.activeDrag.y,"i":this.activeDrag.i,"className":'vue-grid-placeholder',"containerWidth":this.width,"cols":this.cols,"containerPadding":this.containerPadding,"maxRows":this.maxRows,"rowHeight":this.rowHeight,"isDraggable":false,"isResizable":false,"useCSSTransforms":this.useCSSTransforms,"placeholder":true}}):_vm._e()],2)}
-var VueGridLayoutvue_type_template_id_85f2e4e4_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b5c12f96-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridLayout.vue?vue&type=template&id=75fe809e&
+var VueGridLayoutvue_type_template_id_75fe809e_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:this.className},[_vm._t("default",null,{"containerWidth":_vm.width,"layout":_vm.layout,"rowHeight":_vm.rowHeight,"cols":_vm.cols,"maxRows":_vm.maxRows}),(_vm.activeDrag)?_c('VueGridItem',{attrs:{"w":this.activeDrag.w,"h":this.activeDrag.h,"x":this.activeDrag.x,"y":this.activeDrag.y,"i":this.activeDrag.i,"className":'vue-grid-placeholder',"containerWidth":this.width,"cols":this.cols,"containerPadding":this.containerPadding,"maxRows":this.maxRows,"rowHeight":this.rowHeight,"isDraggable":false,"isResizable":false,"useCSSTransforms":this.useCSSTransforms,"placeholder":true}}):_vm._e()],2)}
+var VueGridLayoutvue_type_template_id_75fe809e_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueGridLayout.vue?vue&type=template&id=85f2e4e4&
+// CONCATENATED MODULE: ./src/components/VueGridLayout.vue?vue&type=template&id=75fe809e&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
@@ -7062,13 +7062,13 @@ function (_super) {
     _this.oldLayout = null;
     _this.oldResizeItem = null;
     _this.children = [];
-    _this.eventBus = new external_commonjs_vue_commonjs2_vue_root_Vue_default.a();
     return _this;
   }
 
   VueGridLayout.prototype.created = function () {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
+        this.eventBus = this._provided.eventBus;
         this.eventBus.$on('onDragStart', this.onDragStart);
         this.eventBus.$on('onDrag', this.onDrag);
         this.eventBus.$on('onDragStop', this.onDragStop);
@@ -7512,7 +7512,7 @@ function (_super) {
     },
     provide: function provide() {
       return {
-        eventBus: this.eventBus
+        eventBus: new external_commonjs_vue_commonjs2_vue_root_Vue_default.a()
       };
     }
   })], VueGridLayout);
@@ -7532,8 +7532,8 @@ function (_super) {
 
 var VueGridLayout_component = normalizeComponent(
   components_VueGridLayoutvue_type_script_lang_ts_,
-  VueGridLayoutvue_type_template_id_85f2e4e4_render,
-  VueGridLayoutvue_type_template_id_85f2e4e4_staticRenderFns,
+  VueGridLayoutvue_type_template_id_75fe809e_render,
+  VueGridLayoutvue_type_template_id_75fe809e_staticRenderFns,
   false,
   null,
   null,

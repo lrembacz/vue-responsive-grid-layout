@@ -56,7 +56,7 @@ import {
     },
     provide() {
         return {
-            eventBus: this.eventBus,
+            eventBus: new Vue(),
         };
     },
 })
@@ -67,7 +67,7 @@ export default class VueGridLayout extends Vue {
     public oldLayout?: Layout = null;
     public oldResizeItem?: LayoutItem = null;
     public children: Vue[] = [];
-    public eventBus = new Vue();
+    public eventBus!: Vue;
 
     @Prop({
         type: String,
@@ -176,6 +176,7 @@ export default class VueGridLayout extends Vue {
     public width: number;
 
     public async created() {
+        this.eventBus = (this as any)._provided.eventBus;
         this.eventBus.$on('onDragStart', this.onDragStart);
         this.eventBus.$on('onDrag', this.onDrag);
         this.eventBus.$on('onDragStop', this.onDragStop);
