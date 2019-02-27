@@ -49,21 +49,24 @@ import {
     LayoutItem,
 } from '@/lib/utils';
 
-@Component({
+@Component<VueGridLayout>({
+    name: 'VueGridLayout',
     components: {
         VueGridItem,
     },
+    provide() {
+        return {
+            eventBus: this.eventBus,
+        };
+    },
 })
 export default class VueGridLayout extends Vue {
-    public name: string = 'VueGridLayout';
-    public activeDrag: LayoutItem = null;
+    public activeDrag?: LayoutItem = null;
     public isMounted: boolean = false;
-    public oldDragItem: LayoutItem = null;
-    public oldLayout: Layout = null;
-    public oldResizeItem: LayoutItem = null;
+    public oldDragItem?: LayoutItem = null;
+    public oldLayout?: Layout = null;
+    public oldResizeItem?: LayoutItem = null;
     public children: Vue[] = [];
-
-    @Provide('eventBus')
     public eventBus = new Vue();
 
     @Prop({

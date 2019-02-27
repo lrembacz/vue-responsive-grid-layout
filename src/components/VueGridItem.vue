@@ -68,21 +68,25 @@ export interface Dragging {
     left: number;
 }
 
-@Component({
+@Component<GridItem>({
+    name: 'VueGridItem',
     components: {
         DraggableCore,
         Resizable,
     },
+    inject: ['eventBus'],
+    data() {
+        return {
+            eventBus: this.eventBus,
+        };
+    },
 })
 export default class GridItem extends Vue {
-    public name: string = 'VueGridItem';
-    public resizing: Resizing = null;
-    public dragging: Dragging = null;
+    public resizing?: Resizing = null;
+    public dragging?: Dragging = null;
     public isDragging: boolean | null = null;
     public isMounted: boolean = false;
     public componentHeight: number = 0;
-
-    @Inject('eventBus')
     public eventBus: Vue;
 
     @Prop({
