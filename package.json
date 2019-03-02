@@ -26,6 +26,7 @@
     "*.js"
   ],
   "main": "./dist/vue-responsive-grid-layout.common.js",
+  "unpkg": "./dist/vue-responsive-grid-layout.umd.min.js",
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.1",
     "@vue/cli-plugin-typescript": "^3.4.1",
@@ -44,6 +45,7 @@
     "type": "git",
     "url": "https://github.com/lrembacz/vue-responsive-grid-layout.git"
   },
+  "types": "types/components/index.d.ts",
   "homepage": "https://github.com/lrembacz/vue-responsive-grid-layout#readme",
   "license": "MIT",
   "keywords": [

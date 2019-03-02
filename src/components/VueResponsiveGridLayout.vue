@@ -19,14 +19,13 @@
 
 <script lang="ts">
 import {Component, Vue, Prop, Watch} from 'vue-property-decorator';
-import isEqual from 'lodash/isEqual';
 import VueGridLayout from './VueGridLayout.vue';
 
 import {
     Layout,
-    cloneLayout,
     synchronizeLayoutWithChildren,
-    validateLayout, CompactType, compact,
+    CompactType,
+    compact,
 } from '@/lib/utils';
 import {
     getBreakpointFromWidth,

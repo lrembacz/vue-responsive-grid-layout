@@ -5340,12 +5340,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b5c12f96-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=3629bacb&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d1b3d832-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=090c9b0f&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('VueGridLayout',_vm._g(_vm._b({ref:"layout",attrs:{"layout":_vm.layouts[_vm.breakpoint],"width":_vm.width,"cols":_vm.cols},on:{"layout-update":_vm.onLayoutUpdated,"add-child":_vm.onChildAdded,"remove-child":_vm.onChildRemoved},scopedSlots:_vm._u([{key:"default",fn:function(props){return [_vm._t("default",null,null,props)]}}],null,true)},'VueGridLayout',_vm.attrs,false),_vm.listeners))}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=3629bacb&
+// CONCATENATED MODULE: ./src/components/VueResponsiveGridLayout.vue?vue&type=template&id=090c9b0f&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("c5f6");
@@ -5681,7 +5681,7 @@ function isPromise(obj) {
     return obj instanceof Promise || (obj && typeof obj.then === 'function');
 }
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b5c12f96-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridLayout.vue?vue&type=template&id=75fe809e&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d1b3d832-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridLayout.vue?vue&type=template&id=75fe809e&
 var VueGridLayoutvue_type_template_id_75fe809e_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:this.className},[_vm._t("default",null,{"containerWidth":_vm.width,"layout":_vm.layout,"rowHeight":_vm.rowHeight,"cols":_vm.cols,"maxRows":_vm.maxRows}),(_vm.activeDrag)?_c('VueGridItem',{attrs:{"w":this.activeDrag.w,"h":this.activeDrag.h,"x":this.activeDrag.x,"y":this.activeDrag.y,"i":this.activeDrag.i,"className":'vue-grid-placeholder',"containerWidth":this.width,"cols":this.cols,"containerPadding":this.containerPadding,"maxRows":this.maxRows,"rowHeight":this.rowHeight,"isDraggable":false,"isResizable":false,"useCSSTransforms":this.useCSSTransforms,"placeholder":true}}):_vm._e()],2)}
 var VueGridLayoutvue_type_template_id_75fe809e_staticRenderFns = []
 
@@ -5695,7 +5695,7 @@ var web_dom_iterable = __webpack_require__("ac6a");
 var object_assign = __webpack_require__("5176");
 var assign_default = /*#__PURE__*/__webpack_require__.n(object_assign);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b5c12f96-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridItem.vue?vue&type=template&id=40af5667&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d1b3d832-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueGridItem.vue?vue&type=template&id=40af5667&
 var VueGridItemvue_type_template_id_40af5667_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:_vm.classes,style:(_vm.styles)},[_c('DraggableCore',{class:_vm.dragContainerClass,attrs:{"onStart":_vm.onDragHandler('onDragStart'),"onDrag":_vm.onDragHandler('onDrag'),"onStop":_vm.onDragHandler('onDragStop'),"disabled":!_vm.isDraggable || _vm.immobile,"handle":_vm.handle,"cancel":_vm.cancel,"noTouchAction":_vm.noTouchAction,"touchAction":_vm.touchAction,"draggableCoreProps":_vm.draggableCoreProps}},[(_vm.component)?_c(_vm.component,_vm._b({ref:"component",tag:"div",attrs:{"cols":_vm.cols,"w":_vm.w,"h":_vm.h}},'div',_vm.componentProps,false)):_vm._t("default",null,{"cols":_vm.cols,"w":_vm.w,"h":_vm.h})],2),(_vm.isResizable)?_c('Resizable',{attrs:{"w":_vm.calcWidth(),"h":_vm.calcHeight(),"onResizeStart":_vm.onResizeHandler('onResizeStart'),"onResize":_vm.onResizeHandler('onResize'),"onResizeStop":_vm.onResizeHandler('onResizeStop'),"minConstraints":_vm.minConstraints,"maxConstraints":_vm.maxConstraints,"className":'resizable',"resizableProps":_vm.resizableProps}},[_c('div',{staticClass:"resizable-handle"})]):_vm._e()],1)}
 var VueGridItemvue_type_template_id_40af5667_staticRenderFns = []
 
@@ -8020,25 +8020,29 @@ var VueResponsiveGridLayout_component = normalizeComponent(
 
 
 
-var Components = {
-  VueResponsiveGridLayout: components_VueResponsiveGridLayout,
-  VueGridLayout: components_VueGridLayout,
-  VueGridItem: VueGridItem
-};
 
-function install(Vue) {
+var components_install = function install(Vue) {
   Vue.component('vue-responsive-grid-layout', components_VueResponsiveGridLayout);
   Vue.component('vue-grid-layout', components_VueGridLayout);
   Vue.component('vue-grid-item', VueGridItem);
+};
+
+var version = '__VERSION__';
+var components_plugin = {
+  install: components_install,
+  version: version
+};
+/* harmony default export */ var components = (components_plugin);
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(components_plugin);
 }
 
 
-/* harmony default export */ var components = (Components);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 /* concated harmony reexport VueResponsiveGridLayout */__webpack_require__.d(__webpack_exports__, "VueResponsiveGridLayout", function() { return components_VueResponsiveGridLayout; });
 /* concated harmony reexport VueGridLayout */__webpack_require__.d(__webpack_exports__, "VueGridLayout", function() { return components_VueGridLayout; });
 /* concated harmony reexport VueGridItem */__webpack_require__.d(__webpack_exports__, "VueGridItem", function() { return VueGridItem; });
-/* concated harmony reexport install */__webpack_require__.d(__webpack_exports__, "install", function() { return install; });
 
 
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (components);
