@@ -23,7 +23,8 @@
     "src/*",
     "public/*",
     "*.json",
-    "*.js"
+    "*.js",
+    "types/*"
   ],
   "main": "./dist/vue-responsive-grid-layout.common.js",
   "unpkg": "./dist/vue-responsive-grid-layout.umd.min.js",
