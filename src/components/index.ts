@@ -1,30 +1,24 @@
-import {VueConstructor, PluginObject } from 'vue';
+import _Vue from 'vue';
 import VueResponsiveGridLayout from './VueResponsiveGridLayout.vue';
 import VueGridLayout from './VueGridLayout.vue';
 import VueGridItem from './VueGridItem.vue';
 
 declare global {
     interface Window {
-        Vue: VueConstructor;
+        Vue: typeof _Vue;
     }
 }
 
-const install = (Vue: VueConstructor): void => {
-    Vue.component('vue-responsive-grid-layout', VueResponsiveGridLayout);
-    Vue.component('vue-grid-layout', VueGridLayout);
-    Vue.component('vue-grid-item', VueGridItem);
+const install = (Vue: typeof _Vue): void => {
+    Vue.component('VueResponsiveGridLayout', VueResponsiveGridLayout);
+    Vue.component('VueGridLayout', VueGridLayout);
+    Vue.component('VueGridItem', VueGridItem);
 };
 
-const version = '__VERSION__';
-
-const plugin: PluginObject<VueConstructor> = {
-    install,
-    version,
-};
-export default plugin;
+export default install;
 
 if (typeof window !== 'undefined' && window.Vue) {
-    window.Vue.use(plugin);
+    window.Vue.use(install);
 }
 
 export {

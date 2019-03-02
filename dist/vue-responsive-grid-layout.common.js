@@ -8022,20 +8022,15 @@ var VueResponsiveGridLayout_component = normalizeComponent(
 
 
 var components_install = function install(Vue) {
-  Vue.component('vue-responsive-grid-layout', components_VueResponsiveGridLayout);
-  Vue.component('vue-grid-layout', components_VueGridLayout);
-  Vue.component('vue-grid-item', VueGridItem);
+  Vue.component('VueResponsiveGridLayout', components_VueResponsiveGridLayout);
+  Vue.component('VueGridLayout', components_VueGridLayout);
+  Vue.component('VueGridItem', VueGridItem);
 };
 
-var version = '__VERSION__';
-var components_plugin = {
-  install: components_install,
-  version: version
-};
-/* harmony default export */ var components = (components_plugin);
+/* harmony default export */ var components = (components_install);
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(components_plugin);
+  window.Vue.use(components_install);
 }
 
 
