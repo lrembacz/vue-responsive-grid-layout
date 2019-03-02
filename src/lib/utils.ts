@@ -1,5 +1,5 @@
 import isEqual from 'lodash/isEqual';
-import {Vue} from 'vue/types/vue';
+import Vue from 'vue';
 
 export interface LayoutItem {
     w: number;

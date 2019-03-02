@@ -1,8 +1,6 @@
 import { cloneLayout, compact, correctBounds } from './utils';
 
 import { CompactType, Layout } from './utils';
-import {bottom, cloneLayoutItem, getLayoutItem, VueChildren} from '@/lib/utils';
-import Vue from 'vue';
 
 export interface ResponsiveLayout {
     lg?: Layout;
