@@ -1,4 +1,4 @@
-# VueResponsiveGridLayout 1.1.5
+# VueResponsiveGridLayout 1.1.6
 Responsive draggable and resizable grid layout for VueJS.
 Its responsiveness is based on breakpoints (similar to Bootstrap).
 
@@ -12,9 +12,11 @@ It works with Vuex nice as well.
 
 And it's partly coded in Typescript.
 
+Typescript types *.d.ts available from 1.1.6
+
 # Demo
 
-- https://jsfiddle.net/xc29yp1j/ - simple editable demo with VueResponsiveGridLayout
+- https://jsfiddle.net/bmwroa3j/ - simple editable demo with VueResponsiveGridLayout
 
 # Example
 
