@@ -282,8 +282,8 @@ export default class GridItem extends Vue {
 
     // Child
     @Prop({
-        type: [String, Object, Function],
         required: false,
+        default: null,
     })
     public component: any;
 
