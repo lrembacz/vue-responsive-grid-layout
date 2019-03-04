@@ -43,7 +43,7 @@ export default class GridItem extends Vue {
     dragContainerClass: string;
     handle: string;
     cancel: string;
-    component: '';
+    component: any;
     componentProps: object;
     defaultSize: number;
     resizableProps: object;
