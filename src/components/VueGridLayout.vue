@@ -78,7 +78,8 @@ export default class VueGridLayout extends Vue {
 
     @Prop({
         type: Boolean,
-        required: true,
+        required: false,
+        default: true,
     })
     public autoSize: boolean;
 

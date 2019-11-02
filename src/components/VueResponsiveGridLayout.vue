@@ -48,7 +48,8 @@ export default class VueResponsiveGridLayout extends Vue {
 
     @Prop({
         type: Boolean,
-        required: true,
+        required: false,
+        default: true,
     })
     public autoSize: boolean;
 
