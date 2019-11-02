@@ -16,7 +16,7 @@ Typescript types *.d.ts available from 1.1.6
 
 # Demo
 
-- https://jsfiddle.net/bmwroa3j/ - simple editable demo with VueResponsiveGridLayout
+- https://jsfiddle.net/pebwnfL8/ - simple editable demo with VueResponsiveGridLayout
 
 # Example
 
