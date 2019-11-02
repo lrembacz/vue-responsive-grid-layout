@@ -1,4 +1,4 @@
-# VueResponsiveGridLayout 1.1.8
+# VueResponsiveGridLayout 1.2.0
 Responsive draggable and resizable grid layout for VueJS.
 Its responsiveness is based on breakpoints (similar to Bootstrap).
 
@@ -248,6 +248,9 @@ public layouts: { [key: string]: Layout };
 ## Description
 
 ### autoSize
+If true, the container height swells and contracts to fit contents
+
+notice: When you are using `autoSize`, margin on items and layout should be the same value.
 
 ### cols
 Number of cols. Default is 12.
@@ -465,6 +468,9 @@ Defines additional classes for grid layout.
 Default css class is `vue-grid-layout`.
 
 ### autoSize
+If true, the container height swells and contracts to fit contents
+
+notice: When you are using `autoSize`, margin on items and layout should be the same value.
 
 ### cols
 Number of cols. Default is 12.

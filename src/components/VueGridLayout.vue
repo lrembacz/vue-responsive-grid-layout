@@ -1,5 +1,5 @@
 <template>
-    <div :class="this.className">
+    <div :class="this.className" :style="styles">
         <slot :containerWidth="width" :layout="layout" :rowHeight="rowHeight" :cols="cols" :maxRows="maxRows">
         </slot>
         <VueGridItem
@@ -77,14 +77,8 @@ export default class VueGridLayout extends Vue {
     public className: string;
 
     @Prop({
-        type: Object,
-        required: false,
-    })
-    public styles: object;
-
-    @Prop({
         type: Boolean,
-        required: false,
+        required: true,
     })
     public autoSize: boolean;
 
@@ -203,6 +197,12 @@ export default class VueGridLayout extends Vue {
         // Possibly call back with layout on mount. This should be done after correcting the layout width
         // to ensure we don't rerender with the wrong width.
         // this.onLayoutMaybeChanged(this.layout, this.layout);
+    }
+
+    get styles() {
+        return {
+            height: this.containerHeight(),
+        }
     }
 
     /**
@@ -341,9 +341,7 @@ export default class VueGridLayout extends Vue {
         if (!oldLayout) {
             oldLayout = cloneLayout(this.layout);
         }
-        if (!isEqual(oldLayout, newLayout)) {
-            this.$emit('layout-update', newLayout, last);
-        }
+        this.$emit('layout-update', newLayout, last);
     }
 
     public onResizeStart(element: Vue, i: string, w: number, h: number, { e, node }: GridResizeEvent) {

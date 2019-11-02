@@ -8,6 +8,7 @@
         :layout="layouts[breakpoint]"
         :width="width"
         :cols="cols"
+        :style="styles"
         ref="layout"
     >
         <template slot-scope="props">
@@ -25,7 +26,7 @@ import {
     Layout,
     synchronizeLayoutWithChildren,
     CompactType,
-    compact,
+    compact, bottom,
 } from '@/lib/utils';
 import {
     getBreakpointFromWidth,
@@ -47,7 +48,7 @@ export default class VueResponsiveGridLayout extends Vue {
 
     @Prop({
         type: Boolean,
-        required: false,
+        required: true,
     })
     public autoSize: boolean;
 
@@ -185,6 +186,32 @@ export default class VueResponsiveGridLayout extends Vue {
         window.removeEventListener('resize', this.handleResize);
     }
 
+    get styles() {
+        return {
+            height: this.containerHeight(),
+        }
+    }
+
+    /**
+     * Calculates a pixel value for the container.
+     * @return {String} Container height in pixels.
+     */
+    public containerHeight() {
+        if (!this.autoSize) {
+            return;
+        }
+        const nbRow = bottom(this.layouts[this.breakpoint]);
+        const containerPaddingY = this.containerPadding
+            ? this.containerPadding[1]
+            : this.margin[1];
+
+        return (
+            ((nbRow * this.rowHeight) +
+            ((nbRow - 1) * this.margin[1]) +
+            (containerPaddingY * 2)) +
+            'px'
+        );
+    }
 
     get listeners() {
         const {

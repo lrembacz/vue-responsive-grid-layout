@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Prop, Inject, Watch} from 'vue-property-decorator';
+import {Component, Vue, Prop, Watch} from 'vue-property-decorator';
 import DraggableCore from 'vue-draggable-core';
 import Resizable from 'vue-resizable-core';
 import {perc, setTopLeft, setTransform} from '../lib/utils';
@@ -113,7 +113,7 @@ export default class GridItem extends Vue {
     @Prop({
         type: Array,
         required: false,
-        default: () => [10, 10],
+        default: () => [5, 5],
     })
     public margin: number[];
 
