@@ -1,0 +1,38 @@
+{
+    "name": "vue-draggable-core",
+    "version": "2.0.0-beta.1",
+    "description": "VueDraggableCore component for VueJs2.",
+    "author": "Łukasz Rembacz",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lrembacz/vue-responsive-grid-layout.git"
+    },
+    "homepage": "https://github.com/lrembacz/vue-responsive-grid-layout/tree/master/packages/vue-draggable-core#readme",
+    "main": "dist/vue-draggable-core.umd.js",
+    "module": "dist/vue-draggable-core.esm.js",
+    "browser": "dist/vue-draggable-core.common.js",
+    "jsdelivr": "dist/vue-draggable-core.umd.min.js",
+    "unpkg": "dist/vue-draggable-core.umd.min.js",
+    "files": [
+        "src",
+        "dist",
+        "nuxt",
+        "types"
+    ],
+    "types": "dist/types/index.d.ts",
+    "sideEffects": false,
+    "scripts": {
+        "clean_dist": "rimraf dist/*",
+        "minify": "minify dist/vue-draggable-core.umd.js --out-file dist/vue-draggable-core.umd.min.js",
+        "postbuild": "npm run minify",
+        "lint": "eslint --ignore-path ../../.eslintignore --config ../../.eslintrc.js . --ext .ts",
+        "lint:fix": "npm run lint --fix"
+    },
+    "buildOptions": {
+        "name": "VueDraggableCore"
+    },
+    "peerDependencies": {
+        "vue": ">= 2.1.0"
+    }
+}
