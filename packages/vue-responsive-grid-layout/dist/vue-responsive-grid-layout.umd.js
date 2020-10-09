@@ -2974,7 +2974,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         "default": true
       },
       offsetParent: {
-        type: HTMLElement,
+        type: Object,
         validator: function validator(value) {
           return value && value.nodeType == 1;
         },
@@ -3651,7 +3651,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         "default": 'div'
       },
       offsetParent: {
-        type: HTMLElement,
+        type: Object,
         validator: function validator(value) {
           return value && value.nodeType == 1;
         },

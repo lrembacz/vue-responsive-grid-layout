@@ -1,5 +1,4 @@
-import { findInArray, isFunction, int } from './shims';
-import browserPrefix, { browserPrefixToKey } from './getPrefix';
+import { findInArray, isFunction } from './shims';
 
 import { ControlPosition, PositionOffsetControlPosition, MouseTouchEvent } from './types';
 
@@ -69,20 +68,6 @@ export function offsetXYFromParent(
     const y = (evt.clientY + offsetParent.scrollTop - offsetParentRect.top) / scale;
 
     return { x, y };
-}
-
-export function getTranslation(
-    { x, y }: ControlPosition,
-    positionOffset: PositionOffsetControlPosition,
-    unitSuffix: string
-): string {
-    let translation = `translate(${x}${unitSuffix},${y}${unitSuffix})`;
-    if (positionOffset) {
-        const defaultX = `${typeof positionOffset.x === 'string' ? positionOffset.x : positionOffset.x + unitSuffix}`;
-        const defaultY = `${typeof positionOffset.y === 'string' ? positionOffset.y : positionOffset.y + unitSuffix}`;
-        translation = `translate(${defaultX}, ${defaultY})` + translation;
-    }
-    return translation;
 }
 
 export function getTouch(e: MouseTouchEvent, identifier: number): { clientX: number; clientY: number } {

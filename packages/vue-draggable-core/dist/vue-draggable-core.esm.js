@@ -263,7 +263,7 @@ var VueDraggableCore = Vue.extend({
       "default": true
     },
     offsetParent: {
-      type: HTMLElement,
+      type: Object,
       validator: function validator(value) {
         return value && value.nodeType == 1;
       },

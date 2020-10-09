@@ -199,7 +199,7 @@ export default Vue.extend({
             default: 'div'
         },
         offsetParent: {
-            type: HTMLElement as PropType<HTMLElement>,
+            type: Object as PropType<HTMLElement>,
             validator(value: any): boolean {
                 return value && value.nodeType == 1;
             },
