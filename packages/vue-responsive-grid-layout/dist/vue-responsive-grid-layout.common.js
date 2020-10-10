@@ -2801,7 +2801,6 @@ var script = Vue__default['default'].extend({
       "default": 'div'
     },
     offsetParent: {
-      type: Object,
       validator: function validator(value) {
         return value && value.nodeType == 1;
       },
@@ -3243,7 +3242,6 @@ var __vue_render__ = function __vue_render__() {
       key: "default",
       fn: function fn(draggableCoreProps) {
         return [_c('VueResizableCore', _vm._b({
-          "class": _vm.isResizable ? '' : 'vue-resizable-hide',
           attrs: {
             "draggable-props": Object.assign({}, _vm.resizableProps.draggableProps && _vm.resizableProps.draggableProps, {
               disabled: !_vm.isResizable
@@ -3278,7 +3276,13 @@ var __vue_render__ = function __vue_render__() {
                   key: resizeHandle.axis,
                   tag: "component"
                 }, 'component', resizeHandle.props, false), resizeHandle.on), [_c('span', {
-                  "class": resizeHandle["class"]
+                  directives: [{
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isResizable && !_vm["static"],
+                    expression: "isResizable && !static"
+                  }],
+                  "class": [resizeHandle["class"], _vm.isResizable && 'vue-resizable-hide']
                 })]);
               })], 2)];
             }

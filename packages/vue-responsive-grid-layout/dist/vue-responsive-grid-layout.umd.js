@@ -2974,7 +2974,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         "default": true
       },
       offsetParent: {
-        type: Object,
         validator: function validator(value) {
           return value && value.nodeType == 1;
         },
@@ -3010,15 +3009,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       this.mounted = true; // Touch handlers must be added with {passive: false} to be cancelable.
       // https://developers.google.com/web/updates/2017/01/scrolling-intervention
 
-      var thisNode = this.findDOMNode(); // Add events if slot is default without scopes
-
-      if (this.$slots['default']) {
-        addEvent(thisNode, eventsFor.mouse.start, this.mouseDown);
-        addEvent(thisNode, eventsFor.mouse.stop, this.mouseUp);
-        addEvent(thisNode, eventsFor.touch.stop, this.touchEnd);
-      }
+      var thisNode = this.findDOMNode();
 
       if (thisNode) {
+        // Add events if slot is default without scopes
+        if (this.$slots['default']) {
+          addEvent(thisNode, eventsFor.mouse.start, this.mouseDown);
+          addEvent(thisNode, eventsFor.mouse.stop, this.mouseUp);
+          addEvent(thisNode, eventsFor.touch.stop, this.touchEnd);
+        }
+
         addEvent(thisNode, eventsFor.touch.start, this.touchStart, {
           passive: false
         });
@@ -3059,7 +3059,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         // Make it possible to attach event handlers on top of this one.
         this.$emit('mousedown', e); // Only accept left-clicks.
 
-        if (!this.allowAnyClick && e.button !== 0) return false; // Get nodes. Be sure to grab relative document (could be iframed)
+        if (!this.allowAnyClick && typeof e.button === 'number' && e.button !== 0) return false; // Get nodes. Be sure to grab relative document (could be iframed)
 
         var thisNode = this.findDOMNode();
 
@@ -3651,7 +3651,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         "default": 'div'
       },
       offsetParent: {
-        type: Object,
         validator: function validator(value) {
           return value && value.nodeType == 1;
         },
@@ -4093,7 +4092,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         key: "default",
         fn: function fn(draggableCoreProps) {
           return [_c('VueResizableCore', _vm._b({
-            "class": _vm.isResizable ? '' : 'vue-resizable-hide',
             attrs: {
               "draggable-props": Object.assign({}, _vm.resizableProps.draggableProps && _vm.resizableProps.draggableProps, {
                 disabled: !_vm.isResizable
@@ -4128,7 +4126,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
                     key: resizeHandle.axis,
                     tag: "component"
                   }, 'component', resizeHandle.props, false), resizeHandle.on), [_c('span', {
-                    "class": resizeHandle["class"]
+                    directives: [{
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.isResizable && !_vm["static"],
+                      expression: "isResizable && !static"
+                    }],
+                    "class": [resizeHandle["class"], _vm.isResizable && 'vue-resizable-hide']
                   })]);
                 })], 2)];
               }

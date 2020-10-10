@@ -30,7 +30,7 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     allowAnyClick: boolean;
     disabled: boolean;
     enableUserSelectHack: boolean;
-    offsetParent: HTMLElement;
+    offsetParent: null;
     grid: [number, number];
     handle: string;
     cancel: string;

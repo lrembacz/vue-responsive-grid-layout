@@ -377,7 +377,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         "default": true
       },
       offsetParent: {
-        type: Object,
         validator: function validator(value) {
           return value && value.nodeType == 1;
         },
@@ -413,15 +412,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       this.mounted = true; // Touch handlers must be added with {passive: false} to be cancelable.
       // https://developers.google.com/web/updates/2017/01/scrolling-intervention
 
-      var thisNode = this.findDOMNode(); // Add events if slot is default without scopes
-
-      if (this.$slots['default']) {
-        addEvent(thisNode, eventsFor.mouse.start, this.mouseDown);
-        addEvent(thisNode, eventsFor.mouse.stop, this.mouseUp);
-        addEvent(thisNode, eventsFor.touch.stop, this.touchEnd);
-      }
+      var thisNode = this.findDOMNode();
 
       if (thisNode) {
+        // Add events if slot is default without scopes
+        if (this.$slots['default']) {
+          addEvent(thisNode, eventsFor.mouse.start, this.mouseDown);
+          addEvent(thisNode, eventsFor.mouse.stop, this.mouseUp);
+          addEvent(thisNode, eventsFor.touch.stop, this.touchEnd);
+        }
+
         addEvent(thisNode, eventsFor.touch.start, this.touchStart, {
           passive: false
         });
@@ -462,7 +462,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         // Make it possible to attach event handlers on top of this one.
         this.$emit('mousedown', e); // Only accept left-clicks.
 
-        if (!this.allowAnyClick && e.button !== 0) return false; // Get nodes. Be sure to grab relative document (could be iframed)
+        if (!this.allowAnyClick && typeof e.button === 'number' && e.button !== 0) return false; // Get nodes. Be sure to grab relative document (could be iframed)
 
         var thisNode = this.findDOMNode();
 

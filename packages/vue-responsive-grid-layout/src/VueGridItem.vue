@@ -23,7 +23,6 @@
                 :transform-scale="transformScale"
                 :resize-handles="resizeHandles"
                 :offset-parent="offsetParent"
-                :class="isResizable ? '' : 'vue-resizable-hide'"
                 @resizeStart="resizeStart"
                 @resize="resize"
                 @resizeStop="resizeStop"
@@ -45,7 +44,7 @@
                             v-bind="resizeHandle.props"
                             v-on="resizeHandle.on"
                         >
-                            <span :class="resizeHandle.class"></span>
+                            <span v-show="isResizable && !static" :class="[resizeHandle.class, isResizable && 'vue-resizable-hide']"></span>
                         </component>
                     </component>
                 </template>
@@ -199,7 +198,6 @@ export default Vue.extend({
             default: 'div'
         },
         offsetParent: {
-            type: Object as PropType<HTMLElement>,
             validator(value: any): boolean {
                 return value && value.nodeType == 1;
             },

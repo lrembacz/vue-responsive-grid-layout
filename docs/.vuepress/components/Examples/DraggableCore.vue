@@ -1,5 +1,5 @@
 <template>
-    <VueDraggableCore @start="onStart" @drag="onDrag" @stop="onStop">
+    <VueDraggableCore @dragStart="onStart" @drag="onDrag" @dragStop="onStop">
         <div :class="classes">
             x: {{x}}
             y: {{y}}
@@ -30,20 +30,20 @@
             },
         },
         methods: {
-            onStart(e, coreData) {
+            onStart(coreData, e) {
                 this.active = true;
                 this.x = coreData.x;
                 this.y = coreData.y
                 this.lastX = coreData.lastX;
                 this.lastY = coreData.lastY;
             },
-            onDrag(e, coreData) {
+            onDrag(coreData, e) {
                 this.x = coreData.x;
                 this.y = coreData.y
                 this.lastX = coreData.lastX;
                 this.lastY = coreData.lastY;
             },
-            onStop(e, coreData) {
+            onStop(coreData, e) {
                 this.active = false;
                 this.x = coreData.x;
                 this.y = coreData.y

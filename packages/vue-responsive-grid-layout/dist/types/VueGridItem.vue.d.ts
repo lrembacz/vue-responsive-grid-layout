@@ -129,7 +129,7 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     draggableProps: any;
     resizableProps: any;
     tag: any;
-    offsetParent: HTMLElement;
+    offsetParent: null;
 }>;
 /**
  * An individual item within a VueGridLayout.

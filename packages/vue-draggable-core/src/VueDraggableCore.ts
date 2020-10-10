@@ -54,7 +54,6 @@ export default Vue.extend({
             default: true
         },
         offsetParent: {
-            type: Object as PropType<HTMLElement>,
             validator(value: any): boolean {
                 return value && value.nodeType == 1;
             },
@@ -92,14 +91,13 @@ export default Vue.extend({
         // https://developers.google.com/web/updates/2017/01/scrolling-intervention
         const thisNode = this.findDOMNode();
 
-        // Add events if slot is default without scopes
-        if (this.$slots['default']) {
-            addEvent(thisNode, eventsFor.mouse.start, this.mouseDown);
-            addEvent(thisNode, eventsFor.mouse.stop, this.mouseUp);
-            addEvent(thisNode, eventsFor.touch.stop, this.touchEnd);
-        }
-
         if (thisNode) {
+            // Add events if slot is default without scopes
+            if (this.$slots['default']) {
+                addEvent(thisNode, eventsFor.mouse.start, this.mouseDown);
+                addEvent(thisNode, eventsFor.mouse.stop, this.mouseUp);
+                addEvent(thisNode, eventsFor.touch.stop, this.touchEnd);
+            }
             addEvent(thisNode, eventsFor.touch.start, this.touchStart, {
                 passive: false
             });
@@ -141,7 +139,7 @@ export default Vue.extend({
             this.$emit('mousedown', e);
 
             // Only accept left-clicks.
-            if (!this.allowAnyClick && e.button !== 0) return false;
+            if (!this.allowAnyClick && typeof e.button === 'number' && e.button !== 0) return false;
 
             // Get nodes. Be sure to grab relative document (could be iframed)
             const thisNode = this.findDOMNode();
@@ -171,7 +169,7 @@ export default Vue.extend({
             this.touchIdentifier = getTouchIdentifier(e);
 
             // Get the current drag point from the event. This is used as the offset.
-            const position = getControlPosition(e, touchIdentifier, this as any);
+            const position = getControlPosition(e, touchIdentifier, this);
             if (position == null) return;
             const { x, y } = position;
 

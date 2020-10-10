@@ -1,5 +1,5 @@
 import Vue, { PropType } from 'vue';
-import { CompactType, EventCallback, Layout, LayoutItem, noop } from './lib/utils';
+import { CompactType, Layout, LayoutItem } from './lib/utils';
 
 export default Vue.extend({
     props: {
