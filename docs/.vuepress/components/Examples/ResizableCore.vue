@@ -63,7 +63,7 @@
         },
     }
 </script>
-<style>
+<style scoped>
     .layoutRoot {
         display: flex;
         background: #eee;

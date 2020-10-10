@@ -67,7 +67,7 @@
 
 </script>
 
-<style>
+<style scoped>
     #content {
         width: 100%;
     }
