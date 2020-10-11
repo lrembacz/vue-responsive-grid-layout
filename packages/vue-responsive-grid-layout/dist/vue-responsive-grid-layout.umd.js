@@ -5120,10 +5120,30 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       })[0] : h();
     }
   });
+
+  function install(Vue) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    Vue.component(options.vueGridItemName || 'VueGridItem', __vue_component__);
+    Vue.component(options.vueGridLayoutName || 'VueGridLayout', __vue_component__$1);
+    Vue.component(options.vueResponsiveGridLayoutName || 'VueResponsiveGridLayout', __vue_component__$2);
+    Vue.component(options.widthProviderName || 'WidthProvider', WidthProvider);
+  }
+
+  if ( // @ts-ignore
+  typeof window !== 'undefined' && window.Vue && window.Vue === Vue__default['default']) {
+    window.Vue.use({
+      install: install
+    });
+  }
+
+  var index = {
+    install: install
+  };
   exports.VueGridItem = __vue_component__;
   exports.VueGridLayout = __vue_component__$1;
   exports.VueResponsiveGridLayout = __vue_component__$2;
   exports.WidthProvider = WidthProvider;
+  exports["default"] = index;
   Object.defineProperty(exports, '__esModule', {
     value: true
   });

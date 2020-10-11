@@ -524,5 +524,15 @@ var VueDraggableCore = Vue__default['default'].extend({
     return children;
   }
 });
+
+function install(Vue) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  Vue.component(options.vueDraggableCoreName || 'VueDraggableCore', VueDraggableCore);
+}
+
+var index = {
+  install: install
+};
 exports.VueDraggableCore = VueDraggableCore;
+exports["default"] = index;
 //# sourceMappingURL=vue-draggable-core.common.js.map

@@ -48,10 +48,10 @@ export default Object.keys(builds).map(format => ({
             tsconfig: path.join(PACKAGE_ROOT_PATH, 'tsconfig.build.json'),
             useTsconfigDeclarationDir: true
         }),
-        format === 'umd' &&
-            replace({
-                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-            }),
+        replace({
+            ...(format === 'umd' && {'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)}),
+            'process.env.ROLLUP_BUILD_FORMAT': JSON.stringify(format),
+        }),
         vue({
             css: false
         }),

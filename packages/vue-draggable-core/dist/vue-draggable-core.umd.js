@@ -521,7 +521,24 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       return children;
     }
   });
+
+  function install(Vue) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    Vue.component(options.vueDraggableCoreName || 'VueDraggableCore', VueDraggableCore);
+  }
+
+  if ( // @ts-ignore
+  typeof window !== 'undefined' && window.Vue && window.Vue === Vue__default['default']) {
+    window.Vue.use({
+      install: install
+    });
+  }
+
+  var index = {
+    install: install
+  };
   exports.VueDraggableCore = VueDraggableCore;
+  exports["default"] = index;
   Object.defineProperty(exports, '__esModule', {
     value: true
   });

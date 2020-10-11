@@ -269,5 +269,15 @@ var VueResizableCore = Vue__default['default'].extend({
     return children;
   }
 });
+
+function install(Vue) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  Vue.component(options.vueResizableCoreName || 'VueResizableCore', VueResizableCore);
+}
+
+var index = {
+  install: install
+};
 exports.VueResizableCore = VueResizableCore;
+exports["default"] = index;
 //# sourceMappingURL=vue-resizable-core.common.js.map

@@ -4253,5 +4253,18 @@ var WidthProvider = Vue.extend({
     })[0] : h();
   }
 });
+
+function install(Vue) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  Vue.component(options.vueGridItemName || 'VueGridItem', __vue_component__);
+  Vue.component(options.vueGridLayoutName || 'VueGridLayout', __vue_component__$1);
+  Vue.component(options.vueResponsiveGridLayoutName || 'VueResponsiveGridLayout', __vue_component__$2);
+  Vue.component(options.widthProviderName || 'WidthProvider', WidthProvider);
+}
+
+var index = {
+  install: install
+};
+export default index;
 export { __vue_component__ as VueGridItem, __vue_component__$1 as VueGridLayout, __vue_component__$2 as VueResponsiveGridLayout, WidthProvider };
 //# sourceMappingURL=vue-responsive-grid-layout.esm.js.map

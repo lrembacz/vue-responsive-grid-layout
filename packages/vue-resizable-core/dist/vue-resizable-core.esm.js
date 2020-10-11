@@ -251,5 +251,15 @@ var VueResizableCore = Vue.extend({
     return children;
   }
 });
+
+function install(Vue) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  Vue.component(options.vueResizableCoreName || 'VueResizableCore', VueResizableCore);
+}
+
+var index = {
+  install: install
+};
+export default index;
 export { VueResizableCore };
 //# sourceMappingURL=vue-resizable-core.esm.js.map

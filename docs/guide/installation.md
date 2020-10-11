@@ -24,16 +24,39 @@ yarn add vue-responsive-grid-layout
 Then include the package in your application and install the plugin:
 
 ```javascript
-import VueResponsiveGridLayout from 'vue-responsive-grid-layout'
+import VueResponsiveGridLayout from 'vue-responsive-grid-layout';
 
-Vue.use(VueResponsiveGridLayout)
+Vue.use(VueResponsiveGridLayout);
+```
+
+## Options
+
+When using as plugin, you can pass options to change the component names.
+
+```javascript
+Vue.use(VueResponsiveGridLayout, {
+  vueGridItemName: 'vue-grid-item',
+  vueGridLayoutName: 'vue-grid-layout',
+  vueResponsiveGridLayoutName: 'vue-responsive-grid-layout',
+  widthProviderName: 'width-provider',
+})
+```
+
+### Nuxt Module
+
+:::tip Hint
+Only relevant for users of the [Nuxt](https://nuxtjs.org) framework
+:::
+
+First install from NPM, then add `vue-responsive-grid-layout/nuxt` to modules section of `nuxt.config.js`
+
+```javascript
+{
+  modules: ['vue-responsive-grid-layout/nuxt']
+}
 ```
 
 ### CDN
-
-Soon
-
-### Nuxt Module
 
 Soon
 
@@ -44,7 +67,7 @@ If you don't want to register the components globally, don't do `Vue.use('VueRes
 Instead, import the component(s) in those components that you need them in and register them locally:
 
 ```javascript
-import { VueGridLayout, VueResponsiveGridLayout, VueGridItem } from 'vue-responsive-grid-layout'
+import { VueGridLayout, VueResponsiveGridLayout, VueGridItem } from 'vue-responsive-grid-layout';
 
 export default {
   components: {

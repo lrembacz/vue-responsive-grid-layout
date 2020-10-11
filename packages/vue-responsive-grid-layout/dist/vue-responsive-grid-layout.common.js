@@ -4270,8 +4270,21 @@ var WidthProvider = Vue__default['default'].extend({
     })[0] : h();
   }
 });
+
+function install(Vue) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  Vue.component(options.vueGridItemName || 'VueGridItem', __vue_component__);
+  Vue.component(options.vueGridLayoutName || 'VueGridLayout', __vue_component__$1);
+  Vue.component(options.vueResponsiveGridLayoutName || 'VueResponsiveGridLayout', __vue_component__$2);
+  Vue.component(options.widthProviderName || 'WidthProvider', WidthProvider);
+}
+
+var index = {
+  install: install
+};
 exports.VueGridItem = __vue_component__;
 exports.VueGridLayout = __vue_component__$1;
 exports.VueResponsiveGridLayout = __vue_component__$2;
 exports.WidthProvider = WidthProvider;
+exports["default"] = index;
 //# sourceMappingURL=vue-responsive-grid-layout.common.js.map
