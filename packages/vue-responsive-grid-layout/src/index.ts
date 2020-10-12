@@ -31,7 +31,7 @@ if (
     typeof window !== 'undefined' &&
     window.Vue
 ) {
-    window.Vue.use({ install: install });
+    window.Vue.use(install);
 }
 
 export default {
