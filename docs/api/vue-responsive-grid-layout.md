@@ -11,23 +11,23 @@ next: ./vue-draggable-core
 ::: demo
 ```html
 <template>
-    <WidthProvider>
+    <width-provider>
         <template v-slot:default="{width}">
-            <div class="content" ref="offsetParent">
-                <VueResponsiveGridLayout
+            <div class="content">
+                <vue-responsive-grid-layout
                     :layouts="layouts"
-                    :rowHeight="20"
+                    :row-height="20"
                     :cols="cols"
                     :width="width"
-                    @layoutChange="onLayoutChange"
+                    @layout-change="onLayoutChange"
                 >
                     <template v-slot:item="{i}">
                         <span class="text">{{i}}</span>
                     </template>
-                </VueResponsiveGridLayout>
+                </vue-responsive-grid-layout>
             </div>
         </template>
-    </WidthProvider>
+    </width-provider>
 </template>
 
 <script>
@@ -174,23 +174,23 @@ Makes item static.
 ::: demo
 ```html
 <template>
-    <WidthProvider>
+    <width-provider>
         <template v-slot:default="{width}">
-            <div class="content" ref="offsetParent">
-                <VueResponsiveGridLayout
+            <div class="content">
+                <vue-responsive-grid-layout
                     :layouts="layouts"
-                    :rowHeight="20"
+                    :row-height="20"
                     :cols="cols"
                     :width="width"
-                    @layoutChange="onLayoutChange"
+                    @layout-change="onLayoutChange"
                 >
                     <template v-slot:item="{i}">
                         <span class="text">{{i}}</span>
                     </template>
-                </VueResponsiveGridLayout>
+                </vue-responsive-grid-layout>
             </div>
         </template>
-    </WidthProvider>
+    </width-provider>
 </template>
 
 <script>
@@ -335,24 +335,24 @@ Set resize handles on item.
 ::: demo
 ```html
 <template>
-    <WidthProvider>
+    <width-provider>
         <template v-slot:default="{width}">
-            <div class="content" ref="offsetParent">
-                <VueResponsiveGridLayout
+            <div class="content">
+                <vue-responsive-grid-layout
                     :layouts="layouts"
-                    :rowHeight="20"
+                    :row-height="20"
                     :cols="cols"
                     :width="width"
-                    @layoutChange="onLayoutChange"
-                    :resizeHandles="['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']"
+                    @layout-change="onLayoutChange"
+                    :resize-handles="['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']"
                 >
                     <template v-slot:item="{i}">
                         <span class="text">{{i}}</span>
                     </template>
-                </VueResponsiveGridLayout>
+                </vue-responsive-grid-layout>
             </div>
         </template>
-    </WidthProvider>
+    </width-provider>
 </template>
 
 <script>

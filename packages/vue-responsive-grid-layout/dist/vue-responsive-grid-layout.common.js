@@ -4239,9 +4239,13 @@ var WidthProvider = Vue__default['default'].extend({
     }
   },
   mounted: function mounted() {
-    this.mounted = true;
+    var _this = this;
+
     window.addEventListener('resize', this.onWindowResize);
-    this.onWindowResize();
+    this.mounted = true;
+    this.$nextTick(function () {
+      _this.onWindowResize();
+    });
   },
   beforeDestroy: function beforeDestroy() {
     this.mounted = false;

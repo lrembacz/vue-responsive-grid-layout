@@ -12,6 +12,7 @@ module.exports = {
     },
     head: [
         ['script', { src: 'https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js' }],
+        ['script', {src: 'https://rawgit.com/lrembacz/vue-responsive-grid-layout/next/packages/vue-responsive-grid-layout/dist/vue-responsive-grid-layout.umd.js'}]
     ],
     chainWebpack: config => {
         config.plugin('version-env').use(webpack.EnvironmentPlugin, [

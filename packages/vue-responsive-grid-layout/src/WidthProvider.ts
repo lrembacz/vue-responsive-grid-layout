@@ -25,9 +25,11 @@ export default Vue.extend({
         }
     },
     mounted() {
-        this.mounted = true;
         window.addEventListener('resize', this.onWindowResize);
-        this.onWindowResize();
+        this.mounted = true;
+        this.$nextTick(() => {
+            this.onWindowResize();
+        })
     },
     beforeDestroy() {
         this.mounted = false;

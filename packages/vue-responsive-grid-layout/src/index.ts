@@ -29,9 +29,9 @@ if (
     // @ts-ignore
     process.env.ROLLUP_BUILD_FORMAT === 'umd' &&
     typeof window !== 'undefined' &&
-    window.Vue
+    window.Vue === Vue
 ) {
-    window.Vue.use(install);
+    window.Vue.use({ install: install });
 }
 
 export default {

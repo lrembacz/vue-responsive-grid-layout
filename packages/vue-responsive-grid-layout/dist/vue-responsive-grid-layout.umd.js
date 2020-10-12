@@ -5089,9 +5089,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     },
     mounted: function mounted() {
-      this.mounted = true;
+      var _this3 = this;
+
       window.addEventListener('resize', this.onWindowResize);
-      this.onWindowResize();
+      this.mounted = true;
+      this.$nextTick(function () {
+        _this3.onWindowResize();
+      });
     },
     beforeDestroy: function beforeDestroy() {
       this.mounted = false;
@@ -5130,8 +5134,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   }
 
   if ( // @ts-ignore
-  typeof window !== 'undefined' && window.Vue) {
-    window.Vue.use(install);
+  typeof window !== 'undefined' && window.Vue === Vue__default['default']) {
+    window.Vue.use({
+      install: install
+    });
   }
 
   var index = {
