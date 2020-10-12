@@ -5131,9 +5131,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
   if ( // @ts-ignore
   typeof window !== 'undefined' && window.Vue) {
-    window.Vue.use({
-      install: install
-    });
+    window.Vue.use(install);
   }
 
   var index = {
