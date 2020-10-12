@@ -60,7 +60,13 @@ module.exports = {
         ],
     },
     plugins: [
-        'demo-block',
+        ['demo-block', {
+            settings: {
+                jsLib: [
+                    'https://rawgit.com/lrembacz/vue-responsive-grid-layout/next/packages/vue-responsive-grid-layout/dist/vue-responsive-grid-layout.umd.js'
+                ]
+            }
+        }],
         [
             'vuepress-plugin-typescript',
             {

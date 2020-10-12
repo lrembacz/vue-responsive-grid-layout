@@ -20,7 +20,7 @@
 
 <script>
     export default {
-        name: 'ResponsiveGridLayout',
+        name: 'Static',
         data() {
             return {
                 layouts: {
@@ -41,16 +41,17 @@
                             w: 2,
                             h: 2,
                             draggable: true,
-                            resizable: true
+                            resizable: true,
                         },
                         {
-                            i: "2",
+                            i: "static",
                             x: 4,
                             y: 0,
                             w: 2,
                             h: 4,
                             draggable: true,
                             resizable: true,
+                            static: true
                         },
                         {
                             i: "3",
@@ -75,7 +76,7 @@
 
 </script>
 
-<style scoped>
+<style>
     #content {
         width: 100%;
     }

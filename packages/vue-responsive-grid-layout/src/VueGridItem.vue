@@ -44,7 +44,7 @@
                             v-bind="resizeHandle.props"
                             v-on="resizeHandle.on"
                         >
-                            <span v-show="isResizable && !static" :class="[resizeHandle.class, isResizable && 'vue-resizable-hide']"></span>
+                            <span v-show="isResizable && !static" :class="[resizeHandle.class, !isResizable && 'vue-resizable-hide']"></span>
                         </component>
                     </component>
                 </template>

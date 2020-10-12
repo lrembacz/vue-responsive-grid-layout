@@ -4132,7 +4132,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
                       value: _vm.isResizable && !_vm["static"],
                       expression: "isResizable && !static"
                     }],
-                    "class": [resizeHandle["class"], _vm.isResizable && 'vue-resizable-hide']
+                    "class": [resizeHandle["class"], !_vm.isResizable && 'vue-resizable-hide']
                   })]);
                 })], 2)];
               }
@@ -5130,7 +5130,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   }
 
   if ( // @ts-ignore
-  typeof window !== 'undefined' && window.Vue && window.Vue === Vue__default['default']) {
+  typeof window !== 'undefined' && window.Vue) {
     window.Vue.use({
       install: install
     });

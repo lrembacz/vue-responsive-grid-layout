@@ -3265,7 +3265,7 @@ var __vue_render__ = function __vue_render__() {
                     value: _vm.isResizable && !_vm["static"],
                     expression: "isResizable && !static"
                   }],
-                  "class": [resizeHandle["class"], _vm.isResizable && 'vue-resizable-hide']
+                  "class": [resizeHandle["class"], !_vm.isResizable && 'vue-resizable-hide']
                 })]);
               })], 2)];
             }
