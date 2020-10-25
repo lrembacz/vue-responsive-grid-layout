@@ -33,6 +33,6 @@
         "name": "VueDraggableCore"
     },
     "peerDependencies": {
-        "vue": ">= 2.1.0"
+        "vue": ">= 2.3.0"
     }
 }

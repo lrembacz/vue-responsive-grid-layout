@@ -37,7 +37,7 @@
         "vue-draggable-core": "2.0.0-beta.1"
     },
     "peerDependencies": {
-        "vue": ">= 2.1.0",
+        "vue": ">= 2.3.0",
         "vue-draggable-core": "2.0.0-beta.1"
     }
 }

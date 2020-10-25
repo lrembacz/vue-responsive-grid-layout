@@ -1,8 +1,9 @@
 import Vue from 'vue';
+import {calcWH} from "./calculateUtils";
 
 export type LayoutItem = {
     w: number;
-    h: number;
+    h?: number;
     x: number;
     y: number;
     i: string;
@@ -72,6 +73,10 @@ export enum CompactType {
 const isProduction = process.env.NODE_ENV === 'production';
 const DEBUG = false;
 
+export function optionalNumber(number?: number) {
+    return number !== undefined ? number : 0;
+}
+
 /**
  * Return the bottom coordinate of the layout.
  *
@@ -82,7 +87,7 @@ export function bottom(layout: Layout): number {
     let max = 0,
         bottomY;
     for (let i = 0, len = layout.length; i < len; i++) {
-        bottomY = layout[i].y + layout[i].h;
+        bottomY = layout[i].y + optionalNumber(layout[i].h);
         if (bottomY > max) max = bottomY;
     }
     return max;
@@ -100,7 +105,7 @@ export function cloneLayout(layout: Layout): Layout {
 export function cloneLayoutItem(layoutItem: LayoutItem): LayoutItem {
     return {
         w: layoutItem.w,
-        h: layoutItem.h,
+        ...(layoutItem.h !== undefined && {h: layoutItem.h}),
         x: layoutItem.x,
         y: layoutItem.y,
         i: layoutItem.i,
@@ -125,8 +130,8 @@ export function collides(l1: LayoutItem, l2: LayoutItem): boolean {
     if (l1.i === l2.i) return false; // same element
     if (l1.x + l1.w <= l2.x) return false; // l1 is left of l2
     if (l1.x >= l2.x + l2.w) return false; // l1 is right of l2
-    if (l1.y + l1.h <= l2.y) return false; // l1 is above l2
-    if (l1.y >= l2.y + l2.h) return false; // l1 is below l2
+    if (l1.y + optionalNumber(l1.h) <= l2.y) return false; // l1 is above l2
+    if (l1.y >= l2.y + optionalNumber(l2.h)) return false; // l1 is below l2
     return true; // boxes overlap
 }
 
@@ -194,7 +199,7 @@ function resolveCompactionCollision(layout: Layout, item: LayoutItem, moveToCoor
 
         // Optimization: we can break early if we know we're past this el
         // We can do this b/c it's a sorted layout
-        if (otherItem.y > item.y + item.h) break;
+        if (otherItem.y > item.y + optionalNumber(item.h)) break;
 
         if (collides(item, otherItem)) {
             resolveCompactionCollision(layout, otherItem, moveToCoord + (item as any)[sizeProp], axis);
@@ -242,7 +247,7 @@ export function compactItem(
         if (compactH) {
             resolveCompactionCollision(fullLayout, l, collides.x + collides.w, 'x');
         } else {
-            resolveCompactionCollision(fullLayout, l, collides.y + collides.h, 'y');
+            resolveCompactionCollision(fullLayout, l, collides.y + optionalNumber(collides.h), 'y');
         }
         // Since we can't grow without bounds horizontally, if we've overflown, let's move it down and try again.
         if (compactH && l.x + l.w > cols) {
@@ -443,9 +448,9 @@ export function moveElementAwayFromCollision(
         // Make a mock item so we don't modify the item here, only modify in moveElement.
         const fakeItem: LayoutItem = {
             x: compactH ? Math.max(collidesWith.x - itemToMove.w, 0) : itemToMove.x,
-            y: compactV ? Math.max(collidesWith.y - itemToMove.h, 0) : itemToMove.y,
+            y: compactV ? Math.max(collidesWith.y - optionalNumber(itemToMove.h), 0) : itemToMove.y,
             w: itemToMove.w,
-            h: itemToMove.h,
+            ...(itemToMove.h && { h: itemToMove.h }),
             i: '-1'
         };
 

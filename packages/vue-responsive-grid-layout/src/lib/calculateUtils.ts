@@ -134,7 +134,7 @@ export function calcWH(
     // ...
     // w = (width + margin) / (colWidth + margin)
     let w = Math.round((width + margin[0]) / (colWidth + margin[0]));
-    let h = Math.round((height + margin[1]) / (rowHeight + margin[1]));
+    let h = Math.ceil((height + margin[1]) / (rowHeight + margin[1]));
 
     // Capping
     w = clamp(w, 0, cols - x);

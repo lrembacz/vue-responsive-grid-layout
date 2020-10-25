@@ -24,7 +24,8 @@
     },
     "files": [
         "node_modules/@types/node/globals.d.ts",
-        "types/shims-vue.d.ts"
+        "types/shims-vue.d.ts",
+        "types/javascript-debounce.d.ts"
     ],
     "exclude": [
         "dist",

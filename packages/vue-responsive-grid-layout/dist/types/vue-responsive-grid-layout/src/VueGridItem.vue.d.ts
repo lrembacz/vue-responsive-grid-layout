@@ -5,9 +5,11 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     currentHeight: null;
     resizing: null;
     dragging: null;
-    currentNode: null;
     observer: null;
+    unwatch: null;
 }, {
+    observe(): void;
+    unObserve(): void;
     heightObserver(mutationsList: any): void;
     pos(): Position;
     moveDroppingItem(oldVal?: Partial<DroppingPosition> | undefined): void;
@@ -102,8 +104,7 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     maxConstraints: [number, number] | null;
     posWidth: any;
     posHeight: any;
-    resizable: boolean;
-    height: any;
+    handles: ("s" | "w" | "e" | "n" | "sw" | "nw" | "se" | "ne")[];
 }, {
     cancel: string;
     handle: string;

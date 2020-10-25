@@ -25,7 +25,7 @@
             :use-percentages="!mounted"
             :transform-scale="transformScale"
             :w="l.w"
-            :h="l.h"
+            :h.sync="l.h"
             :x="l.x"
             :y="l.y"
             :i="l.i"
@@ -37,12 +37,14 @@
             :dropping-position="isDroppingItem ? droppingPosition : undefined"
             :resize-handles="l.resizeHandles || resizeHandles"
             :offset-parent="$el"
+            :height-from-children="isHeightFromChildren(i)"
             @dragStart="onDragStart"
             @dragStop="onDragStop"
             @drag="onDrag"
             @resizeStart="onResizeStart"
             @resizeStop="onResizeStop"
             @resize="onResize"
+            @heightChange="onHeightChange"
         >
             <slot name="item" :w="l.w" :h="l.h" :x="l.x" :y="l.y" :i="l.i"></slot>
         </VueGridItem>
@@ -73,6 +75,7 @@
 <script lang="ts">
 import VueGridLayoutProps from './VueGridLayoutProps';
 import isEqual from 'lodash.isEqual';
+import debounce from 'javascript-debounce';
 import {
     bottom,
     cloneLayoutItem,
@@ -152,6 +155,17 @@ export default VueGridLayoutProps.extend({
         }
     },
     methods: {
+        onHeightChange: debounce(function() {
+            const layout = synchronizeLayoutWithChildren(this.currentLayout, this.$children, this.cols, this.compactType);
+            this.onLayoutMaybeChanged(layout, this.currentLayout);
+        }, 0),
+        isHeightFromChildren(i: string) {
+            return Array.isArray(this.heightFromChildren)
+                ? this.heightFromChildren.indexOf(i) !== -1
+                : typeof this.heightFromChildren === 'boolean'
+                    ? this.heightFromChildren
+                    : false;
+        },
         isItemDraggable(l: LayoutItem) {
             return typeof l.isDraggable === 'boolean' ? l.isDraggable : !l.static && this.isDraggable;
         },

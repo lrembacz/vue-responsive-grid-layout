@@ -2,11 +2,13 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray2(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray2(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray2(o, minLen); }
-
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray2(arr); }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray2(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray2(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray2(o, minLen); }
 
 function _arrayLikeToArray2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -1977,6 +1979,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     CompactType["horizontal"] = "horizontal";
     CompactType["vertical"] = "vertical";
   })(CompactType || (CompactType = {}));
+
+  function optionalNumber(number) {
+    return number !== undefined ? number : 0;
+  }
   /**
    * Return the bottom coordinate of the layout.
    *
@@ -1990,7 +1996,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         bottomY;
 
     for (var i = 0, len = layout.length; i < len; i++) {
-      bottomY = layout[i].y + layout[i].h;
+      bottomY = layout[i].y + optionalNumber(layout[i].h);
       if (bottomY > max) max = bottomY;
     }
 
@@ -2009,9 +2015,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
   function cloneLayoutItem(layoutItem) {
-    return {
-      w: layoutItem.w,
-      h: layoutItem.h,
+    return _objectSpread2(_objectSpread2({
+      w: layoutItem.w
+    }, layoutItem.h !== undefined && {
+      h: layoutItem.h
+    }), {}, {
       x: layoutItem.x,
       y: layoutItem.y,
       i: layoutItem.i,
@@ -2026,7 +2034,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       isResizable: layoutItem.isResizable,
       resizeHandles: layoutItem.resizeHandles,
       isBounded: layoutItem.isBounded
-    };
+    });
   }
   /**
    * Given two layoutitems, check if they collide.
@@ -2040,9 +2048,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
     if (l1.x >= l2.x + l2.w) return false; // l1 is right of l2
 
-    if (l1.y + l1.h <= l2.y) return false; // l1 is above l2
+    if (l1.y + optionalNumber(l1.h) <= l2.y) return false; // l1 is above l2
 
-    if (l1.y >= l2.y + l2.h) return false; // l1 is below l2
+    if (l1.y >= l2.y + optionalNumber(l2.h)) return false; // l1 is below l2
 
     return true; // boxes overlap
   }
@@ -2108,7 +2116,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       if (otherItem["static"]) continue; // Optimization: we can break early if we know we're past this el
       // We can do this b/c it's a sorted layout
 
-      if (otherItem.y > item.y + item.h) break;
+      if (otherItem.y > item.y + optionalNumber(item.h)) break;
 
       if (collides(item, otherItem)) {
         resolveCompactionCollision(layout, otherItem, moveToCoord + item[sizeProp], axis);
@@ -2153,7 +2161,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       if (compactH) {
         resolveCompactionCollision(fullLayout, l, collides.x + collides.w, 'x');
       } else {
-        resolveCompactionCollision(fullLayout, l, collides.y + collides.h, 'y');
+        resolveCompactionCollision(fullLayout, l, collides.y + optionalNumber(collides.h), 'y');
       } // Since we can't grow without bounds horizontally, if we've overflown, let's move it down and try again.
 
 
@@ -2335,13 +2343,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // Reset isUserAction flag because we're not in the main collision anymore.
       isUserAction = false; // Make a mock item so we don't modify the item here, only modify in moveElement.
 
-      var fakeItem = {
+      var fakeItem = _objectSpread2(_objectSpread2({
         x: compactH ? Math.max(collidesWith.x - itemToMove.w, 0) : itemToMove.x,
-        y: compactV ? Math.max(collidesWith.y - itemToMove.h, 0) : itemToMove.y,
-        w: itemToMove.w,
-        h: itemToMove.h,
+        y: compactV ? Math.max(collidesWith.y - optionalNumber(itemToMove.h), 0) : itemToMove.y,
+        w: itemToMove.w
+      }, itemToMove.h && {
+        h: itemToMove.h
+      }), {}, {
         i: '-1'
-      }; // No collision? If so, we can go up there; otherwise, we'll end up moving down as normal
+      }); // No collision? If so, we can go up there; otherwise, we'll end up moving down as normal
+
 
       if (!getFirstCollision(layout, fakeItem)) {
         log("Doing reverse collision on ".concat(itemToMove.i, " up to [").concat(fakeItem.x, ",").concat(fakeItem.y, "]."));
@@ -2607,7 +2618,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // w = (width + margin) / (colWidth + margin)
 
     var w = Math.round((width + margin[0]) / (colWidth + margin[0]));
-    var h = Math.round((height + margin[1]) / (rowHeight + margin[1])); // Capping
+    var h = Math.ceil((height + margin[1]) / (rowHeight + margin[1])); // Capping
 
     w = clamp(w, 0, cols - x);
     h = clamp(h, 0, maxRows - y);
@@ -3553,8 +3564,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         required: true
       },
       h: {
-        type: Number,
-        required: true
+        type: Number
       },
       minW: {
         type: Number,
@@ -3655,13 +3665,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           return value && value.nodeType == 1;
         },
         "default": null
+      },
+      heightFromChildren: {
+        type: Boolean,
+        "default": false
       }
     },
     data: function data() {
       return {
+        currentHeight: null,
         resizing: null,
         dragging: null,
-        currentNode: null
+        observer: null,
+        unwatch: null
       };
     },
     computed: {
@@ -3718,6 +3734,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       posHeight: function posHeight() {
         var pos = this.pos;
         return pos ? pos.height : 0;
+      },
+      handles: function handles() {
+        return this.heightFromChildren ? this.resizeHandles.filter(function (handle) {
+          return handle.indexOf('s') !== -1 && handle.indexOf('n') !== -1;
+        }) : this.resizeHandles;
       }
     },
     watch: {
@@ -3730,12 +3751,77 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         if (!lodash_isequal(newVal, oldVal)) {
           this.moveDroppingItem(oldVal);
         }
+      },
+      currentHeight: function currentHeight(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          var _calcWH = calcWH(this.getPositionParams, this.newPos.width, this.currentHeight, this.x, this.y),
+              h = _calcWH.h;
+
+          this.$emit('update:h', h);
+          this.$emit('heightChange');
+        }
       }
     },
     mounted: function mounted() {
-      this.moveDroppingItem({});
+      var _this3 = this;
+
+      this.$nextTick(function () {
+        _this3.unwatch = _this3.$watch('heightFromChildren', function (newVal, oldVal) {
+          if (newVal !== oldVal) {
+            if (newVal) {
+              _this3.observe();
+            } else {
+              _this3.unObserve();
+            }
+          }
+        }, {
+          immediate: true
+        });
+      });
+    },
+    beforeDestroy: function beforeDestroy() {
+      this.unObserve();
+
+      if (this.unwatch) {
+        this.unwatch();
+      }
     },
     methods: {
+      observe: function observe() {
+        var childEl = this.$slots && this.$slots["default"].length > 0 && this.$slots["default"][0].elm;
+
+        if (childEl) {
+          this.currentHeight = childEl.offsetHeight;
+          this.observer = new MutationObserver(this.heightObserver).observe(childEl, {
+            attributes: true
+          });
+        }
+      },
+      unObserve: function unObserve() {
+        if (this.observer) {
+          this.observer.disconnect();
+        }
+      },
+      heightObserver: function heightObserver(mutationsList) {
+        var _iterator = _createForOfIteratorHelper(mutationsList),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var mutation = _step.value;
+
+            if (mutation.type === 'attributes') {
+              if (this.currentHeight !== mutation.target.offsetHeight) {
+                this.currentHeight = mutation.target.offsetHeight;
+              }
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      },
       pos: function pos() {
         return calcGridItemPosition(this.getPositionParams, this.x, this.y, this.w, this.h, this);
       },
@@ -3960,9 +4046,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var minW = this.minW,
             maxW = this.maxW; // Get new XY
 
-        var _calcWH = calcWH(this.getPositionParams, size.width, size.height, this.x, this.y),
-            w = _calcWH.w,
-            h = _calcWH.h; // minW should be at least 1
+        var _calcWH2 = calcWH(this.getPositionParams, size.width, size.height, this.x, this.y),
+            w = _calcWH2.w,
+            h = _calcWH2.h; // minW should be at least 1
 
 
         minW = Math.max(minW, 1); // maxW should be at most (cols - x)
@@ -4101,7 +4187,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
               "min-constraints": _vm.minConstraints,
               "max-constraints": _vm.maxConstraints,
               "transform-scale": _vm.transformScale,
-              "resize-handles": _vm.resizeHandles,
+              "resize-handles": _vm.handles,
               "offset-parent": _vm.offsetParent
             },
             on: {
@@ -4260,8 +4346,42 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         "default": function _default() {
           return ['se'];
         }
+      },
+      heightFromChildren: {
+        type: [Boolean, Array],
+        "default": false
       }
     }
+  });
+  var javascriptDebounce = createCommonjsModule(function (module, exports) {
+    /*!
+     *  javascript-debounce 1.0.1
+     *
+     *  A lightweight, dependency-free JavaScript module for debouncing functions based on David Walsh's debounce function.
+     *
+     *  Source code available at: https://github.com/jgarber623/javascript-debounce
+     *
+     *  (c) 2015-2019 Jason Garber (http://sixtwothree.org)
+     *
+     *  javascript-debounce may be freely distributed under the MIT license.
+     */
+    (function (root, factory) {
+      {
+        module.exports = factory();
+      }
+    })(commonjsGlobal, function () {
+      return function (callback, delay) {
+        var timeout;
+        return function () {
+          var context = this,
+              args = arguments;
+          clearTimeout(timeout);
+          timeout = setTimeout(function () {
+            callback.apply(context, args);
+          }, delay);
+        };
+      };
+    });
   });
   var layoutClass = 'vue-grid-layout';
   var isFirefox = false; // Try...catch will protect from navigator not existing (e.g. node) or a bad implementation of navigator
@@ -4325,6 +4445,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     },
     methods: {
+      onHeightChange: javascriptDebounce(function () {
+        var layout = synchronizeLayoutWithChildren(this.currentLayout, this.$children, this.cols, this.compactType);
+        this.onLayoutMaybeChanged(layout, this.currentLayout);
+      }, 0),
+      isHeightFromChildren: function isHeightFromChildren(i) {
+        return Array.isArray(this.heightFromChildren) ? this.heightFromChildren.indexOf(i) !== -1 : typeof this.heightFromChildren === 'boolean' ? this.heightFromChildren : false;
+      },
       isItemDraggable: function isItemDraggable(l) {
         return typeof l.isDraggable === 'boolean' ? l.isDraggable : !l["static"] && this.isDraggable;
       },
@@ -4680,15 +4807,20 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           "static": l["static"],
           "dropping-position": _vm.isDroppingItem ? _vm.droppingPosition : undefined,
           "resize-handles": l.resizeHandles || _vm.resizeHandles,
-          "offset-parent": _vm.$el
+          "offset-parent": _vm.$el,
+          "height-from-children": _vm.isHeightFromChildren(_vm.i)
         },
         on: {
+          "update:h": function updateH($event) {
+            return _vm.$set(l, "h", $event);
+          },
           "dragStart": _vm.onDragStart,
           "dragStop": _vm.onDragStop,
           "drag": _vm.onDrag,
           "resizeStart": _vm.onResizeStart,
           "resizeStop": _vm.onResizeStop,
-          "resize": _vm.onResize
+          "resize": _vm.onResize,
+          "heightChange": _vm.onHeightChange
         }
       }, [_vm._t("item", null, {
         "w": l.w,
@@ -5089,12 +5221,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     },
     mounted: function mounted() {
-      var _this3 = this;
+      var _this4 = this;
 
       window.addEventListener('resize', this.onWindowResize);
       this.mounted = true;
       this.$nextTick(function () {
-        _this3.onWindowResize();
+        _this4.onWindowResize();
       });
     },
     beforeDestroy: function beforeDestroy() {

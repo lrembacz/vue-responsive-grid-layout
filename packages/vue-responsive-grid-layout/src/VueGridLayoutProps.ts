@@ -86,6 +86,10 @@ export default Vue.extend({
         resizeHandles: {
             type: Array as PropType<Array<'s' | 'w' | 'e' | 'n' | 'sw' | 'nw' | 'se' | 'ne'>>,
             default: () => ['se']
+        },
+        heightFromChildren: {
+            type: [Boolean, Array] as PropType<Array<string>>,
+            default: false
         }
     }
 });

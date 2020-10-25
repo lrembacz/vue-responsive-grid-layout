@@ -21,7 +21,7 @@
                 :min-constraints="minConstraints"
                 :max-constraints="maxConstraints"
                 :transform-scale="transformScale"
-                :resize-handles="resizeHandles"
+                :resize-handles="handles"
                 :offset-parent="offsetParent"
                 @resizeStart="resizeStart"
                 @resize="resize"
@@ -68,6 +68,7 @@ import {
 } from './lib/calculateUtils';
 import { VueDraggableCore } from 'vue-draggable-core';
 import { VueResizableCore } from 'vue-resizable-core';
+import {ResizeHandleAxis} from "../../vue-resizable-core/src/types";
 
 type PartialPosition = { top: number; left: number };
 
@@ -106,8 +107,7 @@ export default Vue.extend({
             required: true
         },
         h: {
-            type: Number,
-            required: true
+            type: Number
         },
         minW: {
             type: Number,
@@ -202,13 +202,19 @@ export default Vue.extend({
                 return value && value.nodeType == 1;
             },
             default: null
+        },
+        heightFromChildren: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
         return {
+            currentHeight: null,
             resizing: null,
             dragging: null,
-            currentNode: null
+            observer: null,
+            unwatch: null,
         };
     },
     computed: {
@@ -265,7 +271,14 @@ export default Vue.extend({
         posHeight() {
             const pos = this.pos;
             return pos ? pos.height : 0;
-        }
+        },
+        handles(): Array<ResizeHandleAxis> {
+            return this.heightFromChildren
+                ? this.resizeHandles.filter((handle: ResizeHandleAxis) =>
+                    (handle.indexOf('s') !== -1 && handle.indexOf('n') !== -1)
+                )
+                : this.resizeHandles;
+        },
     },
     watch: {
         'droppingPosition.left'(newVal: DroppingPosition, oldVal: DroppingPosition) {
@@ -277,12 +290,56 @@ export default Vue.extend({
             if (!isEqual(newVal, oldVal)) {
                 this.moveDroppingItem(oldVal);
             }
-        }
+        },
+        currentHeight(newVal, oldVal) {
+            if (newVal !== oldVal) {
+                const { h } =  calcWH(this.getPositionParams, this.newPos.width, this.currentHeight, this.x, this.y);
+                this.$emit('update:h', h);
+                this.$emit('heightChange');
+            }
+        },
     },
     mounted() {
-        this.moveDroppingItem({});
+        this.$nextTick(() => {
+            this.unwatch = this.$watch('heightFromChildren', (newVal: boolean, oldVal: boolean) => {
+                if (newVal !== oldVal) {
+                    if (newVal) {
+                        this.observe();
+                    } else {
+                        this.unObserve();
+                    }
+                }
+            }, { immediate: true });
+        });
+    },
+    beforeDestroy() {
+        this.unObserve();
+        if (this.unwatch) {
+            this.unwatch();
+        }
     },
     methods: {
+        observe() {
+            const childEl = (this.$slots && this.$slots.default.length > 0) && this.$slots.default[0].elm;
+            if (childEl) {
+                this.currentHeight = childEl.offsetHeight;
+                this.observer = new MutationObserver(this.heightObserver).observe(childEl, {attributes: true});
+            }
+        },
+        unObserve() {
+            if (this.observer) {
+                this.observer.disconnect();
+            }
+        },
+        heightObserver(mutationsList: any) {
+            for (const mutation of mutationsList) {
+                if (mutation.type === 'attributes') {
+                    if (this.currentHeight !== mutation.target.offsetHeight) {
+                        this.currentHeight = mutation.target.offsetHeight;
+                    }
+                }
+            }
+        },
         pos() {
             return calcGridItemPosition(this.getPositionParams, this.x, this.y, this.w, this.h, this);
         },
