@@ -31,7 +31,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.1",
     "@vue/cli-plugin-typescript": "^3.4.1",
-    "@vue/cli-service": "^3.4.1",
+    "@vue/cli-service": "^5.0.8",
     "lodash": "^4.17.11",
     "typescript": "^3.3.3333",
     "vue-draggable-core": "^1.0.5",
